@@ -142,6 +142,8 @@
     color: var(--text-3); font-size: 12px; line-height: 1.6;
     display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
   }
+  .footer a { color: var(--accent); border-bottom: 1px solid var(--accent-bg); transition: border-color 0.15s; }
+  .footer a:hover { border-bottom-color: var(--accent); }
 
   @media (max-width: 600px) {
     .container { padding: 32px 16px 40px; }
@@ -186,8 +188,8 @@
   <div class="grid" id="grid"></div>
 
   <div class="footer">
-    <div id="footer-left">Подборка обновляется. Last update: <span id="last-update">мая 2026</span>.</div>
-    <div id="footer-right">Made with care.</div>
+    <div id="footer-left"></div>
+    <div id="footer-right"></div>
   </div>
 
 </div>
@@ -207,8 +209,8 @@ const DASHBOARDS = [
     date: "2026-05-15",
     badge: { ru: "Психология", en: "Psychology" },
     title: {
-      ru: "Иерархия Маслоу",
-      en: "Maslow's Hierarchy"
+      ru: "Пирамида Маслоу",
+      en: "Maslow's Pyramid"
     },
     desc: {
       ru: "Интерактивная пирамида потребностей. Подвигай ползунки или выбери сценарий — увидишь, как меняются мысли и поведение.",
@@ -265,8 +267,8 @@ const I18N = {
     section: "Дашборды",
     open: "Открыть",
     soon: "Скоро здесь появятся новые дашборды",
-    lastUpdate: "Обновлено: ",
-    madeWith: "Сделано с заботой.",
+    lastUpdate: "Подборка обновляется. Last update: ",
+    madeWith: 'Изучаю ИИ, делаю <a href="https://t.me/barcelonovna" target="_blank" rel="noopener">песенки</a> и <a href="https://t.me/barcelonovna_podcast" target="_blank" rel="noopener">подкасты</a>',
     pageTitle: "ИИ-дашборды Барселоновны",
     htmlLang: "ru"
   },
@@ -278,14 +280,15 @@ const I18N = {
     open: "Open",
     soon: "New dashboards will appear here soon",
     lastUpdate: "Updated: ",
-    madeWith: "Made with care.",
+    madeWith: 'I explore AI and make <a href="https://t.me/barcelonovna" target="_blank" rel="noopener">songs</a> and <a href="https://t.me/barcelonovna_podcast" target="_blank" rel="noopener">podcasts</a>',
     pageTitle: "Barcelonovna AI Dashboards",
     htmlLang: "en"
   }
 };
 
-const MONTHS = {
-  ru: ["января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря"],
+// Месяцы в предложном падеже для RU («в мае 2026»), английские — как есть.
+const MONTHS_IN = {
+  ru: ["в январе","в феврале","в марте","в апреле","в мае","в июне","в июле","в августе","в сентябре","в октябре","в ноябре","в декабре"],
   en: ["January","February","March","April","May","June","July","August","September","October","November","December"]
 };
 
@@ -293,7 +296,7 @@ let lang = "ru";
 
 function formatDate(dateStr, l){
   const [y, m] = dateStr.split("-").map(Number);
-  return MONTHS[l][m-1] + " " + y;
+  return MONTHS_IN[l][m-1] + " " + y;
 }
 
 // ─── рендер карточек ────────────────────────────────────────────────────
@@ -385,12 +388,11 @@ function applyLang(newLang){
   document.getElementById("page-title").textContent = t.title;
   document.getElementById("page-subtitle").textContent = t.subtitle;
   document.getElementById("section-title").textContent = t.section;
-  document.getElementById("footer-right").textContent = t.madeWith;
-  document.getElementById("footer-left").innerHTML = t.lastUpdate + '<span id="last-update">' + formatDate(getLatestDate(), lang) + '</span>';
+  document.getElementById("footer-right").innerHTML = t.madeWith;
+  document.getElementById("footer-left").innerHTML = t.lastUpdate + formatDate(getLatestDate(), lang);
   document.querySelectorAll(".lang-btn").forEach(b => {
     b.classList.toggle("active", b.dataset.lang === newLang);
   });
-  // Запоминаем выбор
   try { localStorage.setItem("lang", newLang); } catch(e){}
   render();
 }
