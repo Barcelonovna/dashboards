@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Иерархия Маслоу · Интерактивная пирамида</title>
+<meta name="description" content="Подвигай ползунки и посмотри, какие мысли и поведение возникают при разной конфигурации потребностей по Маслоу.">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://barcelonovna.github.io/dashboards/maslow-pyramid/">
+<meta property="og:title" content="Иерархия Маслоу. Интерактивная пирамида">
+<meta property="og:description" content="Пять уровней потребностей, ползунки и сценарии. Как меняются мысли и поведение при разной конфигурации.">
+<meta property="og:image" content="https://barcelonovna.github.io/dashboards/maslow-pyramid/preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:locale:alternate" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Иерархия Маслоу. Интерактивная пирамида">
+<meta name="twitter:description" content="Пять уровней потребностей, ползунки и сценарии. Как меняются мысли и поведение.">
+<meta name="twitter:image" content="https://barcelonovna.github.io/dashboards/maslow-pyramid/preview.png">
+
+<style>
+:root {
+  --bg: #fafaf7;
+  --surface: #ffffff;
+  --surface-2: #f1efe8;
+  --text: #1a1a17;
+  --text-2: #6b6a64;
+  --text-3: #9a9994;
+  --border: rgba(0,0,0,0.08);
+  --border-strong: rgba(0,0,0,0.18);
+  --accent: #378ADD;
+  --accent-bg: rgba(55,138,221,0.08);
+  --radius-md: 8px;
+  --radius-lg: 12px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1a1a17;
+    --surface: #25241f;
+    --surface-2: #2f2e29;
+    --text: #ededeb;
+    --text-2: #a8a79f;
+    --text-3: #6f6e68;
+    --border: rgba(255,255,255,0.08);
+    --border-strong: rgba(255,255,255,0.18);
+    --accent-bg: rgba(55,138,221,0.16);
+  }
+}
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+}
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 32px 20px;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+.brand {
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 8px;
+  display: inline-block; text-decoration: none;
+  transition: opacity 0.15s;
+}
+.brand:hover { opacity: 0.7; }
+h1 {
+  font-size: 28px; font-weight: 500;
+  letter-spacing: -0.01em;
+  margin: 0 0 6px;
+}
+.subtitle {
+  font-size: 15px; color: var(--text-2);
+  line-height: 1.55; margin: 0;
+  max-width: 640px;
+}
+.inspired {
+  font-size: 13px; color: var(--text-3);
+  line-height: 1.5; margin: 10px 0 0;
+  max-width: 640px;
+}
+.inspired a {
+  color: var(--accent); text-decoration: none;
+  border-bottom: 1px solid var(--accent-bg);
+  transition: border-color 0.15s;
+}
+.inspired a:hover { border-bottom-color: var(--accent); }
+
+.lang-switch {
+  display: flex;
+  background: var(--surface-2);
+  border-radius: var(--radius-md);
+  padding: 3px;
+  flex-shrink: 0;
+}
+.lang-btn {
+  font-family: inherit;
+  font-size: 13px; font-weight: 500;
+  padding: 6px 12px;
+  background: transparent;
+  color: var(--text-2);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.lang-btn.active {
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+}
+
+.stats {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+.stat {
+  flex: 1; min-width: 160px;
+  background: var(--surface-2);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+}
+.stat-label {
+  font-size: 12px;
+  color: var(--text-2);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+.stat-value {
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+}
+.stat-hint {
+  font-size: 13px;
+  color: var(--text-3);
+  margin-top: 2px;
+}
+
+.presets {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin-bottom: 18px;
+  padding: 10px;
+  background: var(--surface-2);
+  border-radius: var(--radius-lg);
+  align-items: center;
+}
+.preset-label {
+  font-size: 12px; color: var(--text-2);
+  margin: 0 4px 0 6px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.preset {
+  font-family: inherit;
+  font-size: 13px; font-weight: 500;
+  padding: 7px 12px;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.preset:hover { border-color: var(--border-strong); }
+.preset.active {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+.main-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.pyramid-wrap {
+  background: var(--surface-2);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 420px;
+  position: relative;
+  overflow: hidden;
+}
+.pyramid-svg {
+  width: 100%;
+  max-width: 480px;
+  transition: transform 0.6s ease;
+}
+
+.sliders {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: 18px 20px;
+  border: 1px solid var(--border);
+}
+.slider-row {
+  margin-bottom: 16px;
+}
+.slider-row:last-child { margin-bottom: 0; }
+.slider-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 6px;
+}
+.slider-name {
+  font-size: 13px; font-weight: 500;
+  color: var(--text);
+}
+.slider-hint {
+  font-size: 11px; color: var(--text-3);
+  margin-left: 8px;
+  font-weight: 400;
+}
+.slider-val {
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-2);
+  font-weight: 500;
+}
+input[type=range] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  background: var(--surface-2);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+  margin: 4px 0;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+input[type=range]::-moz-range-thumb {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+
+.slider-edges {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-3);
+  margin-top: 4px;
+  line-height: 1.3;
+}
+.slider-edges span {
+  max-width: 45%;
+}
+.slider-edges .edge-high { text-align: right; }
+
+.dominant {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-lg);
+  padding: 16px 20px;
+  margin-bottom: 16px;
+}
+.dominant-label {
+  font-size: 12px;
+  color: var(--text-2);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+.dominant-name {
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 4px;
+  font-variant-numeric: tabular-nums;
+}
+.dominant-desc {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+.blocks {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 16px 20px;
+}
+.block-title {
+  font-size: 12px;
+  color: var(--text-2);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+.block-content {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+}
+.thought {
+  font-style: italic;
+}
+
+.footer {
+  font-size: 12px;
+  color: var(--text-3);
+  line-height: 1.5;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+.footer a {
+  color: var(--text-3);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+}
+.footer a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+.methodology {
+  margin: 16px 0 20px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0;
+  background: var(--surface);
+}
+.methodology summary {
+  font-size: 12px;
+  color: var(--text-2);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-weight: 500;
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+  padding: 12px 16px;
+  position: relative;
+  padding-right: 36px;
+}
+.methodology summary::-webkit-details-marker { display: none; }
+.methodology summary::after {
+  content: "+";
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--text-3);
+}
+.methodology[open] summary::after { content: "−"; }
+.methodology summary:hover { color: var(--text); }
+.methodology-content {
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.6;
+  padding: 0 16px 14px;
+  max-width: 760px;
+}
+.methodology-content p { margin: 0 0 10px; }
+.methodology-content p:last-child { margin-bottom: 0; }
+.methodology-content strong {
+  color: var(--text);
+  font-weight: 500;
+}
+.methodology-content code {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 12px;
+  background: var(--surface-2);
+  padding: 1px 6px;
+  border-radius: 4px;
+  color: var(--text);
+}
+
+@media (max-width: 700px) {
+  .main-grid { grid-template-columns: 1fr; }
+  .blocks { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .container { padding: 20px 14px 32px; }
+  h1 { font-size: 22px; }
+  .stat-value { font-size: 22px; }
+  .dominant-name { font-size: 18px; }
+  .header { flex-direction: column; gap: 14px; }
+  .lang-switch { align-self: flex-start; }
+  .pyramid-wrap { min-height: 360px; padding: 14px; }
+}
+
+.embed-mode .lang-switch,
+.embed-mode .presets,
+.embed-mode .footer { display: none !important; }
+.embed-mode .container { padding: 24px; }
+.embed-mode .header { margin-bottom: 16px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <header class="header">
+    <div class="header-text">
+      <a href="../" class="brand" id="brand" target="_top">ИИ-дашборды Барселоновны</a>
+      <h1 id="title">Иерархия Маслоу</h1>
+      <p class="subtitle" id="subtitle">Из чего собрано твоё «прямо сейчас». Подвигай ползунки или выбери сценарий.</p>
+      <p class="inspired" id="inspired">
+        Основано на иерархии потребностей <a href="https://psychclassics.yorku.ca/Maslow/motivation.htm" target="_blank" rel="noopener">Абрахама Маслоу</a>, 1943. Это интерпретация модели, не диагностика.
+      </p>
+    </div>
+    <div class="lang-switch">
+      <button class="lang-btn active" data-lang="ru">RU</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+  </header>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-label" id="statHarmonyLabel">Гармония</div>
+      <div class="stat-value" id="statHarmonyVal">—</div>
+      <div class="stat-hint" id="statHarmonyHint">—</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label" id="statDomLabel">Куда уходит фокус</div>
+      <div class="stat-value" id="statDomVal">—</div>
+      <div class="stat-hint" id="statDomHint">—</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label" id="statSumLabel">Суммарная наполненность</div>
+      <div class="stat-value" id="statSumVal">—</div>
+      <div class="stat-hint" id="statSumHint">из 500%</div>
+    </div>
+  </div>
+
+  <div class="presets" id="presets">
+    <span class="preset-label" id="presetLabel">Сценарии</span>
+  </div>
+
+  <div class="main-grid">
+    <div class="pyramid-wrap">
+      <svg class="pyramid-svg" id="pyramid" viewBox="0 0 500 380" xmlns="http://www.w3.org/2000/svg"></svg>
+    </div>
+    <div class="sliders" id="sliders"></div>
+  </div>
+
+  <div class="dominant" id="dominantCard">
+    <div class="dominant-label" id="dominantLabel">Доминирующая потребность</div>
+    <div class="dominant-name" id="dominantName">—</div>
+    <div class="dominant-desc" id="dominantDesc">—</div>
+  </div>
+
+  <div class="blocks">
+    <div class="block">
+      <div class="block-title" id="thoughtTitle">Типичные мысли</div>
+      <div class="block-content thought" id="thoughtBlock">—</div>
+    </div>
+    <div class="block">
+      <div class="block-title" id="behaviorTitle">Типичное поведение</div>
+      <div class="block-content behavior" id="behaviorBlock">—</div>
+    </div>
+  </div>
+
+  <details class="methodology">
+    <summary id="methodologyTitle">Как считаются метрики</summary>
+    <div class="methodology-content" id="methodologyContent"></div>
+  </details>
+
+  <footer class="footer" id="footer">
+    Источник: A. H. Maslow, <a href="https://psychclassics.yorku.ca/Maslow/motivation.htm" target="_blank" rel="noopener">A Theory of Human Motivation</a>, Psychological Review, 1943. Тексты мыслей и поведения это авторская интерпретация для иллюстрации, конкретные проявления зависят от личной истории, контекста и культуры.
+  </footer>
+</div>
+
+<script>
+const I18N = {
+  ru: {
+    htmlLang: "ru",
+    brand: "ИИ-дашборды Барселоновны",
+    title: "Иерархия Маслоу",
+    subtitle: "Из чего собрано твоё «прямо сейчас». Подвигай ползунки или выбери сценарий.",
+    inspired: 'Основано на иерархии потребностей <a href="https://psychclassics.yorku.ca/Maslow/motivation.htm" target="_blank" rel="noopener">Абрахама Маслоу</a>, 1943. Это интерпретация модели, не диагностика.',
+    presetLabel: "Сценарии",
+    statHarmonyLabel: "Гармония",
+    statDomLabel: "Куда уходит фокус",
+    statSumLabel: "Суммарная наполненность",
+    statSumHint: "из 500%",
+    dominantLabel: "Доминирующая потребность",
+    thoughtTitle: "Типичные мысли",
+    behaviorTitle: "Типичное поведение",
+    harmonyTags: ["Большой дефицит", "Заметный перекос", "В целом сносно", "Гармонично"],
+    domFlowLabel: "Энергия роста",
+    footer: 'Источник: A. H. Maslow, <a href="https://psychclassics.yorku.ca/Maslow/motivation.htm" target="_blank" rel="noopener">A Theory of Human Motivation</a>, Psychological Review, 1943. Тексты мыслей и поведения это авторская интерпретация для иллюстрации, конкретные проявления зависят от личной истории, контекста и культуры.',
+    titleHtml: "Иерархия Маслоу · Интерактивная пирамида",
+    methodologyTitle: "Как считаются метрики",
+    methodologyContent: '<p><strong>Доминирующая потребность.</strong> Если у любого уровня заполненность ниже 60%, доминирующая выбирается по формуле <code>значение + позиция уровня × 5</code> (физиология = 0, самоактуализация = 4) — берётся уровень с минимальным результатом. Это значит, что при близких значениях приоритет у нижних уровней (по Маслоу нижние тянут внимание сильнее). Если все уровни заполнены на 60% и выше, доминирующая = самый наполненный уровень, твоя точка опоры.</p><p><strong>Гармония</strong> = равномерность распределения × средняя наполненность ÷ 100. Поэтому при низких ровных значениях (например, депрессия) гармония низкая: формально ровно, фактически дефицит. Высокая гармония требует одновременно и ровного распределения, и достаточной общей наполненности.</p>'
+  },
+  en: {
+    htmlLang: "en",
+    brand: "Barcelonovna AI Dashboards",
+    title: "Maslow's Hierarchy",
+    subtitle: "What your 'right now' is made of. Move the sliders or pick a scenario.",
+    inspired: 'Based on the hierarchy of needs by <a href="https://psychclassics.yorku.ca/Maslow/motivation.htm" target="_blank" rel="noopener">Abraham Maslow</a>, 1943. An interpretation of the model, not a diagnosis.',
+    presetLabel: "Scenarios",
+    statHarmonyLabel: "Harmony",
+    statDomLabel: "Where focus goes",
+    statSumLabel: "Total fill",
+    statSumHint: "out of 500%",
+    dominantLabel: "Dominant need",
+    thoughtTitle: "Typical thoughts",
+    behaviorTitle: "Typical behavior",
+    harmonyTags: ["Major shortfall", "Visible imbalance", "Mostly okay", "In harmony"],
+    domFlowLabel: "Growth energy",
+    footer: 'Source: A. H. Maslow, <a href="https://psychclassics.yorku.ca/Maslow/motivation.htm" target="_blank" rel="noopener">A Theory of Human Motivation</a>, Psychological Review, 1943. Thought and behavior texts are an authorial interpretation; actual experience depends on personal history, context and culture.',
+    titleHtml: "Maslow's Hierarchy · Interactive Pyramid",
+    methodologyTitle: "How the metrics are calculated",
+    methodologyContent: '<p><strong>Dominant need.</strong> If any level is below 60%, the dominant one is picked by the formula <code>value + level position × 5</code> (physiological = 0, self-actualization = 4). The level with the minimum score wins. So when values are close, lower levels get priority — per Maslow, lower needs pull attention harder. If every level is at 60% or above, the dominant one is simply the most filled level, your point of strength.</p><p><strong>Harmony</strong> = evenness of distribution × average fill ÷ 100. So when values are low but even (e.g. depression), harmony stays low: formally balanced, factually deficient. High harmony requires both even distribution and sufficient overall fill.</p>'
+  }
+};
+
+const LEVELS = [
+  {
+    key: "physio",
+    name: { ru: "Физиология", en: "Physiological" },
+    hint: { ru: "еда, сон, тепло, тело", en: "food, sleep, warmth, body" },
+    edges: {
+      ru: { low: "голоден, не спал", high: "сыт, выспался" },
+      en: { low: "hungry, sleepless", high: "fed, rested" }
+    },
+    desc: {
+      ru: {
+        low: "Тело тянет всё внимание на себя: еду, сон, тепло. На остальное ресурса нет.",
+        mid: "Не голодаешь, не падаешь от усталости. Но и запаса сил нет.",
+        high: "Тело в порядке и работает в фоне. Энергию можно тратить на что угодно ещё."
+      },
+      en: {
+        low: "The body is pulling all the focus to itself: food, sleep, warmth. Nothing left for the rest.",
+        mid: "Not starving, not falling over. But no reserve either.",
+        high: "Body is fine and runs quietly. You can spend energy on anything else."
+      }
+    },
+    thoughts: {
+      ru: {
+        low: "Где поесть. Когда поспать. Сложно думать о другом.",
+        mid: "Подустал. Надо бы нормально поесть и выспаться.",
+        high: "Тело не подаёт сигналов. Можно заниматься чем угодно."
+      },
+      en: {
+        low: "Where to eat. When to sleep. Hard to think about anything else.",
+        mid: "Tired. Should eat properly and get some real sleep.",
+        high: "Body's quiet. I can focus on whatever I want."
+      }
+    },
+    behaviors: {
+      ru: {
+        low: "Сосредоточен только на базовых функциях. Раздражительность, туман в голове, апатия.",
+        mid: "Быстрые углеводы и кофе вместо завтрака. Спишь меньше, чем нужно.",
+        high: "Регулярный режим. Тело работает в фоне, внимание свободно."
+      },
+      en: {
+        low: "Focused only on basics. Irritable, foggy, low energy.",
+        mid: "Quick carbs and coffee instead of breakfast. Sleeping less than you should.",
+        high: "Steady routine. Body runs in the background, attention is free."
+      }
+    }
+  },
+  {
+    key: "safety",
+    name: { ru: "Безопасность", en: "Safety" },
+    hint: { ru: "жильё, деньги, здоровье, работа", en: "shelter, money, health, work" },
+    edges: {
+      ru: { low: "без опоры", high: "всё прикрыто" },
+      en: { low: "no safety net", high: "all covered" }
+    },
+    desc: {
+      ru: {
+        low: "Завтрашний день туманный и страшный. Мозг постоянно сканирует угрозы.",
+        mid: "На ногах, но без подушки. Лишний риск пугает.",
+        high: "Опора есть. Можно действовать смело, не оглядываясь каждые пять минут."
+      },
+      en: {
+        low: "Tomorrow looks foggy and threatening. The mind is constantly scanning for danger.",
+        mid: "Standing, but no cushion. Extra risk feels scary.",
+        high: "Solid ground. You can act boldly without checking your back every five minutes."
+      }
+    },
+    thoughts: {
+      ru: {
+        low: "Что будет завтра. Хватит ли. А если уволят. А если заболею.",
+        mid: "Вроде нормально, но запас бы не помешал. Надо что-то решить с этим.",
+        high: "Завтрашний день не пугает. Можно строить планы на год вперёд."
+      },
+      en: {
+        low: "What about tomorrow. Will it be enough. What if I get fired. What if I get sick.",
+        mid: "Things are okay, but a cushion wouldn't hurt. Need to sort this out.",
+        high: "Tomorrow doesn't scare me. I can plan a year ahead."
+      }
+    },
+    behaviors: {
+      ru: {
+        low: "Постоянная проверка баланса. Плохо спишь. Цепляешься за любую стабильность, даже плохую.",
+        mid: "Откладываешь решения. Дольше, чем нужно, считаешь риски.",
+        high: "Планируешь отпуск. По мелочам торговаться лень. Думаешь о пенсии без паники."
+      },
+      en: {
+        low: "Constantly checking your balance. Bad sleep. Clinging to any stability, even toxic.",
+        mid: "Delaying decisions. Calculating risks longer than needed.",
+        high: "Planning a vacation. Don't sweat small expenses. Thinking about retirement without panic."
+      }
+    }
+  },
+  {
+    key: "love",
+    name: { ru: "Принадлежность", en: "Belonging" },
+    hint: { ru: "любовь, дружба, семья, свои", en: "love, friendship, family, your tribe" },
+    edges: {
+      ru: { low: "совсем один", high: "свои рядом" },
+      en: { low: "all alone", high: "my people are here" }
+    },
+    desc: {
+      ru: {
+        low: "Своих рядом нет. Тянет к людям и одновременно страшно подпустить.",
+        mid: "Люди есть, но глубины не хватает. Среди них иногда одиноко.",
+        high: "Свои рядом. Есть кому позвонить в любую минуту в любом состоянии."
+      },
+      en: {
+        low: "Your people aren't here. You crave connection and fear it at the same time.",
+        mid: "There are people around, but depth is missing. Sometimes lonely among them.",
+        high: "Your people are with you. Someone to call at any hour in any state."
+      }
+    },
+    thoughts: {
+      ru: {
+        low: "Меня никто по-настоящему не понимает. Я один. Кому я нужен.",
+        mid: "Люди вокруг есть, но настоящего контакта мало. Хочется глубоких отношений.",
+        high: "Меня любят. Я свой. Есть к кому прийти в любом состоянии."
+      },
+      en: {
+        low: "Nobody truly gets me. I'm alone. Who needs me anyway.",
+        mid: "There are people around, but real contact is rare. I want deeper relationships.",
+        high: "I'm loved. I belong. There's someone for any state I'm in."
+      }
+    },
+    behaviors: {
+      ru: {
+        low: "Зависаешь в соцсетях. Ищешь подтверждения у случайных людей. Избегаешь близости, потому что страшно.",
+        mid: "Видишься с друзьями реже, чем хотел бы. Откладываешь звонки. Среди своих иногда чувствуешь себя слегка в стороне.",
+        high: "Звонишь маме без повода. Помнишь дни рождения. Готов слушать чужое. Не только говорить о своём."
+      },
+      en: {
+        low: "Stuck in social feeds. Seeking validation from strangers. Avoiding intimacy because it's scary.",
+        mid: "Seeing friends less than you'd like. Postponing calls. Sometimes feeling slightly apart even among your own.",
+        high: "Calling mom for no reason. Remembering birthdays. Listening to others, not just talking about yourself."
+      }
+    }
+  },
+  {
+    key: "esteem",
+    name: { ru: "Уважение", en: "Esteem" },
+    hint: { ru: "статус, признание, самоуважение", en: "status, recognition, self-respect" },
+    edges: {
+      ru: { low: "не замечают", high: "ценят и уважают" },
+      en: { low: "invisible", high: "valued and respected" }
+    },
+    desc: {
+      ru: {
+        low: "Чувствуешь себя невидимым. Мнение других бьёт по самооценке.",
+        mid: "Где-то признают, где-то нет. Свою ценность ещё приходится доказывать.",
+        high: "Знаешь, чего стоишь. Внешняя оценка приятна, но решает не она."
+      },
+      en: {
+        low: "You feel invisible. Other people's opinions hit hard.",
+        mid: "Recognized in some places, ignored in others. Still proving your worth.",
+        high: "You know what you're worth. External feedback is nice, but it doesn't decide."
+      }
+    },
+    thoughts: {
+      ru: {
+        low: "Никто меня по-настоящему не ценит. Я ничего не добился. У всех всё лучше.",
+        mid: "Вроде что-то получается. Признания хочется больше. И самому в себя поверить бы.",
+        high: "Я знаю, чего стою. Чужое мнение это информация. Решения мои."
+      },
+      en: {
+        low: "Nobody actually values me. I've achieved nothing. Everyone else has it better.",
+        mid: "Some things are working out. I want more recognition. And to believe in myself more.",
+        high: "I know my worth. Other people's opinions are information, not a verdict."
+      }
+    },
+    behaviors: {
+      ru: {
+        low: "Сравниваешь себя со всеми. Ищешь лайки. Агрессивно реагируешь на критику. Преувеличиваешь достижения.",
+        mid: "Болезненно относишься к фидбеку. Хвастаешься чуть больше нужного. Иногда самобичевание.",
+        high: "Спокойно принимаешь критику. Делишься знаниями. Доказывать, что ты молодец, уже не нужно."
+      },
+      en: {
+        low: "Comparing yourself to everyone. Chasing likes. Reacting aggressively to criticism. Overstating wins.",
+        mid: "Sensitive to feedback. Bragging slightly more than needed. Occasional self-flagellation.",
+        high: "Taking criticism calmly. Sharing what you know. No need to prove you're good anymore."
+      }
+    }
+  },
+  {
+    key: "self",
+    name: { ru: "Самоактуализация", en: "Self-actualization" },
+    hint: { ru: "смысл, рост, творчество", en: "meaning, growth, creativity" },
+    edges: {
+      ru: { low: "пусто внутри", high: "делаю своё" },
+      en: { low: "empty inside", high: "doing my thing" }
+    },
+    desc: {
+      ru: {
+        low: "Делаешь что угодно, только не своё. Внутри пустовато и тускло.",
+        mid: "Своё иногда случается, но редко. Хочется заметно сильнее.",
+        high: "Делаешь своё дело. Время летит, силы возвращаются."
+      },
+      en: {
+        low: "Doing anything but your own thing. Hollow and dim inside.",
+        mid: "Your own thing happens sometimes, but rarely. You want it much harder.",
+        high: "Doing your thing. Time flies, energy comes back."
+      }
+    },
+    thoughts: {
+      ru: {
+        low: "Зачем всё это. Жизнь проходит мимо. Я не там, где должен быть.",
+        mid: "Что-то делаю, но не то самое. Хочется своего дела, своего смысла.",
+        high: "Я на своём месте. Делаю своё. Меня прёт от того, чем я занят."
+      },
+      en: {
+        low: "What's the point of all this. Life is passing me by. I'm not where I should be.",
+        mid: "Doing things, but not the thing. I want something of my own, with real meaning.",
+        high: "I'm in my place. Doing my work. I'm genuinely excited by what I do."
+      }
+    },
+    behaviors: {
+      ru: {
+        low: "На автопилоте. Прокрастинируешь даже то, что любил. Сериалы вместо проектов. Ничего не запускаешь.",
+        mid: "Берёшься, бросаешь. Долго раскачиваешься. Поток случается, но редко.",
+        high: "Творишь без оглядки. Теряешь время в потоке. Учишься новому из любопытства. Без страха отстать."
+      },
+      en: {
+        low: "Running on autopilot. Procrastinating even on things you loved. Shows instead of projects. Launching nothing.",
+        mid: "Starting and dropping things. Long warm-up. Flow happens, but rarely.",
+        high: "Creating without looking back. Losing time in flow. Learning new things from curiosity, not from fear of falling behind."
+      }
+    }
+  }
+];
+
+const PRESETS = [
+  {
+    name: { ru: "Беженец", en: "Refugee" },
+    values: [15, 5, 15, 10, 5],
+    thought: {
+      ru: "Где сегодня ночевать. Документы целы. Что я тут делаю. Я никому здесь не нужен.",
+      en: "Where to sleep tonight. Are my papers safe. What am I doing here. Nobody here needs me."
+    },
+    behavior: {
+      ru: "Считаешь каждую копейку. Не понимаешь языка вокруг. Спишь вполглаза. Боишься уличных проверок.",
+      en: "Counting every coin. The language around feels foreign. You sleep half-awake. You dread street checks."
+    }
+  },
+  {
+    name: { ru: "Студент в общаге", en: "Dorm student" },
+    values: [60, 30, 75, 45, 60],
+    thought: {
+      ru: "Дотянуть до стипендии. На что-то жить. А вечером Маша. И сессия скоро.",
+      en: "Stretch the grant. Get by somehow. Masha later tonight. And the exam coming up."
+    },
+    behavior: {
+      ru: "Доширак, переписанные конспекты, тусовка до утра. Спишь как получится. Стираешь раз в две недели.",
+      en: "Instant noodles, borrowed notes, parties till dawn. Sleeping whenever. Laundry once every two weeks."
+    }
+  },
+  {
+    name: { ru: "Корпоративный успех", en: "Corporate win" },
+    values: [90, 95, 50, 85, 25],
+    thought: {
+      ru: "Всё хорошо. Машина, ипотека, статус. Только зачем всё это.",
+      en: "Everything's good. Car, mortgage, status. Just what's it all for."
+    },
+    behavior: {
+      ru: "Встаёшь по будильнику, едешь по плану, делаешь по KPI. По выходным смотришь в потолок и не понимаешь, что чувствуешь.",
+      en: "Up by the alarm, in by schedule, out by KPI. On weekends you stare at the ceiling and can't name what you feel."
+    }
+  },
+  {
+    name: { ru: "Художник в нищете", en: "Starving artist" },
+    values: [40, 25, 55, 30, 90],
+    thought: {
+      ru: "Только бы закончить картину. Не думать про аренду. Не думать про аренду.",
+      en: "Just finish the painting. Don't think about rent. Don't think about rent."
+    },
+    behavior: {
+      ru: "Работаешь ночами. Ешь, когда вспомнишь. Радуешься продаже. Через неделю снова без денег.",
+      en: "Working through the night. Eating when you remember. Joyful when something sells. Broke again in a week."
+    }
+  },
+  {
+    name: { ru: "Депрессия", en: "Depression" },
+    values: [35, 40, 20, 15, 5],
+    thought: {
+      ru: "Всё бессмысленно. Я устал. Завтра будет так же. Лучше бы меня просто не было.",
+      en: "Nothing matters. I'm tired. Tomorrow will be the same. I wish I just wasn't here."
+    },
+    behavior: {
+      ru: "Не вылезаешь из кровати. Не отвечаешь на сообщения. Тарелки в раковине третий день. Сериал на повторе.",
+      en: "Not leaving the bed. Not replying to messages. Dishes in the sink for three days. Same show on loop."
+    }
+  },
+  {
+    name: { ru: "Поток", en: "Flow" },
+    values: [85, 80, 75, 80, 95],
+    thought: {
+      ru: "Чёрт, как же круто. Ещё чуть-чуть, и получится. Время куда-то делось.",
+      en: "Damn, this is good. Almost got it. Time just disappeared."
+    },
+    behavior: {
+      ru: "Делаешь любимое дело. Забываешь поесть, потому что увлёкся. Спишь крепко.",
+      en: "Doing what you love. Forgetting to eat because you're absorbed. Sleeping deep."
+    }
+  },
+  {
+    name: { ru: "Влюблённость", en: "Falling in love" },
+    values: [70, 60, 100, 65, 60],
+    thought: {
+      ru: "Когда мы увидимся снова. Что он сейчас делает. Он же мне написал. О боже, не написал. Спокойно. Написал.",
+      en: "When do we see each other again. What's he doing now. He texted me. Oh god, he didn't. Breathe. He did."
+    },
+    behavior: {
+      ru: "Перечитываешь переписку. Поёшь в душе. Покупаешь то, что обычно бы не купила. Отвечаешь на сообщения за две секунды.",
+      en: "Re-reading every message. Singing in the shower. Buying things you'd never normally buy. Replying in two seconds."
+    }
+  },
+  {
+    name: { ru: "Кризис среднего", en: "Midlife crisis" },
+    values: [90, 85, 60, 70, 20],
+    thought: {
+      ru: "Половина жизни прошла. И что. Ничего стоящего я так и не сделал. А время уходит.",
+      en: "Half my life is gone. So what. I haven't done anything that matters. And time is running out."
+    },
+    behavior: {
+      ru: "Внезапно решаешь учить испанский. Покупаешь мотоцикл. Меняешь работу. Или партнёра. Или себя.",
+      en: "Suddenly learning Spanish. Buying a motorcycle. Changing jobs. Or partners. Or yourself."
+    }
+  },
+  {
+    name: { ru: "Молодая мама", en: "New mother" },
+    values: [35, 55, 75, 45, 30],
+    thought: {
+      ru: "Когда он наконец заснёт. Я уже не помню, что такое выспаться. Что я сегодня ела. А он опять плачет.",
+      en: "When will he finally fall asleep. I forgot what rested feels like. Did I eat anything today. He's crying again."
+    },
+    behavior: {
+      ru: "Спишь по два часа. Ешь стоя над раковиной. Не вылезаешь из пижамы. Любишь до спазма.",
+      en: "Sleeping in two-hour bursts. Eating standing over the sink. Living in pajamas. Loving fiercely."
+    }
+  },
+  {
+    name: { ru: "Выгорание", en: "Burnout" },
+    values: [35, 70, 40, 55, 15],
+    thought: {
+      ru: "Не могу больше. Открываю ноут и смотрю на него час. Зачем я это делаю. Почему всё так тяжело.",
+      en: "Can't anymore. I open the laptop and stare at it for an hour. Why am I doing this. Why is everything so heavy."
+    },
+    behavior: {
+      ru: "Прокрастинируешь с чувством вины. Заказываешь еду пятый день подряд. Раздражаешься на всё. По вечерам залипаешь в телефон до часу ночи.",
+      en: "Procrastinating with guilt. Ordering delivery the fifth day in a row. Snapping at everything. Scrolling till 1 am."
+    }
+  },
+  {
+    name: { ru: "Диванный эксперт", en: "Armchair expert" },
+    values: [65, 70, 35, 25, 15],
+    thought: {
+      ru: "Опять идиоты у руля. Я-то всё понимаю, мне бы их полномочия. Никто не слушает умных людей.",
+      en: "Idiots in charge again. I get it all, just give me the power. Nobody listens to smart people."
+    },
+    behavior: {
+      ru: "Пишешь простыни комментариев под новостями. Знаешь, как починить медицину, школы и страну. Со своей жизнью разберёшься потом.",
+      en: "Writing essays under news posts. You know how to fix healthcare, schools, the country. Your own life can wait."
+    }
+  },
+  {
+    name: { ru: "Поэт", en: "Poet" },
+    values: [55, 35, 50, 45, 85],
+    thought: {
+      ru: "Жизнь это страдание. И вдохновение. И снова страдание. Где-то был портвейн.",
+      en: "Life is suffering. And inspiration. And more suffering. There was port wine somewhere."
+    },
+    behavior: {
+      ru: "Носишь рукопись в кармане куртки. Произносишь тосты длиннее, чем кому-либо нужно. Влюбляешься в недостижимое. На работу ходишь редко.",
+      en: "Carrying a manuscript in your jacket pocket. Giving toasts longer than anyone needed. Falling for the unreachable. Day jobs rarely last."
+    }
+  },
+  {
+    name: { ru: "Олигарх", en: "Oligarch" },
+    values: [85, 65, 35, 80, 45],
+    thought: {
+      ru: "Опять заскучал. Купить футбольный клуб? Уже был. Яхта длиннее на 10 метров? Не вопрос. Кому бы позвонить просто так.",
+      en: "Bored again. Buy a football club? Had one. A yacht ten meters longer? Easy. Anyone to call just because."
+    },
+    behavior: {
+      ru: "Летаешь джетом между четырьмя домами. Раз в месяц психотерапевт за тысячу долларов в час, соглашается со всем. Сын учится в Лондоне, общаешься через ассистента. Иногда сам моешь машину. Успокаивает.",
+      en: "Flying private between four houses. Therapist once a month at a grand an hour, agrees with everything. Son in London, you talk through your assistant. Sometimes you wash your car yourself. It's calming."
+    }
+  },
+  {
+    name: { ru: "Дональд Трамп", en: "Donald Trump" },
+    values: [80, 55, 75, 95, 70],
+    thought: {
+      ru: "Огромный успех. Такого никогда не было. Многие говорят, что я лучший. Фейковые СМИ всё врут. Они меня преследуют, потому что боятся. Я выиграю. Я всегда выигрываю. Поверьте мне.",
+      en: "Tremendous success. Like nobody has ever seen. Many people are saying I'm the best. Fake news lies about everything. They're after me because they're scared. I'll win. I always win. Believe me."
+    },
+    behavior: {
+      ru: "Выступаешь на стадионах по два часа без подготовки. Подаёшь в суд на всех. Пишешь посты заглавными буквами в три часа ночи: ПОЗОР! ОХОТА НА ВЕДЬМ! ФЕЙК! По выходным играешь в гольф.",
+      en: "Speaking at rallies for two hours without notes. Suing everyone. Posting in all caps at three in the morning: SAD! WITCH HUNT! FAKE! Playing golf on weekends."
+    }
+  },
+  {
+    name: { ru: "Эмиграция", en: "Emigration" },
+    values: [60, 30, 25, 35, 50],
+    thought: {
+      ru: "Документы. Регистрация. Снова документы. Какие сегодня дела. А что будет через год.",
+      en: "Documents. Registration. More documents. What's on the list today. And what about a year from now."
+    },
+    behavior: {
+      ru: "Записываешь новые слова в заметки. Запоминаешь маршруты транспорта. Звонишь домой, делая вид, что всё нормально. Заново учишься всему.",
+      en: "Writing down new words in your notes. Memorizing tram routes. Calling home pretending everything's fine. Re-learning everything."
+    }
+  }
+];
+
+const HEAT_STOPS = [
+  { p: 0,    c: [80, 19, 19] },
+  { p: 0.2,  c: [121, 31, 31] },
+  { p: 0.35, c: [226, 75, 74] },
+  { p: 0.45, c: [247, 193, 193] },
+  { p: 0.5,  c: [241, 239, 232] },
+  { p: 0.6,  c: [192, 221, 151] },
+  { p: 0.75, c: [151, 196, 89] },
+  { p: 0.9,  c: [59, 109, 17] },
+  { p: 1.0,  c: [23, 52, 4] }
+];
+function heatColor(v) {
+  const p = Math.max(0, Math.min(1, v / 100));
+  for (let i = 1; i < HEAT_STOPS.length; i++) {
+    if (p <= HEAT_STOPS[i].p) {
+      const a = HEAT_STOPS[i-1], b = HEAT_STOPS[i];
+      const t = (p - a.p) / (b.p - a.p);
+      const r = Math.round(a.c[0] + (b.c[0]-a.c[0])*t);
+      const g = Math.round(a.c[1] + (b.c[1]-a.c[1])*t);
+      const bl = Math.round(a.c[2] + (b.c[2]-a.c[2])*t);
+      return "rgb(" + r + "," + g + "," + bl + ")";
+    }
+  }
+  const last = HEAT_STOPS[HEAT_STOPS.length-1].c;
+  return "rgb(" + last.join(",") + ")";
+}
+
+let state = [50, 50, 50, 50, 50];
+let lang = "ru";
+let currentPresetOverride = null;
+
+try {
+  const params = new URLSearchParams(window.location.search);
+  const urlLang = params.get("lang");
+  const stored = localStorage.getItem("lang");
+  if (urlLang === "ru" || urlLang === "en") lang = urlLang;
+  else if (stored === "ru" || stored === "en") lang = stored;
+  if (params.get("embed") === "1") {
+    document.documentElement.classList.add("embed-mode");
+  }
+} catch(e) {}
+
+const PYR = { topX: 250, topY: 20, baseLeft: 140, baseRight: 360, baseY: 340 };
+const N = 5;
+
+function buildPyramid() {
+  const svg = document.getElementById("pyramid");
+  svg.innerHTML = "";
+  const totalH = PYR.baseY - PYR.topY;
+  const segH = totalH / N;
+  for (let i = 0; i < N; i++) {
+    const idxFromTop = N - 1 - i;
+    const yTop = PYR.topY + idxFromTop * segH;
+    const yBot = yTop + segH;
+    const tTop = idxFromTop / N;
+    const tBot = (idxFromTop + 1) / N;
+    const xL_top = PYR.topX - (PYR.topX - PYR.baseLeft) * tTop;
+    const xR_top = PYR.topX + (PYR.baseRight - PYR.topX) * tTop;
+    const xL_bot = PYR.topX - (PYR.topX - PYR.baseLeft) * tBot;
+    const xR_bot = PYR.topX + (PYR.baseRight - PYR.topX) * tBot;
+
+    const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    g.setAttribute("data-level", i);
+    g.style.cursor = "pointer";
+
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path.setAttribute("d", "M" + xL_top + " " + yTop + " L" + xR_top + " " + yTop + " L" + xR_bot + " " + yBot + " L" + xL_bot + " " + yBot + " Z");
+    path.setAttribute("fill", heatColor(state[i]));
+    path.setAttribute("stroke", "rgba(0,0,0,0.12)");
+    path.setAttribute("stroke-width", "1");
+    path.setAttribute("id", "seg-" + i);
+    path.style.transition = "fill 0.3s, stroke 0.2s, stroke-width 0.2s";
+    g.appendChild(path);
+
+    const cy = (yTop + yBot) / 2;
+
+    // подпись слева
+    const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    label.setAttribute("x", 128);
+    label.setAttribute("y", cy);
+    label.setAttribute("text-anchor", "end");
+    label.setAttribute("dominant-baseline", "middle");
+    label.setAttribute("fill", "var(--text-2)");
+    label.setAttribute("font-family", '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif');
+    label.setAttribute("font-size", "13");
+    label.setAttribute("font-weight", "500");
+    label.setAttribute("id", "label-" + i);
+    label.textContent = LEVELS[i].name[lang];
+    g.appendChild(label);
+
+    // процент справа
+    const pct = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    pct.setAttribute("x", 372);
+    pct.setAttribute("y", cy);
+    pct.setAttribute("dominant-baseline", "middle");
+    pct.setAttribute("fill", "var(--text-2)");
+    pct.setAttribute("font-family", '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif');
+    pct.setAttribute("font-size", "13");
+    pct.setAttribute("font-variant-numeric", "tabular-nums");
+    pct.setAttribute("font-weight", "500");
+    pct.textContent = state[i] + "%";
+    pct.id = "pct-" + i;
+    g.appendChild(pct);
+
+    svg.appendChild(g);
+  }
+}
+
+function updatePyramid() {
+  const dom = findDominant();
+  for (let i = 0; i < N; i++) {
+    const seg = document.getElementById("seg-" + i);
+    if (seg) {
+      seg.setAttribute("fill", heatColor(state[i]));
+      if (i === dom) {
+        seg.setAttribute("stroke", "#378ADD");
+        seg.setAttribute("stroke-width", "2.5");
+      } else {
+        seg.setAttribute("stroke", "rgba(0,0,0,0.12)");
+        seg.setAttribute("stroke-width", "1");
+      }
+    }
+    const pct = document.getElementById("pct-" + i);
+    if (pct) pct.textContent = state[i] + "%";
+    const label = document.getElementById("label-" + i);
+    if (label) {
+      label.setAttribute("fill", i === dom ? "#378ADD" : "var(--text-2)");
+      label.setAttribute("font-weight", i === dom ? "600" : "500");
+    }
+  }
+  const svg = document.getElementById("pyramid");
+  const baseStrength = (state[0] + state[1]) / 2;
+  const tilt = baseStrength < 25 ? -1.5 : (baseStrength < 45 ? -0.7 : 0);
+  svg.style.transform = "rotate(" + tilt + "deg)";
+}
+
+function buildSliders() {
+  const wrap = document.getElementById("sliders");
+  wrap.innerHTML = "";
+  for (let i = N - 1; i >= 0; i--) {
+    const row = document.createElement("div");
+    row.className = "slider-row";
+    row.innerHTML =
+      '<div class="slider-head">' +
+        '<div><span class="slider-name" id="sname-' + i + '">' + LEVELS[i].name[lang] + '</span>' +
+        '<span class="slider-hint" id="shint-' + i + '">' + LEVELS[i].hint[lang] + '</span></div>' +
+        '<span class="slider-val" id="val-' + i + '">' + state[i] + '%</span>' +
+      '</div>' +
+      '<input type="range" min="0" max="100" value="' + state[i] + '" id="sl-' + i + '">' +
+      '<div class="slider-edges">' +
+        '<span class="edge-low" id="elow-' + i + '">' + LEVELS[i].edges[lang].low + '</span>' +
+        '<span class="edge-high" id="ehigh-' + i + '">' + LEVELS[i].edges[lang].high + '</span>' +
+      '</div>';
+    wrap.appendChild(row);
+    const inp = row.querySelector("input");
+    inp.addEventListener("input", e => {
+      state[i] = +e.target.value;
+      document.getElementById("val-" + i).textContent = state[i] + "%";
+      updatePyramid();
+      updateOutputs();
+      clearActivePreset();
+    });
+  }
+}
+
+function buildPresets() {
+  const wrap = document.getElementById("presets");
+  // удаляем старые кнопки, оставляем label
+  wrap.querySelectorAll(".preset").forEach(b => b.remove());
+  PRESETS.forEach((p, idx) => {
+    const btn = document.createElement("button");
+    btn.className = "preset";
+    btn.textContent = p.name[lang];
+    btn.dataset.idx = idx;
+    btn.addEventListener("click", () => {
+      state = p.values.slice();
+      currentPresetOverride = p;
+      document.querySelectorAll(".preset").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      refreshAll();
+    });
+    wrap.appendChild(btn);
+  });
+}
+function clearActivePreset() {
+  document.querySelectorAll(".preset").forEach(b => b.classList.remove("active"));
+  currentPresetOverride = null;
+}
+
+function bucket(v) {
+  if (v < 34) return "low";
+  if (v < 67) return "mid";
+  return "high";
+}
+
+function findDominant() {
+  // если есть провалы ниже 60% — ищем минимум по формуле value + idx*5
+  // при равном score выигрывает уровень с меньшим значением
+  const hasGap = state.some(v => v < 60);
+  if (hasGap) {
+    let bestIdx = 0;
+    let bestScore = state[0] + 0 * 5;
+    for (let i = 1; i < N; i++) {
+      const score = state[i] + i * 5;
+      if (score < bestScore || (score === bestScore && state[i] < state[bestIdx])) {
+        bestScore = score;
+        bestIdx = i;
+      }
+    }
+    return bestIdx;
+  }
+  // все ≥ 60% — точка опоры, самый наполненный
+  let maxV = -1, maxIdx = N - 1;
+  for (let i = 0; i < N; i++) {
+    if (state[i] > maxV) { maxV = state[i]; maxIdx = i; }
+  }
+  return maxIdx;
+}
+
+function updateOutputs() {
+  const t = I18N[lang];
+  const dom = findDominant();
+  const L = LEVELS[dom];
+  const b = bucket(state[dom]);
+
+  document.getElementById("dominantName").textContent = L.name[lang] + ", " + state[dom] + "%";
+  document.getElementById("dominantDesc").textContent = L.desc[lang][b];
+
+  // тексты: если выбран сценарий, его тексты; иначе общая логика по уровню
+  let thoughtText, behaviorText;
+  if (currentPresetOverride) {
+    thoughtText = currentPresetOverride.thought[lang];
+    behaviorText = currentPresetOverride.behavior[lang];
+  } else {
+    thoughtText = L.thoughts[lang][b];
+    behaviorText = L.behaviors[lang][b];
+  }
+  document.getElementById("thoughtBlock").textContent = "«" + thoughtText + "»";
+  document.getElementById("behaviorBlock").textContent = behaviorText;
+
+  // если все >= 60 — фокус на росте
+  const allAboveBase = state.every(v => v >= 60);
+  document.getElementById("statDomVal").textContent = L.name[lang];
+  document.getElementById("statDomHint").textContent = allAboveBase ? t.domFlowLabel : (state[dom] + "%");
+
+  // сумма
+  const sum = state.reduce((a,c) => a + c, 0);
+  document.getElementById("statSumVal").textContent = sum + "%";
+
+  // гармония: ровность × средняя наполненность
+  const avg = sum / N;
+  const dev = state.reduce((a,c) => a + Math.abs(c - avg), 0) / N;
+  const evenness = Math.max(0, 100 - dev * 2.2);
+  const harmony = Math.round(evenness * avg / 100);
+  document.getElementById("statHarmonyVal").textContent = harmony + "%";
+  let tagIdx = 0;
+  if (harmony >= 65) tagIdx = 3;
+  else if (harmony >= 45) tagIdx = 2;
+  else if (harmony >= 25) tagIdx = 1;
+  else tagIdx = 0;
+  document.getElementById("statHarmonyHint").textContent = t.harmonyTags[tagIdx];
+}
+
+function refreshAll() {
+  for (let i = 0; i < N; i++) {
+    const inp = document.getElementById("sl-" + i);
+    if (inp) inp.value = state[i];
+    const val = document.getElementById("val-" + i);
+    if (val) val.textContent = state[i] + "%";
+  }
+  updatePyramid();
+  updateOutputs();
+}
+
+function applyLang() {
+  const t = I18N[lang];
+  document.documentElement.lang = t.htmlLang;
+  document.title = t.titleHtml;
+  document.getElementById("brand").textContent = t.brand;
+  document.getElementById("brand").href = "../?lang=" + lang;
+  document.getElementById("title").textContent = t.title;
+  document.getElementById("subtitle").textContent = t.subtitle;
+  document.getElementById("inspired").innerHTML = t.inspired;
+  document.getElementById("presetLabel").textContent = t.presetLabel;
+  document.getElementById("statHarmonyLabel").textContent = t.statHarmonyLabel;
+  document.getElementById("statDomLabel").textContent = t.statDomLabel;
+  document.getElementById("statSumLabel").textContent = t.statSumLabel;
+  document.getElementById("statSumHint").textContent = t.statSumHint;
+  document.getElementById("dominantLabel").textContent = t.dominantLabel;
+  document.getElementById("thoughtTitle").textContent = t.thoughtTitle;
+  document.getElementById("behaviorTitle").textContent = t.behaviorTitle;
+  document.getElementById("footer").innerHTML = t.footer;
+  document.getElementById("methodologyTitle").textContent = t.methodologyTitle;
+  document.getElementById("methodologyContent").innerHTML = t.methodologyContent;
+
+  // обновляем тексты на слайдерах
+  for (let i = 0; i < N; i++) {
+    const sn = document.getElementById("sname-" + i);
+    if (sn) sn.textContent = LEVELS[i].name[lang];
+    const sh = document.getElementById("shint-" + i);
+    if (sh) sh.textContent = LEVELS[i].hint[lang];
+    const el = document.getElementById("elow-" + i);
+    if (el) el.textContent = LEVELS[i].edges[lang].low;
+    const eh = document.getElementById("ehigh-" + i);
+    if (eh) eh.textContent = LEVELS[i].edges[lang].high;
+    const lb = document.getElementById("label-" + i);
+    if (lb) lb.textContent = LEVELS[i].name[lang];
+  }
+  // пересобираем пресеты
+  buildPresets();
+  // и блоки текстов
+  updateOutputs();
+
+  // активная кнопка языка
+  document.querySelectorAll(".lang-btn").forEach(b => {
+    b.classList.toggle("active", b.dataset.lang === lang);
+  });
+
+  try { localStorage.setItem("lang", lang); } catch(e) {}
+}
+
+document.querySelectorAll(".lang-btn").forEach(b => {
+  b.addEventListener("click", () => {
+    lang = b.dataset.lang;
+    applyLang();
+  });
+});
+
+// init
+buildPyramid();
+buildSliders();
+buildPresets();
+applyLang();
+updatePyramid();
+</script>
+</body>
+</html>
