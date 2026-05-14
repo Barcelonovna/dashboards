@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Связи продлевают жизнь · ИИ-дашборды Барселоновны</title>
+<style>
+:root {
+  --bg: #fafaf7;
+  --surface: #ffffff;
+  --surface-2: #f1efe8;
+  --text: #1a1a17;
+  --text-2: #6b6a64;
+  --text-3: #9a9994;
+  --border: rgba(0,0,0,0.08);
+  --border-strong: rgba(0,0,0,0.18);
+  --accent: #378ADD;
+  --accent-bg: rgba(55,138,221,0.08);
+  --green-3: #3B6D11;
+  --bar-bg: #f1efe8;
+  --bar-highlight-1: #791F1F;
+  --bar-highlight-2: #A32D2D;
+  --bar-neutral: #9a9994;
+  --ring-fill-1: rgba(55,138,221,0.18);
+  --ring-fill-2: rgba(55,138,221,0.1);
+  --ring-fill-3: rgba(55,138,221,0.06);
+  --ring-stroke-1: rgba(55,138,221,0.75);
+  --ring-stroke-2: rgba(55,138,221,0.55);
+  --ring-stroke-3: rgba(55,138,221,0.4);
+  --radius-md: 8px;
+  --radius-lg: 12px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1a1a17;
+    --surface: #25241f;
+    --surface-2: #2f2e29;
+    --text: #ededeb;
+    --text-2: #a8a79f;
+    --text-3: #6f6e68;
+    --border: rgba(255,255,255,0.08);
+    --border-strong: rgba(255,255,255,0.18);
+    --accent: #5DA3E8;
+    --accent-bg: rgba(93,163,232,0.12);
+    --green-3: #97C459;
+    --bar-bg: #2f2e29;
+    --bar-highlight-1: #E24B4A;
+    --bar-highlight-2: #F09595;
+    --bar-neutral: #888780;
+    --ring-fill-1: rgba(93,163,232,0.2);
+    --ring-fill-2: rgba(93,163,232,0.12);
+    --ring-fill-3: rgba(93,163,232,0.06);
+    --ring-stroke-1: rgba(93,163,232,0.85);
+    --ring-stroke-2: rgba(93,163,232,0.55);
+    --ring-stroke-3: rgba(93,163,232,0.35);
+  }
+}
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  font-variant-numeric: tabular-nums;
+}
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 32px 20px 64px;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+.brand {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-decoration: none;
+  margin-bottom: 12px;
+  transition: opacity 0.15s ease;
+}
+.brand:hover { opacity: 0.7; }
+h1 {
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin: 0 0 8px;
+  color: var(--text);
+}
+.subtitle {
+  font-size: 15px;
+  color: var(--text-2);
+  line-height: 1.55;
+  margin: 0;
+  max-width: 640px;
+}
+.inspired {
+  font-size: 13px;
+  color: var(--text-3);
+  line-height: 1.5;
+  margin: 10px 0 0;
+  max-width: 640px;
+}
+.inspired a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent-bg);
+  transition: border-color 0.15s;
+}
+.inspired a:hover {
+  border-bottom-color: var(--accent);
+}
+.lang-switch {
+  display: flex;
+  background: var(--surface-2);
+  border-radius: var(--radius-md);
+  padding: 3px;
+  flex-shrink: 0;
+}
+.lang-btn {
+  background: transparent;
+  border: none;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-family: inherit;
+  font-weight: 500;
+  color: var(--text-2);
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+}
+.lang-btn.active {
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+}
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 32px;
+}
+.stat {
+  background: var(--surface-2);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+}
+.stat-label {
+  font-size: 12px;
+  color: var(--text-2);
+  margin-bottom: 4px;
+}
+.stat-value {
+  font-size: 28px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+}
+.stat-hint {
+  font-size: 11px;
+  color: var(--text-3);
+  margin-top: 2px;
+}
+.section-title {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0 0 4px;
+  color: var(--text);
+}
+.section-sub {
+  font-size: 13px;
+  color: var(--text-2);
+  margin: 0 0 16px;
+}
+#bars {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin-bottom: 14px;
+}
+.bar-row {
+  display: grid;
+  grid-template-columns: 220px 1fr 56px;
+  gap: 12px;
+  align-items: center;
+}
+.bar-label {
+  font-size: 13px;
+  color: var(--text-2);
+}
+.bar-row.highlight .bar-label,
+.bar-row.highlight .bar-value {
+  color: var(--text);
+  font-weight: 500;
+}
+.bar-track {
+  height: 22px;
+  background: var(--bar-bg);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+.bar-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 4px;
+  transition: width 0.8s ease-out;
+}
+.bar-value {
+  font-size: 13px;
+  color: var(--text-2);
+  text-align: right;
+}
+.info-box {
+  background: var(--accent-bg);
+  border-left: 3px solid var(--accent);
+  padding: 12px 14px;
+  border-radius: 0 4px 4px 0;
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.6;
+  margin-bottom: 36px;
+}
+.info-box strong { color: var(--text); font-weight: 500; }
+.calc-section {
+  margin-bottom: 28px;
+}
+.calc-wrap {
+  background: var(--surface-2);
+  border-radius: var(--radius-lg);
+  padding: 22px 24px;
+}
+.calc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+.slider-row { font-size: 13px; }
+.slider-row + .slider-row { margin-top: 20px; }
+.slider-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 2px;
+}
+.slider-name { color: var(--text); font-weight: 500; font-size: 14px; }
+.slider-value {
+  color: var(--text);
+  font-weight: 500;
+  font-size: 20px;
+  font-variant-numeric: tabular-nums;
+}
+.slider-hint {
+  font-size: 12px;
+  color: var(--text-3);
+  margin-bottom: 10px;
+}
+.slider-norm {
+  font-size: 11px;
+  color: var(--text-3);
+  margin-top: 6px;
+}
+input[type=range] {
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  background: #d3d1c7;
+  border-radius: 2px;
+  outline: none;
+  margin: 0;
+}
+@media (prefers-color-scheme: dark) {
+  input[type=range] { background: #444441; }
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
+  border: none;
+}
+input[type=range]::-moz-range-thumb {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
+  border: none;
+}
+.rings-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#rings {
+  width: 100%;
+  max-width: 280px;
+  height: auto;
+}
+.rings-caption {
+  font-size: 11px;
+  color: var(--text-3);
+  text-align: center;
+  margin-top: 6px;
+}
+.results {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 24px;
+  padding-top: 22px;
+  border-top: 1px solid var(--border);
+}
+.result-card {
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+}
+.result-label {
+  font-size: 12px;
+  color: var(--text-2);
+  margin-bottom: 6px;
+}
+.result-value {
+  font-size: 26px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+}
+.result-value.green { color: var(--green-3); }
+.result-hint {
+  font-size: 11px;
+  color: var(--text-3);
+  margin-top: 4px;
+  line-height: 1.4;
+}
+.diagnosis {
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.6;
+  margin-top: 18px;
+  padding: 12px 14px;
+  background: var(--surface);
+  border-radius: var(--radius-md);
+}
+.quote-section {
+  background: var(--surface-2);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+  margin-bottom: 28px;
+}
+.quote-text {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.65;
+  font-style: italic;
+  margin: 0;
+}
+.quote-author {
+  font-size: 12px;
+  color: var(--text-3);
+  margin-top: 10px;
+}
+.footer {
+  font-size: 12px;
+  color: var(--text-3);
+  margin-top: 32px;
+  line-height: 1.6;
+}
+.footer a {
+  color: var(--text-3);
+  text-decoration: underline;
+  text-decoration-color: var(--border-strong);
+  text-underline-offset: 2px;
+}
+.footer a:hover { color: var(--text-2); }
+
+.embed-mode .lang-switch,
+.embed-mode .calc-section,
+.embed-mode .quote-section,
+.embed-mode .footer { display: none !important; }
+.embed-mode .container { padding: 24px; }
+.embed-mode .header { margin-bottom: 16px; }
+.embed-mode #bars { margin-bottom: 0; }
+.embed-mode .info-box { margin-bottom: 0; }
+
+@media (max-width: 700px) {
+  .container { padding: 20px 14px 40px; }
+  h1 { font-size: 22px; }
+  .header { flex-direction: column; gap: 14px; }
+  .lang-switch { align-self: flex-start; }
+  .stats { grid-template-columns: 1fr 1fr; }
+  .stats .stat:nth-child(3) { grid-column: span 2; }
+  .bar-row { grid-template-columns: 140px 1fr 48px; gap: 8px; }
+  .bar-label { font-size: 12px; }
+  .calc-grid { grid-template-columns: 1fr; gap: 24px; }
+  .results { grid-template-columns: 1fr; }
+  .calc-wrap { padding: 18px 16px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <div class="header-text">
+    <a href="../" class="brand" target="_top" data-i18n="brand">ИИ-дашборды Барселоновны</a>
+    <h1 data-i18n="title">Связи продлевают жизнь</h1>
+    <p class="subtitle" data-i18n="subtitle">85 лет наблюдений и мета-анализ 3,4 миллиона человек говорят одно: качество отношений с близкими и знакомыми — один из сильнейших известных факторов здоровья и продолжительности жизни. Сильнее холестерина, сопоставимо с курением.</p>
+    <p class="inspired" data-i18n="inspired">Вдохновлено телеграм-каналом <a href="https://t.me/mig41" target="_blank" rel="noopener">МИГ России</a>, продвигающим идею укрепления горизонтальных связей.</p>
+  </div>
+  <div class="lang-switch" role="group">
+    <button class="lang-btn active" data-lang="ru">RU</button>
+    <button class="lang-btn" data-lang="en">EN</button>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stat">
+    <div class="stat-label" data-i18n="stat1Label">Гарвардское исследование</div>
+    <div class="stat-value" data-i18n="stat1Value">85 лет</div>
+    <div class="stat-hint" data-i18n="stat1Hint">с 1938 года, 1300 участников</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label" data-i18n="stat2Label">Мета-анализ Holt-Lunstad</div>
+    <div class="stat-value" data-i18n="stat2Value">3,4 млн</div>
+    <div class="stat-hint" data-i18n="stat2Hint">участников по всему миру</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label" data-i18n="stat3Label">Сильные связи</div>
+    <div class="stat-value green" data-i18n="stat3Value" style="color: var(--green-3);">−50%</div>
+    <div class="stat-hint" data-i18n="stat3Hint">риска ранней смерти</div>
+  </div>
+</div>
+
+<h2 class="section-title" data-i18n="chartTitle">Социальная изоляция убивает наравне с курением</h2>
+<p class="section-sub" data-i18n="chartSub">Повышение риска ранней смерти, % (мета-анализ Holt-Lunstad 2015 и сопутствующие данные)</p>
+
+<div id="bars"></div>
+
+<div class="info-box">
+  <strong data-i18n="infoTitle">В чём разница.</strong>
+  <span data-i18n="infoBody"> <strong>Социальная изоляция</strong> — объективно мало контактов и социальных ролей. <strong>Одиночество</strong> — субъективное чувство, можно ощущать в толпе и в браке. <strong>Жизнь в одиночку</strong> — отдельное домохозяйство. Это три разные метрики, и каждая отдельно повышает риск.</span>
+</div>
+
+<div class="calc-section">
+  <h2 class="section-title" data-i18n="calcTitle">Калькулятор твоего круга</h2>
+  <p class="section-sub" data-i18n="calcSub">Подвигайте ползунки. Цифры считаются по реальным исследованиям: иерархия Данбара, мета-анализ Holt-Lunstad, теория слабых связей Грановеттера.</p>
+
+  <div class="calc-wrap">
+    <div class="calc-grid">
+
+      <div>
+        <div class="slider-row">
+          <div class="slider-head">
+            <span class="slider-name" data-i18n="slCloseName">Близкие</span>
+            <span class="slider-value" id="val-close">3</span>
+          </div>
+          <div class="slider-hint" data-i18n="slCloseHint">Те, кому можно позвонить в 3 ночи</div>
+          <input type="range" min="0" max="10" value="3" id="sl-close">
+          <div class="slider-norm" data-i18n="slCloseNorm">Норма Данбара: ~5</div>
+        </div>
+        <div class="slider-row">
+          <div class="slider-head">
+            <span class="slider-name" data-i18n="slMidName">Средний круг</span>
+            <span class="slider-value" id="val-mid">10</span>
+          </div>
+          <div class="slider-hint" data-i18n="slMidHint">Друзья, видитесь раз в месяц или чаще</div>
+          <input type="range" min="0" max="30" value="10" id="sl-mid">
+          <div class="slider-norm" data-i18n="slMidNorm">Норма Данбара: ~15</div>
+        </div>
+        <div class="slider-row">
+          <div class="slider-head">
+            <span class="slider-name" data-i18n="slAcqName">Знакомые</span>
+            <span class="slider-value" id="val-acq">40</span>
+          </div>
+          <div class="slider-hint" data-i18n="slAcqHint">Помните имя, иногда переписываетесь</div>
+          <input type="range" min="0" max="150" value="40" id="sl-acq">
+          <div class="slider-norm" data-i18n="slAcqNorm">Норма Данбара: ~50–150</div>
+        </div>
+      </div>
+
+      <div class="rings-wrap">
+        <svg id="rings" viewBox="0 0 260 260" preserveAspectRatio="xMidYMid meet" aria-hidden="true"></svg>
+        <div class="rings-caption" data-i18n="ringsCaption">Твои слои: чем больше круг, тем шире слой знакомств</div>
+      </div>
+    </div>
+
+    <div class="results">
+      <div class="result-card">
+        <div class="result-label" data-i18n="resSecondLabel">Второй круг (друзья друзей)</div>
+        <div class="result-value" id="out-second">1 140</div>
+        <div class="result-hint" data-i18n="resSecondHint">людей, до которых можно дотянуться</div>
+      </div>
+      <div class="result-card">
+        <div class="result-label" data-i18n="resMortalityLabel">Снижение риска ранней смерти</div>
+        <div class="result-value green" id="out-mortality" style="color: var(--green-3);">−34%</div>
+        <div class="result-hint" data-i18n="resMortalityHint">по сравнению с изолированным</div>
+      </div>
+      <div class="result-card">
+        <div class="result-label" data-i18n="resJobsLabel">Доступ к работе и помощи</div>
+        <div class="result-value" id="out-jobs">высокий</div>
+        <div class="result-hint" data-i18n="resJobsHint">55% людей находят работу через слабые связи</div>
+      </div>
+    </div>
+
+    <div class="diagnosis" id="diagnosis">Ваш круг близок к норме Данбара. По данным мета-анализа, такой объём связей даёт значительную защиту в кризис.</div>
+  </div>
+</div>
+
+<div class="quote-section">
+  <p class="quote-text" data-i18n="quoteText">«Когда мы собрали всё, что знали о людях в 50 лет, не уровень холестерина предсказывал, какими они станут в 80. А то, насколько они были удовлетворены своими отношениями».</p>
+  <div class="quote-author" data-i18n="quoteAuthor">Роберт Уолдингер, директор Гарвардского исследования</div>
+</div>
+
+<div class="footer">
+  <span data-i18n="sources">Источники:</span>
+  <a href="https://news.harvard.edu/gazette/story/2017/04/over-nearly-80-years-harvard-study-has-been-showing-how-to-live-a-healthy-and-happy-life/" target="_blank" rel="noopener">Harvard Study of Adult Development</a> ·
+  <a href="https://journals.plos.org/plosmedicine/article?id=10.1371/journal.pmed.1000316" target="_blank" rel="noopener">Holt-Lunstad et al., 2010</a> ·
+  <a href="https://journals.sagepub.com/doi/10.1177/1745691614568352" target="_blank" rel="noopener">Holt-Lunstad et al., 2015</a> ·
+  <a href="https://www.hhs.gov/surgeongeneral/priorities/connection/index.html" target="_blank" rel="noopener">U.S. Surgeon General Advisory, 2023</a> ·
+  <span data-i18n="dunbar">Иерархия Данбара</span> ·
+  <span data-i18n="granovetter">Granovetter, 1973</span>
+  <br>
+  <span data-i18n="updatedLabel">Обновлено:</span> 2026-05
+</div>
+
+</div>
+
+<script>
+const I18N = {
+  ru: {
+    htmlLang: "ru",
+    docTitle: "Связи продлевают жизнь · ИИ-дашборды Барселоновны",
+    brand: "ИИ-дашборды Барселоновны",
+    title: "Связи продлевают жизнь",
+    subtitle: "85 лет наблюдений и мета-анализ 3,4 миллиона человек говорят одно: качество отношений с близкими и знакомыми — один из сильнейших известных факторов здоровья и продолжительности жизни. Сильнее холестерина, сопоставимо с курением.",
+    inspired: 'Вдохновлено телеграм-каналом <a href="https://t.me/mig41" target="_blank" rel="noopener">МИГ России</a>, продвигающим идею укрепления горизонтальных связей.',
+    stat1Label: "Гарвардское исследование",
+    stat1Value: "85 лет",
+    stat1Hint: "с 1938 года, 1300 участников",
+    stat2Label: "Мета-анализ Holt-Lunstad",
+    stat2Value: "3,4 млн",
+    stat2Hint: "участников по всему миру",
+    stat3Label: "Сильные связи",
+    stat3Value: "−50%",
+    stat3Hint: "риска ранней смерти",
+    chartTitle: "Социальная изоляция убивает наравне с курением",
+    chartSub: "Повышение риска ранней смерти, % (мета-анализ Holt-Lunstad 2015 и сопутствующие данные)",
+    bar1: "Жизнь в одиночку",
+    bar2: "Курение ~15 сигарет в день",
+    bar3: "Социальная изоляция",
+    bar4: "Одиночество",
+    bar5: "Ожирение",
+    bar6: "Гиподинамия",
+    bar7: "Загрязнение воздуха",
+    infoTitle: "В чём разница.",
+    infoBody: " <strong>Социальная изоляция</strong> — объективно мало контактов и социальных ролей. <strong>Одиночество</strong> — субъективное чувство, можно ощущать в толпе и в браке. <strong>Жизнь в одиночку</strong> — отдельное домохозяйство. Это три разные метрики, и каждая отдельно повышает риск.",
+    calcTitle: "Калькулятор твоего круга",
+    calcSub: "Подвигайте ползунки. Цифры считаются по реальным исследованиям: иерархия Данбара, мета-анализ Holt-Lunstad, теория слабых связей Грановеттера.",
+    slCloseName: "Близкие",
+    slCloseHint: "Те, кому можно позвонить в 3 ночи",
+    slCloseNorm: "Норма Данбара: ~5",
+    slMidName: "Средний круг",
+    slMidHint: "Друзья, видитесь раз в месяц или чаще",
+    slMidNorm: "Норма Данбара: ~15",
+    slAcqName: "Знакомые",
+    slAcqHint: "Помните имя, иногда переписываетесь",
+    slAcqNorm: "Норма Данбара: ~50–150",
+    ringLabelClose: "близкие",
+    ringLabelMid: "средние",
+    ringLabelAcq: "знакомые",
+    ringsCaption: "Твои слои: чем больше круг, тем шире слой знакомств",
+    resSecondLabel: "Второй круг (друзья друзей)",
+    resSecondHint: "людей, до которых можно дотянуться",
+    resMortalityLabel: "Снижение риска ранней смерти",
+    resMortalityHint: "по сравнению с изолированным",
+    resJobsLabel: "Доступ к работе и помощи",
+    resJobsHint: "55% людей находят работу через слабые связи",
+    jobsLow: "низкий",
+    jobsMid: "средний",
+    jobsHigh: "высокий",
+    jobsVeryHigh: "очень высокий",
+    diag1: "Круг слишком узкий. Риск тяжёлого стресса в кризис высокий, и связи приходится восстанавливать с нуля. Локально это нормально, если временно — после переезда, утраты, выгорания. Если давно — стоит обратить внимание.",
+    diag2: "Круг ниже нормы. Сильных связей достаточно, но слабых мало — а именно через них чаще всего приходят работа, идеи и неожиданная помощь. Стоит инвестировать в расширение круга знакомых.",
+    diag3: "Круг близок к норме Данбара. По данным мета-анализа, такой объём связей даёт значительную защиту в кризис.",
+    diag4: "Круг выше нормы Данбара. Высокая устойчивость к кризисам, широкий доступ к информации и помощи. Главное теперь — поддерживать качество отношений, а не только количество.",
+    quoteText: "«Когда мы собрали всё, что знали о людях в 50 лет, не уровень холестерина предсказывал, какими они станут в 80. А то, насколько они были удовлетворены своими отношениями».",
+    quoteAuthor: "Роберт Уолдингер, директор Гарвардского исследования",
+    sources: "Источники:",
+    dunbar: "Иерархия Данбара",
+    granovetter: "Granovetter, 1973",
+    updatedLabel: "Обновлено:"
+  },
+  en: {
+    htmlLang: "en",
+    docTitle: "Connections extend life · Barcelonovna AI Dashboards",
+    brand: "Barcelonovna AI Dashboards",
+    title: "Connections extend life",
+    subtitle: "85 years of observation and a meta-analysis of 3.4 million people point to one thing: the quality of your relationships with close people and acquaintances is one of the strongest known predictors of health and longevity. Stronger than cholesterol. Comparable to smoking.",
+    inspired: 'Inspired by the Telegram channel <a href="https://t.me/mig41" target="_blank" rel="noopener">MIG Russia</a>, advocating stronger horizontal social ties.',
+    stat1Label: "Harvard Study of Adult Development",
+    stat1Value: "85 years",
+    stat1Hint: "since 1938, 1,300 participants",
+    stat2Label: "Holt-Lunstad meta-analysis",
+    stat2Value: "3.4M",
+    stat2Hint: "participants worldwide",
+    stat3Label: "Strong connections",
+    stat3Value: "−50%",
+    stat3Hint: "risk of early death",
+    chartTitle: "Social isolation kills on par with smoking",
+    chartSub: "Increase in early mortality risk, % (Holt-Lunstad 2015 meta-analysis and related data)",
+    bar1: "Living alone",
+    bar2: "Smoking ~15 cigarettes/day",
+    bar3: "Social isolation",
+    bar4: "Loneliness",
+    bar5: "Obesity",
+    bar6: "Physical inactivity",
+    bar7: "Air pollution",
+    infoTitle: "What's the difference.",
+    infoBody: " <strong>Social isolation</strong> means objectively few contacts and social roles. <strong>Loneliness</strong> is a subjective feeling — you can feel it in a crowd or inside a marriage. <strong>Living alone</strong> is a separate household. These are three distinct metrics, and each independently raises mortality risk.",
+    calcTitle: "Your network calculator",
+    calcSub: "Move the sliders. Numbers are computed from real research: Dunbar's hierarchy, the Holt-Lunstad meta-analysis, and Granovetter's weak ties theory.",
+    slCloseName: "Close ones",
+    slCloseHint: "People you'd call at 3 a.m.",
+    slCloseNorm: "Dunbar norm: ~5",
+    slMidName: "Middle circle",
+    slMidHint: "Friends you see monthly or more often",
+    slMidNorm: "Dunbar norm: ~15",
+    slAcqName: "Acquaintances",
+    slAcqHint: "You remember names, occasionally chat",
+    slAcqNorm: "Dunbar norm: ~50–150",
+    ringLabelClose: "close",
+    ringLabelMid: "middle",
+    ringLabelAcq: "acquaint.",
+    ringsCaption: "Your layers: larger circle means wider ring of contacts",
+    resSecondLabel: "Second circle (friends of friends)",
+    resSecondHint: "people within reach through your network",
+    resMortalityLabel: "Reduction in early mortality risk",
+    resMortalityHint: "compared to an isolated person",
+    resJobsLabel: "Access to jobs and help",
+    resJobsHint: "55% of people find work through weak ties",
+    jobsLow: "low",
+    jobsMid: "moderate",
+    jobsHigh: "high",
+    jobsVeryHigh: "very high",
+    diag1: "Your network is too narrow. The risk of severe stress in a crisis is high, and connections would need to be rebuilt from scratch. This is normal temporarily — after relocation, loss, burnout. If it's been long-term, it's worth attention.",
+    diag2: "Your network is below average. You have enough strong ties, but few weak ones — and weak ties are how most jobs, ideas, and unexpected help arrive. Worth investing in expanding the circle of acquaintances.",
+    diag3: "Your network is close to the Dunbar norm. According to meta-analytic data, this level of connection provides substantial protection in crisis.",
+    diag4: "Your network is above the Dunbar norm. High resilience to crises, broad access to information and help. The key now is maintaining the quality of relationships, not just the count.",
+    quoteText: "\"When we gathered together everything we knew about people at age 50, it wasn't their middle-age cholesterol levels that predicted how they were going to grow old. It was how satisfied they were in their relationships.\"",
+    quoteAuthor: "Robert Waldinger, director of the Harvard Study of Adult Development",
+    sources: "Sources:",
+    dunbar: "Dunbar's hierarchy",
+    granovetter: "Granovetter, 1973",
+    updatedLabel: "Updated:"
+  }
+};
+
+let lang = "ru";
+try {
+  const params = new URLSearchParams(window.location.search);
+  const urlLang = params.get("lang");
+  const stored = localStorage.getItem("lang");
+  if (urlLang === "ru" || urlLang === "en") lang = urlLang;
+  else if (stored === "ru" || stored === "en") lang = stored;
+} catch(e) {}
+
+try {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("embed") === "1") {
+    document.documentElement.classList.add("embed-mode");
+  }
+} catch(e) {}
+
+const factors = [
+  { key: "bar1", value: 32, color: "var(--bar-highlight-1)", highlight: true },
+  { key: "bar2", value: 30, color: "var(--bar-neutral)", highlight: false },
+  { key: "bar3", value: 29, color: "var(--bar-highlight-1)", highlight: true },
+  { key: "bar4", value: 26, color: "var(--bar-highlight-2)", highlight: true },
+  { key: "bar5", value: 18, color: "var(--bar-neutral)", highlight: false },
+  { key: "bar6", value: 14, color: "var(--bar-neutral)", highlight: false },
+  { key: "bar7", value: 5, color: "var(--bar-neutral)", highlight: false }
+];
+const MAX_BAR = 34;
+
+function renderBars() {
+  const container = document.getElementById("bars");
+  container.innerHTML = "";
+  const t = I18N[lang];
+  factors.forEach(f => {
+    const row = document.createElement("div");
+    row.className = "bar-row" + (f.highlight ? " highlight" : "");
+    const label = document.createElement("div");
+    label.className = "bar-label";
+    label.textContent = t[f.key];
+    const track = document.createElement("div");
+    track.className = "bar-track";
+    const fill = document.createElement("div");
+    fill.className = "bar-fill";
+    fill.style.background = f.color;
+    track.appendChild(fill);
+    const val = document.createElement("div");
+    val.className = "bar-value";
+    val.textContent = "+" + f.value + "%";
+    row.appendChild(label);
+    row.appendChild(track);
+    row.appendChild(val);
+    container.appendChild(row);
+    requestAnimationFrame(() => {
+      fill.style.width = (f.value / MAX_BAR * 100) + "%";
+    });
+  });
+}
+
+function formatNum(n) {
+  const rounded = Math.round(n);
+  if (lang === "ru") return rounded.toLocaleString("ru-RU").replace(/\u00a0/g, " ").replace(/,/g, " ");
+  return rounded.toLocaleString("en-US");
+}
+
+function drawRings(close, mid, acq) {
+  const svg = document.getElementById("rings");
+  const t = I18N[lang];
+  const cx = 130, cy = 130;
+  const closeR = 18 + (close / 10) * 22;
+  const midR = closeR + 8 + (mid / 30) * 30;
+  const acqR = midR + 8 + (acq / 150) * 50;
+
+  svg.innerHTML = "";
+  const NS = "http://www.w3.org/2000/svg";
+
+  function circle(r, fillVar, strokeVar) {
+    const c = document.createElementNS(NS, "circle");
+    c.setAttribute("cx", cx);
+    c.setAttribute("cy", cy);
+    c.setAttribute("r", r);
+    c.setAttribute("fill", "var(--" + fillVar + ")");
+    c.setAttribute("stroke", "var(--" + strokeVar + ")");
+    c.setAttribute("stroke-width", "1");
+    svg.appendChild(c);
+  }
+  circle(acqR, "ring-fill-3", "ring-stroke-3");
+  circle(midR, "ring-fill-2", "ring-stroke-2");
+  circle(closeR, "ring-fill-1", "ring-stroke-1");
+
+  const dot = document.createElementNS(NS, "circle");
+  dot.setAttribute("cx", cx);
+  dot.setAttribute("cy", cy);
+  dot.setAttribute("r", 4);
+  dot.setAttribute("fill", "var(--text)");
+  svg.appendChild(dot);
+
+  function label(angleDeg, r, count, name) {
+    const rad = angleDeg * Math.PI / 180;
+    const lx = cx + Math.cos(rad) * r;
+    const ly = cy + Math.sin(rad) * r;
+    const tx = cx + Math.cos(rad) * (r + 14);
+    const ty = cy + Math.sin(rad) * (r + 14);
+
+    const line = document.createElementNS(NS, "line");
+    line.setAttribute("x1", lx);
+    line.setAttribute("y1", ly);
+    line.setAttribute("x2", tx);
+    line.setAttribute("y2", ty);
+    line.setAttribute("stroke", "var(--text-3)");
+    line.setAttribute("stroke-width", "0.5");
+    svg.appendChild(line);
+
+    const text = document.createElementNS(NS, "text");
+    const cosA = Math.cos(rad);
+    const anchor = cosA > 0.2 ? "start" : (cosA < -0.2 ? "end" : "middle");
+    const offset = anchor === "start" ? 3 : (anchor === "end" ? -3 : 0);
+    text.setAttribute("x", tx + offset);
+    text.setAttribute("y", ty + 4);
+    text.setAttribute("text-anchor", anchor);
+    text.setAttribute("font-size", "11");
+    text.setAttribute("fill", "var(--text-2)");
+    text.setAttribute("font-family", "inherit");
+    text.textContent = name + " · " + count;
+    svg.appendChild(text);
+  }
+  label(-90, closeR, close, t.ringLabelClose);
+  label(0, midR, mid, t.ringLabelMid);
+  label(135, acqR, acq, t.ringLabelAcq);
+}
+
+function update() {
+  const close = +document.getElementById("sl-close").value;
+  const mid = +document.getElementById("sl-mid").value;
+  const acq = +document.getElementById("sl-acq").value;
+  const t = I18N[lang];
+
+  document.getElementById("val-close").textContent = close;
+  document.getElementById("val-mid").textContent = mid;
+  document.getElementById("val-acq").textContent = acq;
+
+  const secondCircle = close * 30 + mid * 25 + acq * 20;
+  document.getElementById("out-second").textContent = formatNum(secondCircle);
+
+  const score = Math.min(close, 5) * 3 + Math.min(mid, 15) * 1.5 + Math.min(acq, 50) * 0.3;
+  const maxScore = 5 * 3 + 15 * 1.5 + 50 * 0.3;
+  const reduction = (score / maxScore) * 50;
+  document.getElementById("out-mortality").textContent = "−" + Math.round(reduction) + "%";
+
+  const weakTies = mid + acq;
+  let jobsKey;
+  if (weakTies < 10) jobsKey = "jobsLow";
+  else if (weakTies < 30) jobsKey = "jobsMid";
+  else if (weakTies < 70) jobsKey = "jobsHigh";
+  else jobsKey = "jobsVeryHigh";
+  document.getElementById("out-jobs").textContent = t[jobsKey];
+
+  let diagKey;
+  if (score < 10) diagKey = "diag1";
+  else if (score < 25) diagKey = "diag2";
+  else if (score < 45) diagKey = "diag3";
+  else diagKey = "diag4";
+  document.getElementById("diagnosis").textContent = t[diagKey];
+
+  drawRings(close, mid, acq);
+}
+
+function applyLang() {
+  const t = I18N[lang];
+  document.documentElement.lang = t.htmlLang;
+  document.title = t.docTitle;
+
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.getAttribute("data-i18n");
+    if (t[key] !== undefined) {
+      if (key === "infoBody" || key === "inspired") {
+        el.innerHTML = t[key];
+      } else {
+        el.textContent = t[key];
+      }
+    }
+  });
+
+  document.querySelectorAll(".lang-btn").forEach(btn => {
+    btn.classList.toggle("active", btn.getAttribute("data-lang") === lang);
+  });
+
+  try {
+    const url = new URL(window.location.href);
+    url.searchParams.set("lang", lang);
+    window.history.replaceState({}, "", url);
+  } catch(e) {}
+  try { localStorage.setItem("lang", lang); } catch(e) {}
+
+  renderBars();
+  update();
+}
+
+document.querySelectorAll(".lang-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    lang = btn.getAttribute("data-lang");
+    applyLang();
+  });
+});
+
+["sl-close", "sl-mid", "sl-acq"].forEach(id => {
+  document.getElementById(id).addEventListener("input", update);
+});
+
+applyLang();
+</script>
+</body>
+</html>
