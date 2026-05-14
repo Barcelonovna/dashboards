@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Иерархия Маслоу · Интерактивная пирамида</title>
+<title>Пирамида Маслоу. Интерактивный дашборд</title>
 <meta name="description" content="Подвигай ползунки и посмотри, какие мысли и поведение возникают при разной конфигурации потребностей по Маслоу.">
 
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://barcelonovna.github.io/dashboards/maslow-pyramid/">
-<meta property="og:title" content="Иерархия Маслоу. Интерактивная пирамида">
+<meta property="og:title" content="Пирамида Маслоу. Интерактивный дашборд">
 <meta property="og:description" content="Пять уровней потребностей, ползунки и сценарии. Как меняются мысли и поведение при разной конфигурации.">
 <meta property="og:image" content="https://barcelonovna.github.io/dashboards/maslow-pyramid/preview.png">
 <meta property="og:image:width" content="1200">
@@ -17,7 +17,7 @@
 <meta property="og:locale:alternate" content="en_US">
 
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Иерархия Маслоу. Интерактивная пирамида">
+<meta name="twitter:title" content="Пирамида Маслоу. Интерактивный дашборд">
 <meta name="twitter:description" content="Пять уровней потребностей, ползунки и сценарии. Как меняются мысли и поведение.">
 <meta name="twitter:image" content="https://barcelonovna.github.io/dashboards/maslow-pyramid/preview.png">
 
@@ -145,7 +145,7 @@ h1 {
   margin-bottom: 4px;
 }
 .stat-value {
-  font-size: 22px;
+  font-size: 28px;
   font-weight: 500;
   color: var(--text);
   font-variant-numeric: tabular-nums;
@@ -435,16 +435,30 @@ input[type=range]::-moz-range-thumb {
 .embed-mode .container { padding: 24px; }
 .embed-mode .header { margin-bottom: 16px; }
 </style>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=109215938', 'ym');
+
+    ym(109215938, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/109215938" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
 </head>
 <body>
 <div class="container">
   <header class="header">
     <div class="header-text">
       <a href="../" class="brand" id="brand" target="_top">ИИ-дашборды Барселоновны</a>
-      <h1 id="title">Иерархия Маслоу</h1>
+      <h1 id="title">Пирамида Маслоу</h1>
       <p class="subtitle" id="subtitle">Из чего собрано твоё «прямо сейчас». Подвигай ползунки или выбери сценарий.</p>
       <p class="inspired" id="inspired">
-        Основано на иерархии потребностей <a href="https://psychclassics.yorku.ca/Maslow/motivation.htm" target="_blank" rel="noopener">Абрахама Маслоу</a>, 1943. Это интерпретация модели, не диагностика.
+        Основано на пирамиде потребностей <a href="https://psychclassics.yorku.ca/Maslow/motivation.htm" target="_blank" rel="noopener">Абрахама Маслоу</a>, 1943. Это интерпретация модели, не диагностика.
       </p>
     </div>
     <div class="lang-switch">
@@ -514,9 +528,9 @@ const I18N = {
   ru: {
     htmlLang: "ru",
     brand: "ИИ-дашборды Барселоновны",
-    title: "Иерархия Маслоу",
+    title: "Пирамида Маслоу",
     subtitle: "Из чего собрано твоё «прямо сейчас». Подвигай ползунки или выбери сценарий.",
-    inspired: 'Основано на иерархии потребностей <a href="https://psychclassics.yorku.ca/Maslow/motivation.htm" target="_blank" rel="noopener">Абрахама Маслоу</a>, 1943. Это интерпретация модели, не диагностика.',
+    inspired: 'Основано на пирамиде потребностей <a href="https://psychclassics.yorku.ca/Maslow/motivation.htm" target="_blank" rel="noopener">Абрахама Маслоу</a>, 1943. Это интерпретация модели, не диагностика.',
     presetLabel: "Сценарии",
     statHarmonyLabel: "Гармония",
     statDomLabel: "Куда уходит фокус",
@@ -528,16 +542,16 @@ const I18N = {
     harmonyTags: ["Большой дефицит", "Заметный перекос", "В целом сносно", "Гармонично"],
     domFlowLabel: "Энергия роста",
     footer: 'Источник: A. H. Maslow, <a href="https://psychclassics.yorku.ca/Maslow/motivation.htm" target="_blank" rel="noopener">A Theory of Human Motivation</a>, Psychological Review, 1943. Тексты мыслей и поведения это авторская интерпретация для иллюстрации, конкретные проявления зависят от личной истории, контекста и культуры.',
-    titleHtml: "Иерархия Маслоу · Интерактивная пирамида",
+    titleHtml: "Пирамида Маслоу. Интерактивный дашборд",
     methodologyTitle: "Как считаются метрики",
     methodologyContent: '<p><strong>Доминирующая потребность.</strong> Если у любого уровня заполненность ниже 60%, доминирующая выбирается по формуле <code>значение + позиция уровня × 5</code> (физиология = 0, самоактуализация = 4) — берётся уровень с минимальным результатом. Это значит, что при близких значениях приоритет у нижних уровней (по Маслоу нижние тянут внимание сильнее). Если все уровни заполнены на 60% и выше, доминирующая = самый наполненный уровень, твоя точка опоры.</p><p><strong>Гармония</strong> = равномерность распределения × средняя наполненность ÷ 100. Поэтому при низких ровных значениях (например, депрессия) гармония низкая: формально ровно, фактически дефицит. Высокая гармония требует одновременно и ровного распределения, и достаточной общей наполненности.</p>'
   },
   en: {
     htmlLang: "en",
     brand: "Barcelonovna AI Dashboards",
-    title: "Maslow's Hierarchy",
+    title: "Maslow's Pyramid",
     subtitle: "What your 'right now' is made of. Move the sliders or pick a scenario.",
-    inspired: 'Based on the hierarchy of needs by <a href="https://psychclassics.yorku.ca/Maslow/motivation.htm" target="_blank" rel="noopener">Abraham Maslow</a>, 1943. An interpretation of the model, not a diagnosis.',
+    inspired: 'Based on the pyramid of needs by <a href="https://psychclassics.yorku.ca/Maslow/motivation.htm" target="_blank" rel="noopener">Abraham Maslow</a>, 1943. An interpretation of the model, not a diagnosis.',
     presetLabel: "Scenarios",
     statHarmonyLabel: "Harmony",
     statDomLabel: "Where focus goes",
@@ -549,7 +563,7 @@ const I18N = {
     harmonyTags: ["Major shortfall", "Visible imbalance", "Mostly okay", "In harmony"],
     domFlowLabel: "Growth energy",
     footer: 'Source: A. H. Maslow, <a href="https://psychclassics.yorku.ca/Maslow/motivation.htm" target="_blank" rel="noopener">A Theory of Human Motivation</a>, Psychological Review, 1943. Thought and behavior texts are an authorial interpretation; actual experience depends on personal history, context and culture.',
-    titleHtml: "Maslow's Hierarchy · Interactive Pyramid",
+    titleHtml: "Maslow's Pyramid · Interactive Dashboard",
     methodologyTitle: "How the metrics are calculated",
     methodologyContent: '<p><strong>Dominant need.</strong> If any level is below 60%, the dominant one is picked by the formula <code>value + level position × 5</code> (physiological = 0, self-actualization = 4). The level with the minimum score wins. So when values are close, lower levels get priority — per Maslow, lower needs pull attention harder. If every level is at 60% or above, the dominant one is simply the most filled level, your point of strength.</p><p><strong>Harmony</strong> = evenness of distribution × average fill ÷ 100. So when values are low but even (e.g. depression), harmony stays low: formally balanced, factually deficient. High harmony requires both even distribution and sufficient overall fill.</p>'
   }
@@ -941,7 +955,7 @@ const PRESETS = [
     }
   },
   {
-    name: { ru: "Дональд Трамп", en: "Donald Trump" },
+    name: { ru: "Селебрити в политике", en: "Celebrity in politics" },
     values: [80, 55, 75, 95, 70],
     thought: {
       ru: "Огромный успех. Такого никогда не было. Многие говорят, что я лучший. Фейковые СМИ всё врут. Они меня преследуют, потому что боятся. Я выиграю. Я всегда выигрываю. Поверьте мне.",
