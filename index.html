@@ -205,6 +205,23 @@
 
 const DASHBOARDS = [
   {
+    path: "monty-hall/",
+    date: "2026-05-16",
+    badge: { ru: "Вероятности", en: "Probability" },
+    title: {
+      ru: "Парадокс Монти Холла",
+      en: "Monty Hall Paradox"
+    },
+    desc: {
+      ru: "Три двери, ведущий и счёт 2/3 против 1/3. Поиграй сам, запусти симуляцию на 10 000 игр, посмотри что происходит со 100 дверьми.",
+      en: "Three doors, a host, and 2/3 vs 1/3. Play it yourself, run a 10,000-game simulation, see what happens with 100 doors."
+    },
+    meta: {
+      ru: ["3 режима", "Симуляции", "Теория вероятностей"],
+      en: ["3 modes", "Simulations", "Probability theory"]
+    }
+  },
+  {
     path: "maslow-pyramid/",
     date: "2026-05-15",
     badge: { ru: "Психология", en: "Psychology" },
@@ -266,7 +283,7 @@ const I18N = {
     subtitle: "Коллекция интерактивных дашбордов на открытых данных. Без рекламы, без лишнего, без авторегистрации. Сделано с любовью и ИИ 😊",
     section: "Дашборды",
     open: "Открыть",
-    soon: "Скоро здесь появятся новые дашборды",
+    soon: "Здесь скоро будут новые дашборды",
     lastUpdate: "Подборка обновляется. Last update: ",
     madeWith: 'Изучаю ИИ, делаю <a href="https://t.me/barcelonovna" target="_blank" rel="noopener">песенки</a> и <a href="https://t.me/barcelonovna_podcast" target="_blank" rel="noopener">подкасты</a>',
     pageTitle: "ИИ-дашборды Барселоновны",
@@ -278,7 +295,7 @@ const I18N = {
     subtitle: "A collection of interactive dashboards built on open data. No ads, no fluff, no signup. Made with love and AI 😊",
     section: "Dashboards",
     open: "Open",
-    soon: "New dashboards will appear here soon",
+    soon: "New dashboards coming soon",
     lastUpdate: "Updated: ",
     madeWith: 'I explore AI and make <a href="https://t.me/barcelonovna" target="_blank" rel="noopener">songs</a> and <a href="https://t.me/barcelonovna_podcast" target="_blank" rel="noopener">podcasts</a>',
     pageTitle: "Barcelonovna AI Dashboards",
@@ -350,14 +367,12 @@ function render(){
     grid.appendChild(card);
   });
 
-  // Если дашбордов мало, добавляем "Скоро" плейсхолдер для красоты сетки
-  if(sorted.length < 3){
-    for(let k = sorted.length; k < 3; k++){
-      const empty = document.createElement("div");
-      empty.className = "empty-card";
-      empty.textContent = I18N[lang].soon;
-      grid.appendChild(empty);
-    }
+  // Всегда добавляем 3 пустые карточки-заглушки после реальных
+  for(let k = 0; k < 3; k++){
+    const empty = document.createElement("div");
+    empty.className = "empty-card";
+    empty.textContent = I18N[lang].soon;
+    grid.appendChild(empty);
   }
 
   // Масштабируем iframe-превью под ширину карточки
