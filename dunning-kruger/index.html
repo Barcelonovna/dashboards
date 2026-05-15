@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Эффект Даннинга-Крюгера — ИИ-дашборды Барселоновны</title>
+
+<meta name="description" content="Интерактивная кривая Даннинга-Крюгера: перетащите аватарку и посмотрите, что человек думает на каждой стадии. С критикой Nuhfer 2017.">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://barcelonovna.github.io/dashboards/dunning-kruger/">
+<meta property="og:title" content="Эффект Даннинга-Крюгера">
+<meta property="og:description" content="Перетащите аватарку по кривой и посмотрите, что люди думают на каждой стадии. С критикой Nuhfer 2017.">
+<meta property="og:image" content="https://barcelonovna.github.io/dashboards/dunning-kruger/preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ru_RU">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Эффект Даннинга-Крюгера">
+<meta name="twitter:description" content="Перетащите аватарку по кривой. Узнайте, что думают новички и эксперты.">
+<meta name="twitter:image" content="https://barcelonovna.github.io/dashboards/dunning-kruger/preview.png">
+
+<style>
+:root {
+  --bg: #fafaf7;
+  --surface: #ffffff;
+  --surface-2: #f1efe8;
+  --text: #1a1a17;
+  --text-2: #6b6a64;
+  --text-3: #9a9994;
+  --border: rgba(0,0,0,0.08);
+  --border-strong: rgba(0,0,0,0.18);
+  --accent: #378ADD;
+  --accent-bg: rgba(55,138,221,0.08);
+  --red: #A32D2D;
+  --red-lite: #E24B4A;
+  --pink: #F7C1C1;
+  --green-lite: #C0DD97;
+  --green: #97C459;
+  --green-dark: #3B6D11;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1a1a17;
+    --surface: #25241f;
+    --surface-2: #2f2e29;
+    --text: #ededeb;
+    --text-2: #a8a79f;
+    --text-3: #6f6e68;
+    --border: rgba(255,255,255,0.08);
+    --border-strong: rgba(255,255,255,0.18);
+    --red: #E24B4A;
+    --green: #97C459;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0; padding: 0;
+  font-size: 16px;
+  line-height: 1.55;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 32px 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.brand {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+  display: inline-block;
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+.brand:hover { opacity: 0.7; }
+
+h1 {
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin: 0 0 6px;
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--text-2);
+  margin: 0;
+  line-height: 1.5;
+  max-width: 640px;
+}
+
+.inspired {
+  font-size: 13px;
+  color: var(--text-3);
+  line-height: 1.5;
+  margin: 10px 0 0;
+  max-width: 640px;
+}
+.inspired a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent-bg);
+  transition: border-color 0.15s;
+}
+.inspired a:hover { border-bottom-color: var(--accent); }
+
+.lang-switch {
+  display: flex;
+  background: var(--surface-2);
+  border-radius: var(--radius-md);
+  padding: 3px;
+  flex-shrink: 0;
+}
+.lang-btn {
+  background: none;
+  border: none;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-2);
+  cursor: pointer;
+  border-radius: 6px;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+.lang-btn.active {
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+}
+
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+.stat {
+  flex: 1;
+  min-width: 150px;
+  background: var(--surface-2);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  transition: background 0.4s;
+}
+.stat.active-stage {
+  background: var(--accent-bg);
+}
+.stat-label {
+  font-size: 12px;
+  color: var(--text-2);
+  margin-bottom: 4px;
+}
+.stat-value {
+  font-size: 28px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+.stat-hint {
+  font-size: 13px;
+  color: var(--text-3);
+  margin-top: 4px;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.toggle-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+.toggle {
+  position: relative;
+  width: 38px; height: 22px;
+  background: var(--surface-2);
+  border-radius: 11px;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+.toggle::after {
+  content: "";
+  position: absolute;
+  width: 18px; height: 18px;
+  background: var(--surface);
+  border-radius: 50%;
+  top: 2px; left: 2px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+  transition: left 0.2s;
+}
+.toggle.on { background: var(--accent); }
+.toggle.on::after { left: 18px; }
+.toggle-label {
+  font-size: 13px;
+  color: var(--text-2);
+  font-weight: 500;
+}
+
+.chart-wrap {
+  background: var(--surface-2);
+  border-radius: var(--radius-lg);
+  padding: 18px 16px 10px;
+  margin-bottom: 18px;
+  position: relative;
+}
+
+.chart-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  touch-action: none;
+}
+
+.stage-name {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0 0 4px;
+  transition: color 0.3s;
+}
+
+.stage-quote {
+  font-size: 15px;
+  color: var(--text-2);
+  font-style: italic;
+  margin: 0;
+  line-height: 1.5;
+  min-height: 1.5em;
+}
+
+.stage-block {
+  background: var(--surface-2);
+  border-radius: var(--radius-lg);
+  padding: 18px 20px;
+  margin-bottom: 18px;
+}
+
+.examples-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-2);
+  margin: 0 0 12px;
+}
+
+.examples-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.ex-card {
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  transition: border-color 0.15s, transform 0.2s;
+}
+.ex-card-head {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ex-icon {
+  width: 16px; height: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+}
+.ex-text {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.45;
+  margin: 0;
+  min-height: 2.9em;
+}
+
+.insight {
+  background: var(--accent-bg);
+  border-radius: var(--radius-lg);
+  padding: 16px 20px;
+  margin-bottom: 22px;
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.55;
+  border-left: 3px solid var(--accent);
+}
+.insight strong { color: var(--accent); }
+
+.explainer {
+  background: var(--surface-2);
+  border-radius: var(--radius-lg);
+  padding: 18px 22px;
+  margin-bottom: 22px;
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.6;
+}
+.explainer h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0 0 8px;
+  color: var(--text);
+}
+.explainer p {
+  margin: 0 0 10px;
+  color: var(--text-2);
+}
+.explainer p:last-child { margin-bottom: 0; }
+.explainer .accent-word {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.critic-block {
+  background: var(--surface-2);
+  border-radius: var(--radius-lg);
+  padding: 18px 22px;
+  margin-bottom: 22px;
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.6;
+  border-left: 3px solid var(--text-3);
+  display: none;
+}
+.critic-block.visible { display: block; }
+.critic-block h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0 0 8px;
+  color: var(--text);
+}
+.critic-block p {
+  margin: 0 0 10px;
+  color: var(--text-2);
+}
+.critic-block p:last-child { margin-bottom: 0; }
+
+.footer {
+  font-size: 12px;
+  color: var(--text-3);
+  margin-top: 24px;
+  line-height: 1.6;
+}
+.footer a {
+  color: var(--text-2);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+}
+.footer a:hover { border-bottom-color: var(--text-2); }
+
+@media (max-width: 600px) {
+  .container { padding: 20px 14px 32px; }
+  h1 { font-size: 22px; }
+  .stat-value { font-size: 22px; }
+  .stage-name { font-size: 18px; }
+  .header { flex-direction: column; gap: 14px; }
+  .lang-switch { align-self: flex-start; }
+  .examples-grid { grid-template-columns: 1fr; }
+  .stat { min-width: 0; flex-basis: calc(50% - 5px); }
+}
+
+.embed-mode .lang-switch,
+.embed-mode .footer,
+.embed-mode .controls,
+.embed-mode .explainer,
+.embed-mode .critic-block { display: none !important; }
+.embed-mode .container { padding: 24px; }
+.embed-mode .header { margin-bottom: 16px; }
+.embed-mode .inspired { display: none; }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <div class="header-text">
+      <a href="../" class="brand" id="brand" target="_top">ИИ-дашборды Барселоновны</a>
+      <h1 id="title">Эффект Даннинга-Крюгера</h1>
+      <p class="subtitle" id="subtitle">Перетащите аватарку или двигайте слайдер. Посмотрите, как меняется уверенность в себе и что человек думает на каждой стадии.</p>
+      <p class="inspired" id="inspired">
+        Кривая основана на классической работе <a href="https://psycnet.apa.org/record/2000-03244-012" target="_blank" rel="noopener">Kruger &amp; Dunning, 1999</a>. Критика популярной интерпретации — <a href="https://digitalcommons.usf.edu/numeracy/vol10/iss1/art4/" target="_blank" rel="noopener">Nuhfer et al., 2017</a>.
+      </p>
+    </div>
+    <div class="lang-switch">
+      <button class="lang-btn active" data-lang="ru">RU</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+  </div>
+
+  <div class="explainer" id="explainer">
+    <h3 id="explainer-title">Что это вообще такое</h3>
+    <p id="explainer-p1">В 1999 году психологи <span class="accent-word">Дэвид Даннинг</span> и <span class="accent-word">Джастин Крюгер</span> из Корнелла провели эксперимент: дали людям тест на логику, грамматику и юмор, а потом спросили, как, по их мнению, они справились по сравнению с остальными.</p>
+    <p id="explainer-p2">Результат оказался неожиданным. Те, кто реально набрал меньше всех, считали, что они в топе. А лучшие, наоборот, недооценивали себя. Авторы объяснили это просто: чтобы понять, что ты чего-то не знаешь, нужны те же самые знания, которых нет. Новичок не видит границ своего незнания.</p>
+    <p id="explainer-p3">Кривая, которую вы видите ниже — это не сами данные из статьи (там были столбики), а популярная иллюстрация эффекта: уверенность взлетает на старте, падает в долину, медленно растёт обратно. Подвигайте аватарку и посмотрите, как меняется внутренний монолог человека на каждой стадии.</p>
+  </div>
+
+  <div class="stats">
+    <div class="stat" id="stat-experience">
+      <div class="stat-label" id="lbl-experience">Опыт</div>
+      <div class="stat-value" id="val-experience">0%</div>
+      <div class="stat-hint" id="hint-experience">от новичка к мастеру</div>
+    </div>
+    <div class="stat" id="stat-confidence">
+      <div class="stat-label" id="lbl-confidence">Уверенность</div>
+      <div class="stat-value" id="val-confidence">10%</div>
+      <div class="stat-hint" id="hint-confidence">как себя оценивает человек</div>
+    </div>
+    <div class="stat" id="stat-real">
+      <div class="stat-label" id="lbl-real">Реальный уровень</div>
+      <div class="stat-value" id="val-real">0%</div>
+      <div class="stat-hint" id="hint-real">объективные знания</div>
+    </div>
+    <div class="stat" id="stat-gap">
+      <div class="stat-label" id="lbl-gap">Разрыв</div>
+      <div class="stat-value" id="val-gap">+10</div>
+      <div class="stat-hint" id="hint-gap">уверенность минус реальность</div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <label class="toggle-wrap" id="critic-toggle">
+      <span class="toggle" id="critic-tog"></span>
+      <span class="toggle-label" id="critic-label">Показать реальные данные (Nuhfer 2017)</span>
+    </label>
+  </div>
+
+  <div class="chart-wrap">
+    <svg class="chart-svg" id="chart" viewBox="0 0 900 460" preserveAspectRatio="xMidYMid meet"></svg>
+  </div>
+
+  <div class="stage-block">
+    <h2 class="stage-name" id="stage-name">Старт</h2>
+    <p class="stage-quote" id="stage-quote">«А я только начинаю...»</p>
+  </div>
+
+  <div>
+    <p class="examples-title" id="examples-title">Как это выглядит в жизни на этой стадии:</p>
+    <div class="examples-grid">
+      <div class="ex-card">
+        <div class="ex-card-head">
+          <span class="ex-icon">
+            <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="4 4 1 8 4 12"/><polyline points="12 4 15 8 12 12"/>
+            </svg>
+          </span>
+          <span id="ex1-head">Программист</span>
+        </div>
+        <p class="ex-text" id="ex1-text">—</p>
+      </div>
+      <div class="ex-card">
+        <div class="ex-card-head">
+          <span class="ex-icon">
+            <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="8" cy="8" r="6"/><circle cx="8" cy="8" r="2"/>
+            </svg>
+          </span>
+          <span id="ex2-head">Водитель</span>
+        </div>
+        <p class="ex-text" id="ex2-text">—</p>
+      </div>
+      <div class="ex-card">
+        <div class="ex-card-head">
+          <span class="ex-icon">
+            <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 13c0-2.8 2.2-5 5-5s5 2.2 5 5"/><circle cx="8" cy="5" r="2.5"/>
+            </svg>
+          </span>
+          <span id="ex3-head">Родитель</span>
+        </div>
+        <p class="ex-text" id="ex3-text">—</p>
+      </div>
+      <div class="ex-card">
+        <div class="ex-card-head">
+          <span class="ex-icon">
+            <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="2 13 6 9 9 11 14 4"/><polyline points="11 4 14 4 14 7"/>
+            </svg>
+          </span>
+          <span id="ex4-head">Инвестор</span>
+        </div>
+        <p class="ex-text" id="ex4-text">—</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="insight" id="insight">
+    <strong id="insight-strong">Главный инсайт:</strong> <span id="insight-text">самые уверенные люди в комнате чаще всего знают предмет хуже всех. Но как только опыт растёт, эта связь ломается.</span>
+  </div>
+
+  <div class="critic-block" id="critic-block">
+    <h3 id="critic-title">Что не так с этой кривой</h3>
+    <p id="critic-p1">В 2017 году Эд Нафер с коллегами перепроверил оригинальный эксперимент Даннинга и Крюгера на 1154 участниках и опубликовал работу в журнале Numeracy. Их вывод: красивая кривая, которую все знают по картинкам в интернете, — упрощение.</p>
+    <p id="critic-p2"><strong>Регрессия к среднему.</strong> Если попросить любую группу людей оценить себя по шкале от 0 до 100, большинство выберет что-то в районе 50–70. Это просто математика: люди не любят крайних оценок. А значит, новичок, чей реальный балл = 10, поставит себе 60 — и разрыв в 50 пунктов получится автоматически, без всякой «глупой уверенности». То же с экспертом наоборот.</p>
+    <p id="critic-p3"><strong>Шум самооценки.</strong> Один и тот же человек, если спросить его дважды с интервалом в неделю, ответит по-разному. Если усреднить такие случайные ответы по группе, они тоже создадут видимость кривой — даже если эффекта нет вообще.</p>
+    <p id="critic-p4">Это не значит, что эффект — выдумка. Новички действительно склонны переоценивать себя, особенно в простых задачах. Но классическая кривая преувеличивает: реальная связь уверенности и компетентности больше похожа на прямую линию с шумом.</p>
+  </div>
+
+  <div class="footer" id="footer">
+    Источники: <a href="https://psycnet.apa.org/record/2000-03244-012" target="_blank" rel="noopener">Kruger &amp; Dunning, 1999</a> · <a href="https://digitalcommons.usf.edu/numeracy/vol10/iss1/art4/" target="_blank" rel="noopener">Nuhfer et al., 2017</a> · <a href="https://en.wikipedia.org/wiki/Dunning%E2%80%93Kruger_effect" target="_blank" rel="noopener">Wikipedia</a>
+  </div>
+
+</div>
+
+<script>
+// ============================================================
+// i18n
+// ============================================================
+const I18N = {
+  ru: {
+    brand: "ИИ-дашборды Барселоновны",
+    htmlLang: "ru",
+    title: "Эффект Даннинга-Крюгера",
+    subtitle: "Перетащите аватарку или двигайте слайдер. Посмотрите, как меняется уверенность в себе и что человек думает на каждой стадии.",
+    inspired: "Кривая основана на классической работе <a href=\"https://psycnet.apa.org/record/2000-03244-012\" target=\"_blank\" rel=\"noopener\">Kruger &amp; Dunning, 1999</a>. Критика популярной интерпретации — <a href=\"https://digitalcommons.usf.edu/numeracy/vol10/iss1/art4/\" target=\"_blank\" rel=\"noopener\">Nuhfer et al., 2017</a>.",
+    lblExperience: "Опыт",
+    hintExperience: "от новичка к мастеру",
+    lblConfidence: "Уверенность",
+    hintConfidence: "как себя оценивает человек",
+    lblReal: "Реальный уровень",
+    hintReal: "объективные знания",
+    lblGap: "Разрыв",
+    hintGap: "уверенность минус реальность",
+    criticLabel: "Показать реальные данные (Nuhfer 2017)",
+    explainerTitle: "Что это вообще такое",
+    explainerP1: "В 1999 году психологи <span class=\"accent-word\">Дэвид Даннинг</span> и <span class=\"accent-word\">Джастин Крюгер</span> из Корнелла провели эксперимент: дали людям тест на логику, грамматику и юмор, а потом спросили, как, по их мнению, они справились по сравнению с остальными.",
+    explainerP2: "Результат оказался неожиданным. Те, кто реально набрал меньше всех, считали, что они в топе. А лучшие, наоборот, недооценивали себя. Авторы объяснили это просто: чтобы понять, что ты чего-то не знаешь, нужны те же самые знания, которых нет. Новичок не видит границ своего незнания.",
+    explainerP3: "Кривая, которую вы видите ниже — это не сами данные из статьи (там были столбики), а популярная иллюстрация эффекта: уверенность взлетает на старте, падает в долину, медленно растёт обратно. Подвигайте аватарку и посмотрите, как меняется внутренний монолог человека на каждой стадии.",
+    criticTitle: "Что не так с этой кривой",
+    criticP1: "В 2017 году Эд Нафер с коллегами перепроверил оригинальный эксперимент Даннинга и Крюгера на 1154 участниках и опубликовал работу в журнале Numeracy. Их вывод: красивая кривая, которую все знают по картинкам в интернете, — упрощение.",
+    criticP2: "<strong>Регрессия к среднему.</strong> Если попросить любую группу людей оценить себя по шкале от 0 до 100, большинство выберет что-то в районе 50–70. Это просто математика: люди не любят крайних оценок. А значит, новичок, чей реальный балл = 10, поставит себе 60 — и разрыв в 50 пунктов получится автоматически, без всякой «глупой уверенности». То же с экспертом наоборот.",
+    criticP3: "<strong>Шум самооценки.</strong> Один и тот же человек, если спросить его дважды с интервалом в неделю, ответит по-разному. Если усреднить такие случайные ответы по группе, они тоже создадут видимость кривой — даже если эффекта нет вообще.",
+    criticP4: "Это не значит, что эффект — выдумка. Новички действительно склонны переоценивать себя, особенно в простых задачах. Но классическая кривая преувеличивает: реальная связь уверенности и компетентности больше похожа на прямую линию с шумом.",
+    examplesTitle: "Как это выглядит в жизни на этой стадии:",
+    ex1Head: "Программист",
+    ex2Head: "Водитель",
+    ex3Head: "Родитель",
+    ex4Head: "Инвестор",
+    insightStrong: "Главный инсайт:",
+    insightDefault: "самые уверенные люди в комнате чаще всего знают предмет хуже всех. Но как только опыт растёт, эта связь ломается.",
+    insightCritic: "по данным Nuhfer 2017, классическая кривая — упрощение. Большая часть эффекта объясняется регрессией к среднему и шумом самооценки, а не «глупой уверенностью» новичков.",
+    footer: "Источники: <a href=\"https://psycnet.apa.org/record/2000-03244-012\" target=\"_blank\" rel=\"noopener\">Kruger &amp; Dunning, 1999</a> · <a href=\"https://digitalcommons.usf.edu/numeracy/vol10/iss1/art4/\" target=\"_blank\" rel=\"noopener\">Nuhfer et al., 2017</a> · <a href=\"https://en.wikipedia.org/wiki/Dunning%E2%80%93Kruger_effect\" target=\"_blank\" rel=\"noopener\">Wikipedia</a>",
+    xAxis: "опыт →",
+    yAxis: "↑ уверенность",
+    realLine: "реальный уровень",
+    confidenceLine: "уверенность",
+    nuhferLine: "данные Nuhfer 2017",
+    stages: [
+      {
+        name: "Пик глупости",
+        quote: "«Да я уже всё понял, тут же ничего сложного.»",
+        ex1: "Прочитал статью про React за вечер. Готов рефакторить чужой код и спорить с senior.",
+        ex2: "Сдал на права месяц назад. Уверенно подрезает на трассе, обгоняет в дождь.",
+        ex3: "Прочитал одну книгу про воспитание. Знает точно, как «правильно». Раздаёт советы всем.",
+        ex4: "Купил первые акции, они выросли. Чувствует, что разобрался в рынке. Берёт кредит на «верную ставку»."
+      },
+      {
+        name: "Долина отчаяния",
+        quote: "«Кажется, я вообще ничего не понимаю.»",
+        ex1: "Третий месяц в проде. Понял, что не знает ни архитектуры, ни тестов, ни как сеть работает. Хочет уволиться.",
+        ex2: "Попал в первую сложную ситуацию. Осознал, что половину знаков не помнит. Боится выезжать на трассу.",
+        ex3: "Ребёнок не слушается, истерики каждый день. Все «правильные» методы не работают. Чувствует себя плохим родителем.",
+        ex4: "Потерял половину портфеля. Понял, что не знает, что такое волатильность. Боится открывать приложение брокера."
+      },
+      {
+        name: "Склон просветления",
+        quote: "«Теперь я хотя бы знаю, чего я не знаю.»",
+        ex1: "Начал учить системно. Читает Designing Data-Intensive Applications. Понимает, что в одной голове всё не уместить.",
+        ex2: "Стал ездить аккуратнее, начал смотреть в зеркала. Понял, что водить — это про предсказание других, а не про реакцию.",
+        ex3: "Перестал искать одну книгу с ответами. Учится слушать ребёнка, а не его «исправлять». Берёт терапию.",
+        ex4: "Перешёл в индексные фонды. Понял, что обыграть рынок сложнее, чем казалось. Читает Bogle и Taleb."
+      },
+      {
+        name: "Плато мастерства",
+        quote: "«Я знаю свою область. Но в смежных — я почти новичок.»",
+        ex1: "Senior с 10 годами. Уверенно проектирует системы, но честно говорит «не знаю» и идёт читать. Менторит других.",
+        ex2: "Водит 15 лет. Аккуратно, спокойно, без понтов. Уважает дорогу. Признаёт, что устал — берёт такси.",
+        ex3: "Двое детей выросли. Знает, что универсальных рецептов нет. Каждому ребёнку — свой подход. Принимает свои ошибки.",
+        ex4: "20 лет на рынке. Диверсификация, дисциплина, никаких прогнозов. Знает свои когнитивные искажения."
+      }
+    ]
+  },
+  en: {
+    brand: "Barcelonovna AI Dashboards",
+    htmlLang: "en",
+    title: "The Dunning-Kruger Effect",
+    subtitle: "Drag the avatar or move the slider. See how confidence shifts and what people think at each stage.",
+    inspired: "Curve based on the classic paper by <a href=\"https://psycnet.apa.org/record/2000-03244-012\" target=\"_blank\" rel=\"noopener\">Kruger &amp; Dunning, 1999</a>. Critique of the popular reading — <a href=\"https://digitalcommons.usf.edu/numeracy/vol10/iss1/art4/\" target=\"_blank\" rel=\"noopener\">Nuhfer et al., 2017</a>.",
+    lblExperience: "Experience",
+    hintExperience: "from novice to master",
+    lblConfidence: "Confidence",
+    hintConfidence: "how the person rates themselves",
+    lblReal: "Real skill",
+    hintReal: "objective competence",
+    lblGap: "Gap",
+    hintGap: "confidence minus reality",
+    criticLabel: "Show real data (Nuhfer 2017)",
+    explainerTitle: "What is this, actually",
+    explainerP1: "In 1999, psychologists <span class=\"accent-word\">David Dunning</span> and <span class=\"accent-word\">Justin Kruger</span> at Cornell ran an experiment: they gave people tests in logic, grammar, and humour, then asked how they thought they did compared to others.",
+    explainerP2: "The result was strange. People who actually scored at the bottom thought they were near the top. The top scorers, on the other hand, underestimated themselves. The authors explained it like this: to recognise that you don't know something, you need the same knowledge you lack. A novice can't see the edges of their own ignorance.",
+    explainerP3: "The curve you see below is not the raw data from the paper (that was bar charts), but the popular illustration of the effect: confidence shoots up at the start, drops into a valley, then slowly climbs back. Drag the avatar and see how the internal monologue shifts at each stage.",
+    criticTitle: "What's wrong with this curve",
+    criticP1: "In 2017, Ed Nuhfer and colleagues re-ran the original Dunning-Kruger experiment with 1154 participants and published their results in the Numeracy journal. Their conclusion: the famous curve everyone knows from internet pictures is an oversimplification.",
+    criticP2: "<strong>Regression to the mean.</strong> If you ask any group of people to rate themselves on a 0–100 scale, most will pick something in the 50–70 range. It's just maths: people avoid extreme answers. So a novice with a real score of 10 will rate themselves 60 — creating a 50-point gap automatically, without any \"confident foolishness\". Same thing in reverse for experts.",
+    criticP3: "<strong>Self-assessment noise.</strong> The same person, asked twice a week apart, gives different answers. Average such random answers across a group and you get something that looks like a curve — even if there's no effect at all.",
+    criticP4: "This doesn't mean the effect is fiction. Novices really do tend to overestimate themselves, especially in simple tasks. But the classic curve exaggerates it: the real relationship between confidence and competence looks more like a noisy straight line.",
+    examplesTitle: "What it looks like in real life at this stage:",
+    ex1Head: "Programmer",
+    ex2Head: "Driver",
+    ex3Head: "Parent",
+    ex4Head: "Investor",
+    insightStrong: "Key insight:",
+    insightDefault: "the most confident people in the room usually know the subject worst. But once experience grows, this link breaks.",
+    insightCritic: "per Nuhfer 2017, the classic curve is a simplification. Most of the effect comes from regression to the mean and noise in self-assessment, not from \"confident fools\".",
+    footer: "Sources: <a href=\"https://psycnet.apa.org/record/2000-03244-012\" target=\"_blank\" rel=\"noopener\">Kruger &amp; Dunning, 1999</a> · <a href=\"https://digitalcommons.usf.edu/numeracy/vol10/iss1/art4/\" target=\"_blank\" rel=\"noopener\">Nuhfer et al., 2017</a> · <a href=\"https://en.wikipedia.org/wiki/Dunning%E2%80%93Kruger_effect\" target=\"_blank\" rel=\"noopener\">Wikipedia</a>",
+    xAxis: "experience →",
+    yAxis: "↑ confidence",
+    realLine: "real skill",
+    confidenceLine: "self-confidence",
+    nuhferLine: "Nuhfer 2017 data",
+    stages: [
+      {
+        name: "Peak of Mt. Stupid",
+        quote: "\"I've totally got this, it's not that hard.\"",
+        ex1: "Read a React article last night. Ready to refactor everyone's code and argue with seniors.",
+        ex2: "Got a license a month ago. Confidently cuts lanes on the highway, overtakes in the rain.",
+        ex3: "Read one parenting book. Knows exactly how to do it \"right\". Gives advice to everyone.",
+        ex4: "Bought first stocks, they went up. Feels they understand markets. Takes a loan for a \"sure thing\"."
+      },
+      {
+        name: "Valley of Despair",
+        quote: "\"I don't actually understand anything.\"",
+        ex1: "Three months in production. Realised they know neither architecture nor testing nor networking. Wants to quit.",
+        ex2: "Hit their first tough situation. Realised they forgot half the signs. Afraid to go on the highway.",
+        ex3: "Kid won't listen, tantrums daily. None of the \"right\" methods work. Feels like a bad parent.",
+        ex4: "Lost half the portfolio. Realised they didn't know what volatility means. Afraid to open the broker app."
+      },
+      {
+        name: "Slope of Enlightenment",
+        quote: "\"At least now I know what I don't know.\"",
+        ex1: "Started studying systematically. Reading Designing Data-Intensive Applications. Knows you can't fit it all in one head.",
+        ex2: "Drives more carefully, checks mirrors. Realised driving is about predicting others, not about reaction time.",
+        ex3: "Stopped looking for one book with all the answers. Learning to listen to the child, not \"fix\" them. Started therapy.",
+        ex4: "Switched to index funds. Realised beating the market is harder than it looked. Reading Bogle and Taleb."
+      },
+      {
+        name: "Plateau of Mastery",
+        quote: "\"I know my field. But in adjacent ones — I'm almost a beginner.\"",
+        ex1: "Senior, 10 years in. Designs systems confidently but honestly says \"don't know\" and goes to read. Mentors others.",
+        ex2: "15 years driving. Calm, accurate, no showing off. Respects the road. When tired — takes a cab.",
+        ex3: "Two grown kids. Knows there's no universal recipe. Different approach for each child. Accepts their mistakes.",
+        ex4: "20 years in the market. Diversification, discipline, no forecasts. Knows their cognitive biases."
+      }
+    ]
+  }
+};
+
+// ============================================================
+// State + URL params
+// ============================================================
+let lang = "ru";
+let showCritic = false;
+let xPos = 0.08; // позиция на оси, [0..1]
+let isDragging = false;
+
+try {
+  const params = new URLSearchParams(window.location.search);
+  const urlLang = params.get("lang");
+  const stored = localStorage.getItem("lang");
+  if (urlLang === "ru" || urlLang === "en") lang = urlLang;
+  else if (stored === "ru" || stored === "en") lang = stored;
+  if (params.get("embed") === "1") {
+    document.documentElement.classList.add("embed-mode");
+  }
+} catch(e) {}
+
+// ============================================================
+// Кривая Даннинга-Крюгера
+// x in [0, 1] -> y in [0, 1]
+// ============================================================
+function dkCurve(x) {
+  if (x < 0.18) {
+    const t = x / 0.18;
+    return 0.10 + 0.85 * Math.pow(t, 0.6);
+  } else if (x < 0.45) {
+    const t = (x - 0.18) / 0.27;
+    return 0.95 - 0.78 * (0.5 - 0.5 * Math.cos(t * Math.PI));
+  } else if (x < 0.75) {
+    const t = (x - 0.45) / 0.30;
+    return 0.17 + 0.48 * (0.5 - 0.5 * Math.cos(t * Math.PI));
+  } else {
+    const t = (x - 0.75) / 0.25;
+    return 0.65 + 0.20 * (0.5 - 0.5 * Math.cos(t * Math.PI));
+  }
+}
+
+// Реальная компетентность — прямая y = x (для отображения линии)
+function realCurve(x) {
+  return x;
+}
+
+// Кривая по данным Nuhfer 2017 — почти плоская, чуть-чуть растёт с опытом,
+// слабый положительный наклон, шум усреднён
+function nuhferCurve(x) {
+  // самооценка слабо коррелирует с реальной компетенцией:
+  // от 0.55 в начале до 0.75 в конце, без выраженных пиков/долин
+  return 0.55 + 0.20 * x;
+}
+
+// Какая стадия активна
+function getStage(x) {
+  if (x < 0.22) return 0; // пик глупости
+  if (x < 0.50) return 1; // долина
+  if (x < 0.78) return 2; // склон
+  return 3;               // плато
+}
+
+// Цвет стадии для подсветки
+const STAGE_COLORS = ["#E24B4A", "#A32D2D", "#97C459", "#3B6D11"];
+const STAGE_BG = [
+  "rgba(226,75,74,0.10)",
+  "rgba(163,45,45,0.10)",
+  "rgba(151,196,89,0.10)",
+  "rgba(59,109,17,0.10)"
+];
+
+// ============================================================
+// Рендер SVG
+// ============================================================
+const W = 900, HSVG = 460;
+const M = { l: 56, r: 30, t: 30, b: 60 };
+const innerW = W - M.l - M.r;
+const innerH = HSVG - M.t - M.b;
+
+function xToPx(x) { return M.l + x * innerW; }
+function yToPx(y) { return M.t + (1 - y) * innerH; }
+function pxToX(px) { return Math.max(0, Math.min(1, (px - M.l) / innerW)); }
+
+function buildPath(curveFn, samples = 200) {
+  const pts = [];
+  for (let i = 0; i <= samples; i++) {
+    const x = i / samples;
+    const y = curveFn(x);
+    pts.push([xToPx(x), yToPx(y)]);
+  }
+  let d = `M${pts[0][0]},${pts[0][1]}`;
+  for (let i = 1; i < pts.length; i++) {
+    d += ` L${pts[i][0]},${pts[i][1]}`;
+  }
+  return d;
+}
+
+function buildAreaPath(curveFn, samples = 200) {
+  const top = [];
+  for (let i = 0; i <= samples; i++) {
+    const x = i / samples;
+    const y = curveFn(x);
+    top.push([xToPx(x), yToPx(y)]);
+  }
+  let d = `M${xToPx(0)},${yToPx(0)}`;
+  for (const p of top) d += ` L${p[0]},${p[1]}`;
+  d += ` L${xToPx(1)},${yToPx(0)} Z`;
+  return d;
+}
+
+function renderChart() {
+  const svg = document.getElementById("chart");
+  const t = I18N[lang];
+  const stageIdx = getStage(xPos);
+
+  const mainCurveFn = showCritic ? nuhferCurve : dkCurve;
+  const yCurr = mainCurveFn(xPos);
+  const yReal = realCurve(xPos);
+
+  // Зоны стадий (фоновые полосы для классической кривой)
+  const stageZones = [
+    { x0: 0,    x1: 0.22, color: "rgba(226,75,74,0.05)" },
+    { x0: 0.22, x1: 0.50, color: "rgba(163,45,45,0.05)" },
+    { x0: 0.50, x1: 0.78, color: "rgba(151,196,89,0.05)" },
+    { x0: 0.78, x1: 1.00, color: "rgba(59,109,17,0.05)" }
+  ];
+  const stageLabels = t.stages.map(s => s.name);
+
+  let html = "";
+
+  // Полосы стадий (только в классическом режиме)
+  if (!showCritic) {
+    for (let i = 0; i < stageZones.length; i++) {
+      const z = stageZones[i];
+      const isActive = i === stageIdx;
+      html += `<rect x="${xToPx(z.x0)}" y="${M.t}" width="${xToPx(z.x1) - xToPx(z.x0)}" height="${innerH}" fill="${isActive ? STAGE_BG[i] : z.color}" />`;
+    }
+  }
+
+  // Сетка по Y (4 линии)
+  for (let i = 0; i <= 4; i++) {
+    const yp = M.t + (i / 4) * innerH;
+    html += `<line x1="${M.l}" y1="${yp}" x2="${M.l + innerW}" y2="${yp}" stroke="var(--border)" stroke-width="1" stroke-dasharray="${i === 4 ? '0' : '2,3'}" />`;
+  }
+
+  // Ось X (нижняя)
+  html += `<line x1="${M.l}" y1="${yToPx(0)}" x2="${M.l + innerW}" y2="${yToPx(0)}" stroke="var(--border-strong)" stroke-width="1.2" />`;
+  // Ось Y
+  html += `<line x1="${M.l}" y1="${M.t}" x2="${M.l}" y2="${yToPx(0)}" stroke="var(--border-strong)" stroke-width="1.2" />`;
+
+  // Подписи осей
+  html += `<text x="${M.l}" y="${HSVG - 18}" font-size="12" fill="var(--text-3)" font-family="-apple-system, sans-serif">${t.xAxis}</text>`;
+  html += `<text x="-${M.t + innerH / 2}" y="18" transform="rotate(-90)" font-size="12" fill="var(--text-3)" text-anchor="middle" font-family="-apple-system, sans-serif">${t.yAxis}</text>`;
+
+  // Подписи стадий внизу (только в классике)
+  if (!showCritic) {
+    const stageX = [0.11, 0.36, 0.64, 0.89];
+    for (let i = 0; i < 4; i++) {
+      html += `<text x="${xToPx(stageX[i])}" y="${HSVG - 38}" font-size="11" fill="${i === stageIdx ? STAGE_COLORS[i] : 'var(--text-3)'}" font-weight="${i === stageIdx ? 600 : 400}" text-anchor="middle" font-family="-apple-system, sans-serif">${stageLabels[i]}</text>`;
+    }
+  }
+
+  // Заливка под кривой
+  const areaColor = showCritic ? "rgba(154, 153, 148, 0.10)" : "rgba(55, 138, 221, 0.10)";
+  html += `<path d="${buildAreaPath(mainCurveFn)}" fill="${areaColor}" />`;
+
+  // Реальная компетентность — серая пунктирная диагональ
+  html += `<path d="${buildPath(realCurve)}" fill="none" stroke="var(--text-3)" stroke-width="1.5" stroke-dasharray="5,4" />`;
+  html += `<text x="${xToPx(0.92)}" y="${yToPx(0.92) - 8}" font-size="11" fill="var(--text-3)" text-anchor="end" font-family="-apple-system, sans-serif">${t.realLine}</text>`;
+
+  // Если включена критика — также показываем классическую полупрозрачно для сравнения
+  if (showCritic) {
+    html += `<path d="${buildPath(dkCurve)}" fill="none" stroke="var(--accent)" stroke-width="2" stroke-dasharray="3,4" opacity="0.45" />`;
+    html += `<text x="${xToPx(0.24)}" y="${yToPx(dkCurve(0.20)) - 6}" font-size="10" fill="var(--accent)" opacity="0.75" font-family="-apple-system, sans-serif">${t.confidenceLine}</text>`;
+  }
+
+  // Главная кривая
+  const mainColor = showCritic ? "var(--text-2)" : "var(--accent)";
+  html += `<path d="${buildPath(mainCurveFn)}" fill="none" stroke="${mainColor}" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round" />`;
+
+  if (showCritic) {
+    html += `<text x="${xToPx(0.20)}" y="${yToPx(nuhferCurve(0.20)) - 14}" font-size="12" fill="var(--text)" font-weight="600" font-family="-apple-system, sans-serif">${t.nuhferLine}</text>`;
+  }
+
+  // Точки стадий на кривой (только в классике)
+  if (!showCritic) {
+    const stageDotX = [0.11, 0.32, 0.62, 0.90];
+    for (let i = 0; i < 4; i++) {
+      const x = stageDotX[i];
+      const y = dkCurve(x);
+      html += `<circle cx="${xToPx(x)}" cy="${yToPx(y)}" r="${i === stageIdx ? 6 : 4}" fill="${STAGE_COLORS[i]}" stroke="var(--surface-2)" stroke-width="2" />`;
+    }
+  }
+
+  // Вертикальная линия от точки вниз
+  const avX = xToPx(xPos);
+  const avY = yToPx(yCurr);
+  html += `<line x1="${avX}" y1="${avY}" x2="${avX}" y2="${yToPx(0)}" stroke="var(--text-3)" stroke-width="1" stroke-dasharray="2,3" opacity="0.5" />`;
+
+  // Аватарка-точка
+  // тень
+  html += `<circle cx="${avX}" cy="${avY + 2}" r="14" fill="rgba(0,0,0,0.18)" filter="blur(3px)" />`;
+  // основной круг
+  html += `<circle cx="${avX}" cy="${avY}" r="14" fill="var(--surface)" stroke="${showCritic ? 'var(--text-2)' : STAGE_COLORS[stageIdx]}" stroke-width="3" />`;
+  // улыбка/выражение лица в зависимости от стадии
+  // глаза
+  html += `<circle cx="${avX - 4}" cy="${avY - 2}" r="1.4" fill="var(--text)" />`;
+  html += `<circle cx="${avX + 4}" cy="${avY - 2}" r="1.4" fill="var(--text)" />`;
+  // рот меняется
+  let mouth;
+  if (showCritic) {
+    mouth = `<line x1="${avX - 3.5}" y1="${avY + 3}" x2="${avX + 3.5}" y2="${avY + 3}" stroke="var(--text)" stroke-width="1.5" stroke-linecap="round" />`;
+  } else if (stageIdx === 0) {
+    // широкая ухмылка
+    mouth = `<path d="M${avX - 4},${avY + 2} Q${avX},${avY + 6} ${avX + 4},${avY + 2}" fill="none" stroke="var(--text)" stroke-width="1.5" stroke-linecap="round" />`;
+  } else if (stageIdx === 1) {
+    // унылая
+    mouth = `<path d="M${avX - 4},${avY + 5} Q${avX},${avY + 2} ${avX + 4},${avY + 5}" fill="none" stroke="var(--text)" stroke-width="1.5" stroke-linecap="round" />`;
+  } else if (stageIdx === 2) {
+    // ровная
+    mouth = `<line x1="${avX - 3.5}" y1="${avY + 3.5}" x2="${avX + 3.5}" y2="${avY + 3.5}" stroke="var(--text)" stroke-width="1.5" stroke-linecap="round" />`;
+  } else {
+    // лёгкая улыбка
+    mouth = `<path d="M${avX - 4},${avY + 3} Q${avX},${avY + 5} ${avX + 4},${avY + 3}" fill="none" stroke="var(--text)" stroke-width="1.5" stroke-linecap="round" />`;
+  }
+  html += mouth;
+
+  svg.innerHTML = html;
+}
+
+// ============================================================
+// Перетаскивание + клик
+// ============================================================
+function getSvgX(evt) {
+  const svg = document.getElementById("chart");
+  const rect = svg.getBoundingClientRect();
+  const clientX = evt.touches ? evt.touches[0].clientX : evt.clientX;
+  // Преобразуем pixel позицию в SVG-координату
+  const svgX = (clientX - rect.left) * (W / rect.width);
+  return svgX;
+}
+
+function handleMove(evt) {
+  if (!isDragging) return;
+  evt.preventDefault();
+  const sx = getSvgX(evt);
+  xPos = pxToX(sx);
+  updateUI();
+}
+
+function handleDown(evt) {
+  isDragging = true;
+  const sx = getSvgX(evt);
+  xPos = pxToX(sx);
+  updateUI();
+  evt.preventDefault();
+}
+
+function handleUp() {
+  isDragging = false;
+}
+
+const chartEl = document.getElementById("chart");
+chartEl.addEventListener("mousedown", handleDown);
+chartEl.addEventListener("touchstart", handleDown, { passive: false });
+window.addEventListener("mousemove", handleMove);
+window.addEventListener("touchmove", handleMove, { passive: false });
+window.addEventListener("mouseup", handleUp);
+window.addEventListener("touchend", handleUp);
+chartEl.style.cursor = "ew-resize";
+
+// ============================================================
+// Обновление UI
+// ============================================================
+function updateUI() {
+  const t = I18N[lang];
+  const stageIdx = getStage(xPos);
+  const stage = t.stages[stageIdx];
+
+  const curveFn = showCritic ? nuhferCurve : dkCurve;
+  const conf = curveFn(xPos);
+  const real = realCurve(xPos);
+  const gap = conf - real;
+
+  // Stats
+  document.getElementById("val-experience").textContent = Math.round(xPos * 100) + "%";
+  document.getElementById("val-confidence").textContent = Math.round(conf * 100) + "%";
+  document.getElementById("val-real").textContent = Math.round(real * 100) + "%";
+  const gapSign = gap >= 0 ? "+" : "";
+  document.getElementById("val-gap").textContent = gapSign + Math.round(gap * 100);
+
+  // Подсветить активную карточку стадии (как минимум опыт)
+  // Покрасим карточку gap-разрыва в красный/зелёный
+  const gapStat = document.getElementById("stat-gap");
+  if (Math.abs(gap) > 0.3) {
+    gapStat.style.color = gap > 0 ? "var(--red)" : "var(--green-dark)";
+  } else {
+    gapStat.style.color = "";
+  }
+
+  // Stage block
+  const stageNameEl = document.getElementById("stage-name");
+  stageNameEl.textContent = stage.name;
+  stageNameEl.style.color = showCritic ? "var(--text)" : STAGE_COLORS[stageIdx];
+  document.getElementById("stage-quote").textContent = stage.quote;
+
+  // Examples
+  document.getElementById("ex1-text").textContent = stage.ex1;
+  document.getElementById("ex2-text").textContent = stage.ex2;
+  document.getElementById("ex3-text").textContent = stage.ex3;
+  document.getElementById("ex4-text").textContent = stage.ex4;
+
+  // Insight
+  document.getElementById("insight-text").textContent = showCritic ? t.insightCritic : t.insightDefault;
+
+  renderChart();
+}
+
+// ============================================================
+// Смена языка
+// ============================================================
+function applyLang() {
+  const t = I18N[lang];
+  document.documentElement.lang = t.htmlLang;
+  document.getElementById("brand").textContent = t.brand;
+  document.getElementById("brand").href = "../?lang=" + lang;
+  document.getElementById("title").textContent = t.title;
+  document.getElementById("subtitle").textContent = t.subtitle;
+  document.getElementById("inspired").innerHTML = t.inspired;
+  document.getElementById("lbl-experience").textContent = t.lblExperience;
+  document.getElementById("hint-experience").textContent = t.hintExperience;
+  document.getElementById("lbl-confidence").textContent = t.lblConfidence;
+  document.getElementById("hint-confidence").textContent = t.hintConfidence;
+  document.getElementById("lbl-real").textContent = t.lblReal;
+  document.getElementById("hint-real").textContent = t.hintReal;
+  document.getElementById("lbl-gap").textContent = t.lblGap;
+  document.getElementById("hint-gap").textContent = t.hintGap;
+  document.getElementById("critic-label").textContent = t.criticLabel;
+  document.getElementById("explainer-title").textContent = t.explainerTitle;
+  document.getElementById("explainer-p1").innerHTML = t.explainerP1;
+  document.getElementById("explainer-p2").innerHTML = t.explainerP2;
+  document.getElementById("explainer-p3").innerHTML = t.explainerP3;
+  document.getElementById("critic-title").textContent = t.criticTitle;
+  document.getElementById("critic-p1").innerHTML = t.criticP1;
+  document.getElementById("critic-p2").innerHTML = t.criticP2;
+  document.getElementById("critic-p3").innerHTML = t.criticP3;
+  document.getElementById("critic-p4").innerHTML = t.criticP4;
+  document.getElementById("examples-title").textContent = t.examplesTitle;
+  document.getElementById("ex1-head").textContent = t.ex1Head;
+  document.getElementById("ex2-head").textContent = t.ex2Head;
+  document.getElementById("ex3-head").textContent = t.ex3Head;
+  document.getElementById("ex4-head").textContent = t.ex4Head;
+  document.getElementById("insight-strong").textContent = t.insightStrong;
+  document.getElementById("footer").innerHTML = t.footer;
+
+  // Кнопки переключателя
+  document.querySelectorAll(".lang-btn").forEach(b => {
+    b.classList.toggle("active", b.dataset.lang === lang);
+  });
+
+  updateUI();
+}
+
+document.querySelectorAll(".lang-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    lang = btn.dataset.lang;
+    try { localStorage.setItem("lang", lang); } catch(e){}
+    applyLang();
+  });
+});
+
+// ============================================================
+// Тоггл критики
+// ============================================================
+const criticToggle = document.getElementById("critic-toggle");
+const criticTog = document.getElementById("critic-tog");
+const criticBlockEl = document.getElementById("critic-block");
+criticToggle.addEventListener("click", () => {
+  showCritic = !showCritic;
+  criticTog.classList.toggle("on", showCritic);
+  criticBlockEl.classList.toggle("visible", showCritic);
+  updateUI();
+});
+
+// ============================================================
+// Старт
+// ============================================================
+applyLang();
+</script>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=109215938', 'ym');
+
+    ym(109215938, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/109215938" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+</body>
+</html>

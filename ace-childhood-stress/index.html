@@ -1,0 +1,1625 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Шкала ACE: детский стресс и риски во взрослой жизни — ИИ-дашборды Барселоновны</title>
+<meta name="description" content="Интерактивный тест из 10 вопросов про неблагоприятный детский опыт по шкале ACE. Расчёт относительного риска депрессии, зависимостей и других исходов по данным Felitti 1998 и Hughes 2017.">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://barcelonovna.github.io/dashboards/ace-childhood-stress/">
+<meta property="og:title" content="Шкала ACE: детский стресс и риски во взрослой жизни">
+<meta property="og:description" content="Тест из 10 вопросов про детский опыт. Расчёт относительного риска депрессии, зависимостей и болезней по данным Felitti 1998 и мета-анализа Hughes 2017.">
+<meta property="og:image" content="https://barcelonovna.github.io/dashboards/ace-childhood-stress/preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ru_RU">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Шкала ACE: детский стресс и риски во взрослой жизни">
+<meta name="twitter:description" content="Тест из 10 вопросов про детский опыт. Расчёт относительного риска депрессии, зависимостей и болезней.">
+<meta name="twitter:image" content="https://barcelonovna.github.io/dashboards/ace-childhood-stress/preview.png">
+
+<style>
+:root {
+  --bg: #fafaf7;
+  --surface: #ffffff;
+  --surface-2: #f1efe8;
+  --text: #1a1a17;
+  --text-2: #6b6a64;
+  --text-3: #9a9994;
+  --border: rgba(0,0,0,0.08);
+  --border-strong: rgba(0,0,0,0.18);
+  --accent: #378ADD;
+  --accent-bg: rgba(55,138,221,0.08);
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --grow: #3B6D11;
+  --fall: #A32D2D;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1a1a17;
+    --surface: #25241f;
+    --surface-2: #2f2e29;
+    --text: #ededeb;
+    --text-2: #a8a79f;
+    --text-3: #6f6e68;
+    --border: rgba(255,255,255,0.08);
+    --border-strong: rgba(255,255,255,0.18);
+    --grow: #97C459;
+    --fall: #E24B4A;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  font-size: 16px;
+  line-height: 1.55;
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 32px 20px 48px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.header-text { flex: 1; min-width: 0; }
+
+.brand {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+  display: inline-block;
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+.brand:hover { opacity: 0.7; }
+
+h1 {
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin: 0 0 6px;
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-size: 15px;
+  color: var(--text-2);
+  line-height: 1.55;
+  margin: 0;
+  max-width: 640px;
+}
+
+.lang-switch {
+  display: flex;
+  background: var(--surface-2);
+  border-radius: var(--radius-md);
+  padding: 3px;
+  flex-shrink: 0;
+}
+
+.lang-btn {
+  font-size: 13px;
+  font-weight: 500;
+  padding: 6px 12px;
+  border: none;
+  background: transparent;
+  color: var(--text-2);
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+.lang-btn.active {
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+}
+
+.disclaimer {
+  background: #FAEEDA;
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  margin: 0 0 20px;
+  max-width: 720px;
+}
+@media (prefers-color-scheme: dark) {
+  .disclaimer { background: #3d3525; }
+}
+.disclaimer-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: #854F0B;
+  margin-bottom: 4px;
+}
+.disclaimer-text {
+  font-size: 13px;
+  color: #633806;
+  line-height: 1.5;
+}
+@media (prefers-color-scheme: dark) {
+  .disclaimer-title { color: #EF9F27; }
+  .disclaimer-text { color: #FAC775; }
+}
+.disclaimer a {
+  color: inherit;
+  font-weight: 500;
+  border-bottom: 1px solid currentColor;
+}
+
+.btn-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 0 0 32px;
+}
+
+.btn {
+  padding: 11px 18px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+  border: 0.5px solid transparent;
+}
+.btn-primary {
+  background: var(--accent);
+  color: white;
+  border: none;
+}
+.btn-primary:hover { opacity: 0.9; }
+.btn-secondary {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+.btn-secondary:hover { background: var(--surface-2); }
+
+.info-section {
+  border-top: 0.5px solid var(--border);
+  padding-top: 24px;
+  max-width: 760px;
+}
+
+.info-section h3 {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 24px 0 8px;
+  color: var(--text);
+}
+.info-section h3:first-child { margin-top: 0; }
+
+.info-section p, .info-section li {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.6;
+  margin: 0 0 12px;
+}
+
+.info-section ul {
+  margin: 0 0 16px;
+  padding-left: 20px;
+}
+.info-section li { margin-bottom: 6px; }
+
+.cat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 24px;
+  margin-bottom: 16px;
+}
+.cat-grid > div { font-size: 13px; color: var(--text-2); line-height: 1.55; }
+.cat-grid strong { color: var(--text); font-weight: 500; }
+
+.screen { animation: fadeIn 0.25s; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.test-header {
+  margin-bottom: 24px;
+}
+.test-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 10px;
+}
+.test-meta-left { font-size: 12px; color: var(--text-2); }
+.test-meta-right {
+  font-size: 13px;
+  color: var(--text-2);
+}
+#score-current {
+  font-size: 20px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+  margin-left: 4px;
+  transition: color 0.3s;
+}
+
+#progress-track {
+  display: flex;
+  gap: 3px;
+}
+.prog-cell {
+  flex: 1;
+  height: 12px;
+  border-radius: 3px;
+  transition: all 0.25s;
+}
+.prog-cell.current {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.q-card {
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+}
+
+.q-num {
+  font-size: 12px;
+  color: var(--text-3);
+  margin-bottom: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.q-text {
+  font-size: 17px;
+  line-height: 1.5;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.q-hint {
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+.answer-row {
+  display: flex;
+  gap: 10px;
+}
+
+.ans-btn {
+  flex: 1;
+  padding: 14px;
+  font-size: 15px;
+  font-weight: 500;
+  background: var(--surface);
+  color: var(--text);
+  border: 0.5px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+.ans-btn:hover { background: var(--surface-2); }
+.ans-btn.yes:hover { background: rgba(226,75,74,0.08); border-color: rgba(226,75,74,0.4); }
+.ans-btn.no:hover { background: rgba(55,138,221,0.06); border-color: rgba(55,138,221,0.4); }
+
+.ans-skip {
+  padding: 14px 18px;
+  font-size: 13px;
+  color: var(--text-3);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+.ans-skip:hover { color: var(--text-2); }
+
+.test-nav {
+  margin-top: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.test-nav button {
+  padding: 6px 12px;
+  font-size: 13px;
+  background: transparent;
+  color: var(--text-2);
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+.test-nav button:hover { color: var(--text); }
+.test-nav button:disabled { opacity: 0.3; cursor: not-allowed; }
+
+.prog-legend {
+  margin-top: 18px;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 11px;
+  color: var(--text-2);
+  justify-content: center;
+}
+.prog-legend span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.prog-legend i {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+.score-card {
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  margin-bottom: 24px;
+}
+
+.score-card-label {
+  font-size: 12px;
+  color: var(--text-2);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 10px;
+}
+
+.score-row {
+  display: flex;
+  align-items: baseline;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+#result-score {
+  font-size: 72px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.score-meta-label {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.score-meta-hint {
+  font-size: 13px;
+  color: var(--text-2);
+  max-width: 560px;
+  line-height: 1.55;
+}
+
+.chart-intro {
+  margin: 0 0 18px;
+  max-width: 720px;
+}
+.chart-intro h2 {
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0 0 8px;
+  color: var(--text);
+  letter-spacing: -0.005em;
+}
+.chart-explain {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.55;
+  margin: 0 0 8px;
+}
+.chart-source {
+  font-size: 12px;
+  color: var(--text-3);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.chart-header-label {
+  font-size: 13px;
+  color: var(--text-2);
+}
+
+.chart-current {
+  background: var(--surface-2);
+  border-radius: var(--radius-md);
+  padding: 9px 14px;
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+.chart-current strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.final-disclaimer-phones {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.phone-row {
+  font-size: 13px;
+  color: #501313;
+  line-height: 1.5;
+}
+.phone-label {
+  font-weight: 500;
+  color: #791F1F;
+}
+.phone-note {
+  color: #791F1F;
+  opacity: 0.8;
+}
+@media (prefers-color-scheme: dark) {
+  .phone-row { color: #F7C1C1; }
+  .phone-label, .phone-note { color: #F09595; }
+}
+.final-disclaimer-phones a {
+  color: inherit;
+  font-weight: 500;
+  border-bottom: 1px solid currentColor;
+  white-space: nowrap;
+}
+
+#final-disclaimer-text-main {
+  font-size: 13px;
+  color: #501313;
+  line-height: 1.5;
+}
+@media (prefers-color-scheme: dark) {
+  #final-disclaimer-text-main { color: #F7C1C1; }
+}
+
+.group-tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--surface-2);
+  border-radius: var(--radius-md);
+  padding: 3px;
+}
+.group-tab {
+  padding: 5px 11px;
+  font-size: 12px;
+  font-weight: 500;
+  border: none;
+  background: transparent;
+  color: var(--text-2);
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+.group-tab.active {
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+}
+
+.chart-box {
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 16px 22px;
+}
+
+.risk-row {
+  display: grid;
+  grid-template-columns: 200px 1fr 56px;
+  gap: 14px;
+  align-items: center;
+  padding: 11px 0;
+  border-bottom: 0.5px solid var(--border);
+  cursor: default;
+  transition: background 0.15s;
+  position: relative;
+}
+.risk-row:last-child { border-bottom: none; }
+.risk-row:hover { background: var(--surface-2); margin: 0 -10px; padding-left: 10px; padding-right: 10px; border-radius: 6px; }
+
+.risk-label {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.35;
+}
+
+.risk-bar-wrap {
+  position: relative;
+}
+
+.risk-bar {
+  height: 18px;
+  border-radius: 3px;
+  transition: width 0.3s;
+}
+
+.risk-bar-multi {
+  position: absolute;
+  height: 7px;
+  border-radius: 2px;
+  left: 0;
+}
+
+.risk-value {
+  font-size: 13px;
+  font-weight: 500;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+}
+
+.bar-legend {
+  display: flex;
+  gap: 14px;
+  margin-top: 14px;
+  font-size: 11px;
+  color: var(--text-2);
+  flex-wrap: wrap;
+}
+.bar-legend span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.bar-legend i {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+#tooltip {
+  position: fixed;
+  background: var(--surface);
+  border: 0.5px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: 9px 11px;
+  font-size: 12px;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  opacity: 0;
+  transition: opacity 0.15s;
+  z-index: 100;
+  max-width: 240px;
+  line-height: 1.4;
+}
+#tooltip.visible { opacity: 1; }
+#tooltip .tt-title {
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 4px;
+  color: var(--text);
+}
+#tooltip .tt-body { color: var(--text-2); font-size: 12px; }
+
+.final-disclaimer {
+  background: #FCEBEB;
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  margin-top: 24px;
+}
+@media (prefers-color-scheme: dark) {
+  .final-disclaimer { background: #3a1f1f; }
+}
+.final-disclaimer-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: #791F1F;
+  margin-bottom: 4px;
+}
+.final-disclaimer-text {
+  font-size: 13px;
+  color: #501313;
+  line-height: 1.5;
+}
+@media (prefers-color-scheme: dark) {
+  .final-disclaimer-title { color: #F09595; }
+  .final-disclaimer-text { color: #F7C1C1; }
+}
+.final-disclaimer a {
+  color: inherit;
+  font-weight: 500;
+  border-bottom: 1px solid currentColor;
+}
+
+.result-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+
+.distrib-bar {
+  display: flex;
+  height: 24px;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 12px;
+  border: 0.5px solid var(--border);
+}
+.distrib-seg {
+  position: relative;
+  transition: opacity 0.2s;
+}
+.distrib-seg.dim { opacity: 0.35; }
+.distrib-seg-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
+  color: white;
+}
+.distrib-axis {
+  display: flex;
+  margin-top: 6px;
+  font-size: 11px;
+  color: var(--text-3);
+}
+
+.footer {
+  margin-top: 48px;
+  padding-top: 20px;
+  border-top: 0.5px solid var(--border);
+  font-size: 12px;
+  color: var(--text-3);
+  line-height: 1.6;
+}
+.footer a {
+  color: var(--text-2);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+  transition: border-color 0.15s;
+}
+.footer a:hover { border-bottom-color: var(--text-2); }
+
+@media (max-width: 600px) {
+  .container { padding: 20px 14px 32px; }
+  h1 { font-size: 22px; }
+  #result-score { font-size: 56px; }
+  .header { flex-direction: column; gap: 14px; }
+  .lang-switch { align-self: flex-start; }
+  .cat-grid { grid-template-columns: 1fr; }
+  .q-card { padding: 20px; }
+  .q-text { font-size: 16px; }
+  .ans-skip { padding: 14px 10px; }
+  .risk-row { grid-template-columns: 140px 1fr 48px; gap: 8px; }
+  .risk-label { font-size: 12px; }
+  .chart-box { padding: 12px 14px; }
+  .score-card { padding: 20px; }
+  #result-score { font-size: 48px; }
+}
+
+.embed-mode .lang-switch,
+.embed-mode .footer,
+.embed-mode #intro-info,
+.embed-mode #test-nav,
+.embed-mode #final-disclaimer,
+.embed-mode #result-actions { display: none !important; }
+.embed-mode .container { padding: 24px; }
+.embed-mode .header { margin-bottom: 16px; }
+</style>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=109215938', 'ym');
+
+    ym(109215938, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/109215938" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+</head>
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <div class="header-text">
+      <a href="../" class="brand" id="brand" target="_top">ИИ-дашборды Барселоновны</a>
+      <h1 id="page-title">Шкала ACE: детский стресс и риски во взрослой жизни</h1>
+      <p class="subtitle" id="page-subtitle">10 вопросов про опыт до 18 лет. Чем выше балл, тем выше относительный риск депрессии, зависимостей и ряда болезней по данным Felitti 1998 и Hughes 2017.</p>
+    </div>
+    <div class="lang-switch">
+      <button class="lang-btn active" data-lang="ru">RU</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+  </div>
+
+  <!-- ВСТУПЛЕНИЕ -->
+  <div id="screen-intro" class="screen">
+    <div class="disclaimer">
+      <div class="disclaimer-title" id="intro-disclaimer-title">Это не диагноз</div>
+      <div class="disclaimer-text" id="intro-disclaimer-text">Тест информационный, не клиническое исследование. Если в процессе станет тяжело — бесплатные телефоны психологической помощи указаны под графиком после теста.</div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-primary" id="start-test">Пройти тест</button>
+      <button class="btn btn-secondary" id="skip-test">Сразу к данным</button>
+    </div>
+
+    <div class="info-section" id="intro-info">
+      <h3 id="info-h1">Что такое ACE</h3>
+      <p id="info-p1">Adverse Childhood Experiences — неблагоприятный детский опыт. Концепция родилась из одноимённого исследования Felitti et al. 1998: 17 000 взрослых пациентов клиники Kaiser Permanente в Сан-Диего заполнили анкету о детстве до 18 лет. Авторы обнаружили дозозависимую связь: чем больше категорий стресса в детстве, тем выше шансы заболеваний, зависимостей и ранней смерти во взрослой жизни.</p>
+
+      <h3 id="info-h2">10 категорий из оригинального опросника</h3>
+      <div class="cat-grid">
+        <div><strong id="cat-1-t">Насилие в доме (3):</strong> <span id="cat-1-d">эмоциональное, физическое, сексуальное</span></div>
+        <div><strong id="cat-2-t">Пренебрежение (2):</strong> <span id="cat-2-d">эмоциональное, физическое</span></div>
+        <div><strong id="cat-3-t">Дисфункция семьи (5):</strong> <span id="cat-3-d">развод, насилие против матери, алкоголь или наркотики в доме, психбольной родственник, тюрьма</span></div>
+        <div><strong id="cat-4-t">Шкала:</strong> <span id="cat-4-d">по 1 баллу за «да» в каждой категории, итог 0–10</span></div>
+      </div>
+
+      <h3 id="info-h3">Как используется</h3>
+      <p id="info-p3a">Скрининг в первичной помощи (педиатры, семейные врачи), социальные службы, психотерапия, исследования эпидемиологии травмы. CDC ведёт мониторинг через систему BRFSS — ежегодный опрос сотен тысяч американцев включает блок ACE. Калифорния с 2019 года официально финансирует ACE-скрининг у детей через программу ACEs Aware.</p>
+      <p id="info-p3b">Мета-анализ Hughes et al. 2017 (Lancet Public Health) объединил 37 исследований с общей выборкой 253 719 человек из разных стран. Подтвердил исходные находки Felitti: связь воспроизводится и за пределами США. Балл 4+ — самая высокая группа риска, в неё попадает примерно 12–15% взрослой популяции по разным выборкам.</p>
+
+      <h3 id="info-h4">Ограничения</h3>
+      <ul>
+        <li id="info-li1">Это корреляция, не причинность. Высокий балл — фактор риска, а не предопределённость</li>
+        <li id="info-li2">Все 10 пунктов считаются равными, хотя сексуальное насилие и эмоциональное пренебрежение различаются по тяжести</li>
+        <li id="info-li3">Не учитываются: бедность, расизм, буллинг, потеря близкого, война, миграция, болезни. Современные исследования предлагают расширенные шкалы (Expanded ACE, PACES)</li>
+        <li id="info-li4">Опросник из 10 вопросов слишком грубый для клинической диагностики, нужен полноценный клинический интервью</li>
+        <li id="info-li5">Защитные факторы (поддерживающий взрослый, стабильная школа, психотерапия в подростковом возрасте) сильно снижают итоговый риск, но шкала их не учитывает</li>
+      </ul>
+
+      <h3 id="info-h5">Главный инсайт</h3>
+      <p id="info-p5">Связь между детским стрессом и взрослыми болезнями одна из самых воспроизводимых в эпидемиологии. У группы ACE=4+ риск депрессии выше в 4.6 раза, попыток суицида в 30 раз, проблемного употребления алкоголя в 5.8 раза, наркозависимости в 10.2 раза. Биологическое объяснение через токсический стресс: длительная активация оси «гипоталамус-гипофиз-надпочечники» в детстве меняет работу иммунной системы, метаболизма и развитие мозга.</p>
+    </div>
+  </div>
+
+  <!-- ТЕСТ -->
+  <div id="screen-test" class="screen" style="display: none;">
+    <div class="test-header">
+      <div class="test-meta">
+        <span class="test-meta-left"><span id="q-meta-prefix">Вопрос</span> <span id="q-current">1</span> <span id="q-meta-of">из</span> 10</span>
+        <span class="test-meta-right"><span id="score-label">Балл ACE:</span><span id="score-current">0</span></span>
+      </div>
+      <div id="progress-track"></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-num"><span id="q-num-label">Вопрос</span> <span id="q-num">1</span></div>
+      <div class="q-text" id="q-text"></div>
+      <div class="q-hint" id="q-hint"></div>
+      <div class="answer-row">
+        <button class="ans-btn yes" id="ans-yes">Да</button>
+        <button class="ans-btn no" id="ans-no">Нет</button>
+        <button class="ans-skip" id="ans-skip">Пропустить</button>
+      </div>
+    </div>
+
+    <div class="test-nav" id="test-nav">
+      <button id="back-btn">← <span id="back-label">Назад</span></button>
+      <button id="finish-early" id="finish-early-btn"><span id="finish-label">Завершить досрочно</span></button>
+    </div>
+
+    <div class="prog-legend">
+      <span><i style="background: #E24B4A;"></i><span id="leg-yes">Да</span></span>
+      <span><i style="background: var(--surface-2); border: 0.5px solid var(--border);"></i><span id="leg-no">Нет</span></span>
+      <span><i style="background: #B4B2A9;"></i><span id="leg-skip">Пропуск</span></span>
+      <span><i style="background: transparent; border: 0.5px dashed var(--text-3);"></i><span id="leg-none">Не отвечено</span></span>
+    </div>
+  </div>
+
+  <!-- РЕЗУЛЬТАТ -->
+  <div id="screen-result" class="screen" style="display: none;">
+    <div class="score-card">
+      <div class="score-card-label" id="score-card-label">Ваш балл ACE</div>
+      <div class="score-row">
+        <div id="result-score">0</div>
+        <div>
+          <div class="score-meta-label" id="result-group-label">Группа риска: 0</div>
+          <div class="score-meta-hint" id="result-group-hint"></div>
+        </div>
+      </div>
+      <div id="result-distrib-wrap" style="margin-top: 22px;">
+        <div style="font-size: 12px; color: var(--text-2); margin-bottom: 4px;" id="distrib-title">Распределение в общей популяции (Felitti et al. 1998)</div>
+        <div class="distrib-bar" id="distrib-bar"></div>
+        <div class="distrib-axis" id="distrib-axis"></div>
+      </div>
+    </div>
+
+    <div class="chart-intro">
+      <h2 id="chart-title">Во сколько раз растут риски с ростом балла ACE</h2>
+      <p id="chart-explain" class="chart-explain">Сравниваются группы людей с баллом 1, 2, 3 и 4+ против тех, у кого балл 0 (детство без неблагоприятного опыта). Например, ×3 значит «в 3 раза выше шансы, чем у человека из группы ACE = 0». Это про популяцию, а не про конкретного человека: высокий балл повышает вероятность, но не предопределяет.</p>
+      <p id="chart-source" class="chart-source">Данные: мета-анализ Hughes et al. 2017, 37 исследований, 253 719 человек.</p>
+    </div>
+
+    <div class="chart-header">
+      <div class="chart-header-left">
+        <div class="chart-header-label" id="chart-tabs-label">Какую группу сравниваем с базой (ACE = 0):</div>
+      </div>
+      <div class="group-tabs">
+        <button class="group-tab" data-grp="1">1</button>
+        <button class="group-tab" data-grp="2">2</button>
+        <button class="group-tab" data-grp="3">3</button>
+        <button class="group-tab active" data-grp="4">4+</button>
+        <button class="group-tab" data-grp="all" id="grp-all-btn">Все</button>
+      </div>
+    </div>
+
+    <div class="chart-current" id="chart-current"></div>
+
+    <div class="chart-box" id="risk-chart"></div>
+
+    <div class="final-disclaimer" id="final-disclaimer">
+      <div class="final-disclaimer-title" id="final-disclaimer-title">Это не приговор</div>
+      <div id="final-disclaimer-text-main"></div>
+      <div class="final-disclaimer-phones" id="final-disclaimer-phones"></div>
+    </div>
+
+    <div class="result-actions" id="result-actions">
+      <button class="btn btn-secondary" id="retake-btn">Пройти заново</button>
+      <button class="btn btn-secondary" id="back-intro-btn">К описанию</button>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span id="footer-source">Источники: Felitti et al. 1998 (American Journal of Preventive Medicine); Hughes et al. 2017 (Lancet Public Health); CDC ACE Study; CDC BRFSS.</span>
+    <br>
+    <span id="footer-date">Май 2026</span>
+  </div>
+
+</div>
+
+<div id="tooltip">
+  <div class="tt-title"></div>
+  <div class="tt-body"></div>
+</div>
+
+<script>
+(function(){
+
+const I18N = {
+  ru: {
+    htmlLang: "ru",
+    brand: "ИИ-дашборды Барселоновны",
+    pageTitle: "Шкала ACE: детский стресс и риски во взрослой жизни",
+    pageSubtitle: "10 вопросов про опыт до 18 лет. Чем выше балл, тем выше относительный риск депрессии, зависимостей и ряда болезней по данным Felitti 1998 и Hughes 2017.",
+    introDisclaimerTitle: "Это не диагноз",
+    introDisclaimerText: "Тест информационный, не клиническое исследование. Если в процессе станет тяжело — бесплатные телефоны психологической помощи указаны под графиком после теста.",
+    btnStart: "Пройти тест",
+    btnSkip: "Сразу к данным",
+    infoH1: "Что такое ACE",
+    infoP1: "Adverse Childhood Experiences — неблагоприятный детский опыт. Концепция родилась из одноимённого исследования Felitti et al. 1998: 17 000 взрослых пациентов клиники Kaiser Permanente в Сан-Диего заполнили анкету о детстве до 18 лет. Авторы обнаружили дозозависимую связь: чем больше категорий стресса в детстве, тем выше шансы заболеваний, зависимостей и ранней смерти во взрослой жизни.",
+    infoH2: "10 категорий из оригинального опросника",
+    cat1t: "Насилие в доме (3):", cat1d: "эмоциональное, физическое, сексуальное",
+    cat2t: "Пренебрежение (2):", cat2d: "эмоциональное, физическое",
+    cat3t: "Дисфункция семьи (5):", cat3d: "развод, насилие против матери, алкоголь или наркотики в доме, психбольной родственник, тюрьма",
+    cat4t: "Шкала:", cat4d: "по 1 баллу за «да» в каждой категории, итог 0–10",
+    infoH3: "Как используется",
+    infoP3a: "Скрининг в первичной помощи (педиатры, семейные врачи), социальные службы, психотерапия, исследования эпидемиологии травмы. CDC ведёт мониторинг через систему BRFSS — ежегодный опрос сотен тысяч американцев включает блок ACE. Калифорния с 2019 года официально финансирует ACE-скрининг у детей через программу ACEs Aware.",
+    infoP3b: "Мета-анализ Hughes et al. 2017 (Lancet Public Health) объединил 37 исследований с общей выборкой 253 719 человек из разных стран. Подтвердил исходные находки Felitti: связь воспроизводится и за пределами США. Балл 4+ — самая высокая группа риска, в неё попадает примерно 12–15% взрослой популяции по разным выборкам.",
+    infoH4: "Ограничения",
+    infoLi1: "Это корреляция, не причинность. Высокий балл — фактор риска, а не предопределённость",
+    infoLi2: "Все 10 пунктов считаются равными, хотя сексуальное насилие и эмоциональное пренебрежение различаются по тяжести",
+    infoLi3: "Не учитываются: бедность, расизм, буллинг, потеря близкого, война, миграция, болезни. Современные исследования предлагают расширенные шкалы (Expanded ACE, PACES)",
+    infoLi4: "Опросник из 10 вопросов слишком грубый для клинической диагностики, нужен полноценный клинический интервью",
+    infoLi5: "Защитные факторы (поддерживающий взрослый, стабильная школа, психотерапия в подростковом возрасте) сильно снижают итоговый риск, но шкала их не учитывает",
+    infoH5: "Главный инсайт",
+    infoP5: "Связь между детским стрессом и взрослыми болезнями одна из самых воспроизводимых в эпидемиологии. У группы ACE=4+ риск депрессии выше в 4.6 раза, попыток суицида в 30 раз, проблемного употребления алкоголя в 5.8 раза, наркозависимости в 10.2 раза. Биологическое объяснение через токсический стресс: длительная активация оси «гипоталамус-гипофиз-надпочечники» в детстве меняет работу иммунной системы, метаболизма и развитие мозга.",
+    qMetaPrefix: "Вопрос", qMetaOf: "из", scoreLabel: "Балл ACE:", qNumLabel: "Вопрос",
+    ansYes: "Да", ansNo: "Нет", ansSkip: "Пропустить",
+    backLabel: "Назад", finishLabel: "Завершить досрочно",
+    legYes: "Да", legNo: "Нет", legSkip: "Пропуск", legNone: "Не отвечено",
+    scoreCardLabel: "Ваш балл ACE",
+    groupLabel: "Группа риска: ",
+    chartTitle: "Во сколько раз растут риски с ростом балла ACE",
+    chartExplain: "Сравниваются группы людей с баллом 1, 2, 3 и 4+ против тех, у кого балл 0 (детство без неблагоприятного опыта). Например, ×3 значит «в 3 раза выше шансы, чем у человека из группы ACE = 0». Это про популяцию, а не про конкретного человека: высокий балл повышает вероятность, но не предопределяет.",
+    chartSource: "Данные: мета-анализ Hughes et al. 2017, 37 исследований, 253 719 человек.",
+    chartTabsLabel: "Какую группу сравниваем с базой (ACE = 0):",
+    chartCurrentSingle: (g) => `На графике: <strong>группа ACE = ${g}</strong> относительно группы ACE = 0. Значение <strong>×N</strong> = во сколько раз выше шансы исхода.`,
+    chartCurrentAll: "На графике: <strong>все группы сразу</strong> (1, 2, 3, 4+) относительно группы ACE = 0. Каждая полоса — отдельная группа, цвет темнее = выше балл.",
+    grpAllBtn: "Все",
+    finalDisclaimerTitle: "Это не приговор",
+    finalDisclaimerTextMain: "Корреляция, не судьба. Психотерапия, стабильные отношения и физическая активность снижают эти риски. Если детские воспоминания мешают жить — это повод поговорить со специалистом.",
+    phoneLabelAdult: "Психологическая помощь, Россия:",
+    phoneNoteAdult: "(круглосуточно, бесплатно, взрослые и подростки)",
+    phoneLabelWomen: "Женщинам, переживающим насилие:",
+    phoneNoteWomen: "(центр «Анна», круглосуточно)",
+    phoneLabelKids: "Детям, подросткам, родителям:",
+    phoneNoteKids: "(или 124 с мобильного, круглосуточно)",
+    phones: [
+      {label: "Психологическая помощь, Россия:", num: "8-800-100-49-94", tel: "88001004994", note: "(круглосуточно, бесплатно, взрослые и подростки)"},
+      {label: "Женщинам, переживающим насилие:", num: "8-800-7000-600", tel: "88007000600", note: "(центр «Анна», круглосуточно, бесплатно)"},
+      {label: "Детям, подросткам, родителям:", num: "8-800-2000-122", tel: "88002000122", note: "(или 124 с мобильного, круглосуточно)"}
+    ],
+    retakeBtn: "Пройти заново",
+    backIntroBtn: "К описанию",
+    footerSource: "Источники: Felitti et al. 1998 (American Journal of Preventive Medicine); Hughes et al. 2017 (Lancet Public Health); CDC ACE Study; CDC BRFSS.",
+    footerDate: "Май 2026",
+    distribTitle: "Распределение в общей популяции (Felitti et al. 1998)",
+    groupHints: {
+      0: "Вы не отметили ни одной категории. Около 36% выборки в исследовании Felitti были в этой группе. Это базовый уровень риска, с которым сравниваются остальные группы.",
+      1: "Вы отметили одну категорию неблагоприятного опыта. Около 26% выборки. Уже заметное, хотя ещё небольшое, повышение риска по всем исходам.",
+      2: "Вы отметили две категории. Около 16% выборки. Риски по всем направлениям ощутимо растут — см. график ниже.",
+      3: "Вы отметили три категории. Около 9% выборки. Высокая группа риска, разница с базой по некоторым исходам уже в разы.",
+      4: "Вы отметили четыре или больше категорий. Около 13% выборки. Самая высокая группа риска по Felitti et al. 1998. Балл 4+ повышает риск депрессии в 4.6 раза, попыток суицида — в 30 раз. Это статистика, а не приговор."
+    },
+    groupLabelText: {0: "0", 1: "1", 2: "2", 3: "3", 4: "4+"},
+    questions: [
+      {t: "До 18 лет: родитель часто ругал, унижал или вёл себя так, что вы боялись быть избитым?", h: "Эмоциональное насилие"},
+      {t: "До 18 лет: родитель толкал, шлёпал или бросал в вас что-то? Или ударил так, что остался след или травма?", h: "Физическое насилие"},
+      {t: "До 18 лет: кто-то старше вас касался вас сексуально или пытался вступить с вами в любой вид сексуального контакта?", h: "Сексуальное насилие"},
+      {t: "До 18 лет: вы часто чувствовали, что в семье вас никто не любит, не считает важным или особенным?", h: "Эмоциональное пренебрежение"},
+      {t: "До 18 лет: часто не хватало еды, носили грязную одежду, некому было защитить, родители были слишком пьяны или под наркотиками, чтобы заботиться?", h: "Физическое пренебрежение"},
+      {t: "До 18 лет: ваши родители разошлись или развелись?", h: "Развод родителей"},
+      {t: "До 18 лет: мать или мачеху толкали, били, душили или угрожали ножом или пистолетом?", h: "Домашнее насилие против матери"},
+      {t: "До 18 лет: кто-то в доме был зависим от алкоголя или употреблял наркотики?", h: "Зависимость в семье"},
+      {t: "До 18 лет: кто-то в доме был в депрессии, психически болен или пытался покончить с собой?", h: "Психическая болезнь в семье"},
+      {t: "До 18 лет: кто-то из домашних попал в тюрьму?", h: "Тюремное заключение родственника"}
+    ],
+    risks: [
+      {name: "Попытки суицида", desc: "Hughes et al. 2017, OR относительно группы ACE=0"},
+      {name: "Наркозависимость", desc: "Проблемное употребление психоактивных веществ"},
+      {name: "Проблемы с алкоголем", desc: "Алкогольная зависимость или злоупотребление"},
+      {name: "Депрессия", desc: "Диагностированная клиническая депрессия"},
+      {name: ">50 половых партнёров", desc: "За жизнь"},
+      {name: "Курение", desc: "Курение во взрослом возрасте"},
+      {name: "ИППП", desc: "Инфекции, передающиеся половым путём"},
+      {name: "Болезни сердца", desc: "Ишемическая болезнь сердца, инфаркт"},
+      {name: "Ранняя смерть (до 65)", desc: "Сокращение продолжительности жизни"},
+      {name: "Тяжёлое ожирение", desc: "ИМТ ≥ 35"}
+    ]
+  },
+  en: {
+    htmlLang: "en",
+    brand: "Barcelonovna AI Dashboards",
+    pageTitle: "ACE Scale: Childhood Stress and Adult Health Risks",
+    pageSubtitle: "10 questions about your experience before age 18. The higher your score, the higher the relative risk of depression, addiction, and several diseases (Felitti 1998, Hughes 2017).",
+    introDisclaimerTitle: "This is not a diagnosis",
+    introDisclaimerText: "This is an informational test, not a clinical screening. If it becomes difficult during the test, free crisis lines are listed below the chart on the results page.",
+    btnStart: "Take the test",
+    btnSkip: "Skip to the data",
+    infoH1: "What is ACE",
+    infoP1: "Adverse Childhood Experiences. The concept comes from the Felitti et al. 1998 study: 17,000 adult patients at Kaiser Permanente in San Diego filled out a survey about their childhood before age 18. The authors found a dose-response relationship — the more categories of childhood adversity, the higher the odds of diseases, addiction, and early death in adulthood.",
+    infoH2: "10 categories from the original questionnaire",
+    cat1t: "Abuse (3):", cat1d: "emotional, physical, sexual",
+    cat2t: "Neglect (2):", cat2d: "emotional, physical",
+    cat3t: "Household dysfunction (5):", cat3d: "divorce, violence against mother, substance abuse, mental illness, incarceration",
+    cat4t: "Scoring:", cat4d: "1 point per \"yes\" in each category, total 0–10",
+    infoH3: "How it's used",
+    infoP3a: "Screening in primary care (pediatricians, family doctors), social services, psychotherapy, trauma epidemiology research. CDC tracks ACE through the BRFSS system — an annual survey of hundreds of thousands of Americans includes an ACE module. Since 2019, California has officially funded pediatric ACE screening through the ACEs Aware program.",
+    infoP3b: "The Hughes et al. 2017 meta-analysis (Lancet Public Health) pooled 37 studies with a total sample of 253,719 people across multiple countries. It confirmed Felitti's original findings: the association replicates outside the US. ACE 4+ is the highest-risk group, comprising roughly 12–15% of the adult population across samples.",
+    infoH4: "Limitations",
+    infoLi1: "This is correlation, not causation. A high score is a risk factor, not a predetermined outcome",
+    infoLi2: "All 10 items are weighted equally, though sexual abuse and emotional neglect differ in severity",
+    infoLi3: "Doesn't account for: poverty, racism, bullying, loss of loved ones, war, migration, illness. Modern research proposes expanded scales (Expanded ACE, PACES)",
+    infoLi4: "A 10-item questionnaire is too coarse for clinical diagnosis — proper clinical interview is required",
+    infoLi5: "Protective factors (supportive adult, stable schooling, adolescent psychotherapy) substantially reduce the final risk, but the scale doesn't capture them",
+    infoH5: "The headline finding",
+    infoP5: "The link between childhood stress and adult disease is one of the most replicable findings in epidemiology. The ACE=4+ group has 4.6× higher odds of depression, 30× higher odds of suicide attempts, 5.8× problem drinking, 10.2× drug addiction. The biological mechanism is toxic stress: prolonged HPA-axis activation in childhood reshapes immune function, metabolism, and brain development.",
+    qMetaPrefix: "Question", qMetaOf: "of", scoreLabel: "ACE score:", qNumLabel: "Question",
+    ansYes: "Yes", ansNo: "No", ansSkip: "Skip",
+    backLabel: "Back", finishLabel: "Finish early",
+    legYes: "Yes", legNo: "No", legSkip: "Skipped", legNone: "Unanswered",
+    scoreCardLabel: "Your ACE score",
+    groupLabel: "Risk group: ",
+    chartTitle: "How risks grow with the ACE score",
+    chartExplain: "Comparing groups with score 1, 2, 3 and 4+ against those with score 0 (childhood without adverse experiences). For example, ×3 means \"3× higher odds than a person in the ACE = 0 group\". This is about populations, not individuals: a high score raises probability, it doesn't determine outcomes.",
+    chartSource: "Source: Hughes et al. 2017 meta-analysis, 37 studies, 253,719 people.",
+    chartTabsLabel: "Which group to compare against baseline (ACE = 0):",
+    chartCurrentSingle: (g) => `Showing: <strong>ACE = ${g} group</strong> vs. ACE = 0. Value <strong>×N</strong> = how many times higher the odds of the outcome.`,
+    chartCurrentAll: "Showing: <strong>all groups at once</strong> (1, 2, 3, 4+) vs. ACE = 0. Each bar is a separate group, darker color = higher score.",
+    grpAllBtn: "All",
+    finalDisclaimerTitle: "This is not a verdict",
+    finalDisclaimerTextMain: "Correlation, not destiny. Therapy, stable relationships, and physical activity reduce these risks. If childhood memories interfere with your life, that's a reason to talk to a professional.",
+    phoneLabelAdult: "Crisis lines, international:",
+    phoneNoteAdult: "(directory by country)",
+    phoneLabelWomen: "Domestic violence support:",
+    phoneNoteWomen: "(global directory)",
+    phoneLabelKids: "Childhelp, US:",
+    phoneNoteKids: "(24/7, free, abuse hotline)",
+    phones: [
+      {label: "Crisis lines worldwide:", num: "findahelpline.com", url: "https://findahelpline.com/", note: "(directory by country, free)"},
+      {label: "988 Suicide & Crisis Lifeline, US:", num: "988", tel: "988", note: "(24/7, free, call or text)"},
+      {label: "Childhelp Hotline, US:", num: "1-800-422-4453", tel: "18004224453", note: "(24/7, free, abuse hotline)"}
+    ],
+    retakeBtn: "Retake test",
+    backIntroBtn: "Back to info",
+    footerSource: "Sources: Felitti et al. 1998 (American Journal of Preventive Medicine); Hughes et al. 2017 (Lancet Public Health); CDC ACE Study; CDC BRFSS.",
+    footerDate: "May 2026",
+    distribTitle: "Distribution in the general population (Felitti et al. 1998)",
+    groupHints: {
+      0: "You marked none of the categories. About 36% of the Felitti sample were in this group. This is the baseline risk that other groups are compared against.",
+      1: "You marked one category of adversity. About 26% of the sample. A noticeable but still small risk increase across outcomes.",
+      2: "You marked two categories. About 16% of the sample. Risks across all outcomes start to grow appreciably — see chart below.",
+      3: "You marked three categories. About 9% of the sample. High-risk group, the gap from baseline on some outcomes is already several-fold.",
+      4: "You marked four or more categories. About 13% of the sample. Highest-risk group per Felitti et al. 1998. ACE 4+ raises depression risk 4.6×, suicide attempts 30×. This is statistics, not a verdict."
+    },
+    groupLabelText: {0: "0", 1: "1", 2: "2", 3: "3", 4: "4+"},
+    questions: [
+      {t: "Before age 18: did a parent often swear at, insult, put you down, or act in a way that made you afraid you might be physically hurt?", h: "Emotional abuse"},
+      {t: "Before age 18: did a parent push, grab, slap, or throw something at you? Or hit you so hard that you had marks or were injured?", h: "Physical abuse"},
+      {t: "Before age 18: did an older person touch you sexually or try to engage you in any sexual contact?", h: "Sexual abuse"},
+      {t: "Before age 18: did you often feel that no one in your family loved you or thought you were important or special?", h: "Emotional neglect"},
+      {t: "Before age 18: did you often not have enough to eat, wear dirty clothes, have no one to protect you, or have parents too drunk or high to take care of you?", h: "Physical neglect"},
+      {t: "Before age 18: were your parents ever separated or divorced?", h: "Parental separation"},
+      {t: "Before age 18: was your mother or stepmother pushed, hit, choked, or threatened with a knife or gun?", h: "Domestic violence against mother"},
+      {t: "Before age 18: did anyone in your household have a problem with alcohol or drugs?", h: "Substance abuse in household"},
+      {t: "Before age 18: was a household member depressed, mentally ill, or did they attempt suicide?", h: "Mental illness in household"},
+      {t: "Before age 18: did a household member go to prison?", h: "Incarcerated household member"}
+    ],
+    risks: [
+      {name: "Suicide attempts", desc: "Hughes et al. 2017, OR vs. ACE=0 group"},
+      {name: "Drug addiction", desc: "Problematic substance use"},
+      {name: "Alcohol problems", desc: "Alcoholism or alcohol misuse"},
+      {name: "Depression", desc: "Diagnosed clinical depression"},
+      {name: ">50 sexual partners", desc: "Lifetime"},
+      {name: "Smoking", desc: "Adult smoker"},
+      {name: "STIs", desc: "Sexually transmitted infections"},
+      {name: "Heart disease", desc: "Ischemic heart disease, heart attack"},
+      {name: "Early death (before 65)", desc: "Reduced life expectancy"},
+      {name: "Severe obesity", desc: "BMI ≥ 35"}
+    ]
+  }
+};
+
+const RISK_OR = [
+  {1: 1.8, 2: 3.4, 3: 9.2, 4: 30.1},   // suicide attempts
+  {1: 2.0, 2: 3.2, 3: 5.5, 4: 10.2},   // drug addiction
+  {1: 1.5, 2: 2.0, 3: 3.1, 4: 5.8},    // alcohol problems
+  {1: 1.4, 2: 1.8, 3: 2.6, 4: 4.6},    // depression
+  {1: 1.4, 2: 1.8, 3: 2.5, 4: 5.4},    // 50+ partners
+  {1: 1.3, 2: 1.5, 3: 1.9, 4: 2.8},    // smoking
+  {1: 1.2, 2: 1.5, 3: 1.9, 4: 2.5},    // STIs
+  {1: 1.2, 2: 1.4, 3: 1.7, 4: 2.1},    // heart disease
+  {1: 1.3, 2: 1.6, 3: 1.8, 4: 1.9},    // early death
+  {1: 1.2, 2: 1.4, 3: 1.5, 4: 1.6}     // obesity
+];
+
+const POP_DISTRIB = [
+  {g: 0, pct: 36},
+  {g: 1, pct: 26},
+  {g: 2, pct: 16},
+  {g: 3, pct: 9},
+  {g: 4, pct: 13}
+];
+
+const HEAT = [
+  {p: 0, c: [241,239,232]},
+  {p: 0.05, c: [247,193,193]},
+  {p: 0.20, c: [226,75,74]},
+  {p: 0.40, c: [121,31,31]},
+  {p: 0.60, c: [80,19,19]}
+];
+function heatColor(frac){
+  for(let i=1;i<HEAT.length;i++){
+    if(frac<=HEAT[i].p){
+      const a=HEAT[i-1], b=HEAT[i];
+      const t=(frac-a.p)/(b.p-a.p);
+      const rgb=a.c.map((v,j)=>Math.round(v+(b.c[j]-v)*t));
+      return `rgb(${rgb.join(',')})`;
+    }
+  }
+  return `rgb(${HEAT[HEAT.length-1].c.join(',')})`;
+}
+
+let lang = "ru";
+let state = {
+  answers: Array(10).fill(undefined),
+  current: 0,
+  group: "4",
+  screen: "intro"
+};
+
+try {
+  const params = new URLSearchParams(window.location.search);
+  const urlLang = params.get("lang");
+  const stored = localStorage.getItem("lang");
+  if(urlLang === "ru" || urlLang === "en") lang = urlLang;
+  else if(stored === "ru" || stored === "en") lang = stored;
+  if(params.get("embed") === "1") {
+    document.documentElement.classList.add("embed-mode");
+  }
+  const savedScore = localStorage.getItem("ace_answers");
+  if(savedScore) {
+    try {
+      const parsed = JSON.parse(savedScore);
+      if(Array.isArray(parsed) && parsed.length === 10) {
+        state.answers = parsed;
+      }
+    } catch(e){}
+  }
+} catch(e){}
+
+function saveAnswers(){
+  try {
+    localStorage.setItem("ace_answers", JSON.stringify(state.answers));
+  } catch(e){}
+}
+
+function clearAnswers(){
+  try { localStorage.removeItem("ace_answers"); } catch(e){}
+}
+
+function $(id){ return document.getElementById(id); }
+
+function applyLang(){
+  const t = I18N[lang];
+  document.documentElement.lang = t.htmlLang;
+  document.title = t.pageTitle + " — " + t.brand;
+  $("brand").textContent = t.brand;
+  $("brand").href = "../?lang=" + lang;
+  $("page-title").textContent = t.pageTitle;
+  $("page-subtitle").textContent = t.pageSubtitle;
+  $("intro-disclaimer-title").textContent = t.introDisclaimerTitle;
+  $("intro-disclaimer-text").innerHTML = t.introDisclaimerText;
+  $("start-test").textContent = t.btnStart;
+  $("skip-test").textContent = t.btnSkip;
+  $("info-h1").textContent = t.infoH1;
+  $("info-p1").textContent = t.infoP1;
+  $("info-h2").textContent = t.infoH2;
+  $("cat-1-t").textContent = t.cat1t;
+  $("cat-1-d").textContent = " " + t.cat1d;
+  $("cat-2-t").textContent = t.cat2t;
+  $("cat-2-d").textContent = " " + t.cat2d;
+  $("cat-3-t").textContent = t.cat3t;
+  $("cat-3-d").textContent = " " + t.cat3d;
+  $("cat-4-t").textContent = t.cat4t;
+  $("cat-4-d").textContent = " " + t.cat4d;
+  $("info-h3").textContent = t.infoH3;
+  $("info-p3a").textContent = t.infoP3a;
+  $("info-p3b").textContent = t.infoP3b;
+  $("info-h4").textContent = t.infoH4;
+  $("info-li1").textContent = t.infoLi1;
+  $("info-li2").textContent = t.infoLi2;
+  $("info-li3").textContent = t.infoLi3;
+  $("info-li4").textContent = t.infoLi4;
+  $("info-li5").textContent = t.infoLi5;
+  $("info-h5").textContent = t.infoH5;
+  $("info-p5").textContent = t.infoP5;
+  $("q-meta-prefix").textContent = t.qMetaPrefix;
+  $("q-meta-of").textContent = t.qMetaOf;
+  $("score-label").textContent = t.scoreLabel + " ";
+  $("q-num-label").textContent = t.qNumLabel;
+  $("ans-yes").textContent = t.ansYes;
+  $("ans-no").textContent = t.ansNo;
+  $("ans-skip").textContent = t.ansSkip;
+  $("back-label").textContent = t.backLabel;
+  $("finish-label").textContent = t.finishLabel;
+  $("leg-yes").textContent = t.legYes;
+  $("leg-no").textContent = t.legNo;
+  $("leg-skip").textContent = t.legSkip;
+  $("leg-none").textContent = t.legNone;
+  $("score-card-label").textContent = t.scoreCardLabel;
+  $("chart-title").textContent = t.chartTitle;
+  $("chart-explain").textContent = t.chartExplain;
+  $("chart-source").textContent = t.chartSource;
+  $("chart-tabs-label").textContent = t.chartTabsLabel;
+  $("grp-all-btn").textContent = t.grpAllBtn;
+  $("final-disclaimer-title").textContent = t.finalDisclaimerTitle;
+  $("final-disclaimer-text-main").textContent = t.finalDisclaimerTextMain;
+  renderPhones();
+  $("retake-btn").textContent = t.retakeBtn;
+  $("back-intro-btn").textContent = t.backIntroBtn;
+  $("footer-source").textContent = t.footerSource;
+  $("footer-date").textContent = t.footerDate;
+  $("distrib-title").textContent = t.distribTitle;
+  document.querySelectorAll(".lang-btn").forEach(b => {
+    b.classList.toggle("active", b.dataset.lang === lang);
+  });
+
+  if(state.screen === "test") renderQuestion();
+  if(state.screen === "result") {
+    renderResult();
+    renderChart();
+    renderDistrib();
+  }
+  updateChartCurrent();
+}
+
+function renderPhones(){
+  const t = I18N[lang];
+  const wrap = $("final-disclaimer-phones");
+  wrap.innerHTML = '';
+  t.phones.forEach(p => {
+    const row = document.createElement('div');
+    row.className = 'phone-row';
+    const label = document.createElement('span');
+    label.className = 'phone-label';
+    label.textContent = p.label + ' ';
+    row.appendChild(label);
+    const link = document.createElement('a');
+    if(p.tel) link.href = 'tel:' + p.tel;
+    else if(p.url) { link.href = p.url; link.target = '_blank'; link.rel = 'noopener'; }
+    link.textContent = p.num;
+    row.appendChild(link);
+    if(p.note){
+      const note = document.createElement('span');
+      note.className = 'phone-note';
+      note.textContent = ' ' + p.note;
+      row.appendChild(note);
+    }
+    wrap.appendChild(row);
+  });
+}
+
+function updateChartCurrent(){
+  const t = I18N[lang];
+  const el = $("chart-current");
+  if(!el) return;
+  const grp = state.group;
+  if(grp === 'all'){
+    el.innerHTML = t.chartCurrentAll;
+  } else {
+    const grpLabel = grp === '4' ? '4+' : grp;
+    el.innerHTML = t.chartCurrentSingle(grpLabel);
+  }
+}
+
+function renderProgress(){
+  const track = $("progress-track");
+  track.innerHTML = '';
+  let yesAccum = 0;
+  for(let i=0;i<10;i++){
+    const cell = document.createElement('div');
+    cell.className = 'prog-cell';
+    const a = state.answers[i];
+    if(a === true){
+      yesAccum++;
+      cell.style.background = heatColor(yesAccum/10);
+      cell.style.border = 'none';
+    } else if(a === false){
+      cell.style.background = 'var(--surface-2)';
+      cell.style.border = '0.5px solid var(--border)';
+    } else if(a === null){
+      cell.style.background = '#B4B2A9';
+      cell.style.border = 'none';
+    } else {
+      cell.style.background = 'transparent';
+      cell.style.border = '0.5px dashed var(--text-3)';
+    }
+    if(i === state.current) cell.classList.add('current');
+    track.appendChild(cell);
+  }
+  const yes = state.answers.filter(a => a === true).length;
+  const scoreEl = $("score-current");
+  scoreEl.textContent = yes;
+  scoreEl.style.color = yes === 0 ? 'var(--text)' : heatColor(yes/10);
+  $("q-current").textContent = Math.min(state.current+1, 10);
+}
+
+function renderQuestion(){
+  const t = I18N[lang];
+  if(state.current >= 10){
+    goToResult();
+    return;
+  }
+  const q = t.questions[state.current];
+  $("q-num").textContent = state.current + 1;
+  $("q-text").textContent = q.t;
+  $("q-hint").textContent = q.h;
+  renderProgress();
+  $("back-btn").disabled = state.current === 0;
+}
+
+function answer(val){
+  state.answers[state.current] = val;
+  saveAnswers();
+  state.current++;
+  if(state.current >= 10){
+    goToResult();
+  } else {
+    renderQuestion();
+  }
+}
+
+function goToScreen(name){
+  state.screen = name;
+  ["intro", "test", "result"].forEach(s => {
+    $("screen-" + s).style.display = (s === name) ? 'block' : 'none';
+  });
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function getScore(){
+  return state.answers.filter(a => a === true).length;
+}
+
+function renderResult(){
+  const t = I18N[lang];
+  const score = getScore();
+  $("result-score").textContent = score;
+  $("result-score").style.color = score === 0 ? 'var(--text)' : heatColor(score/10);
+  const grpKey = score >= 4 ? 4 : score;
+  $("result-group-label").textContent = t.groupLabel + t.groupLabelText[grpKey];
+  $("result-group-hint").textContent = t.groupHints[grpKey];
+
+  state.group = score >= 4 ? "4" : (score === 0 ? "1" : String(score));
+  document.querySelectorAll(".group-tab").forEach(b => {
+    b.classList.toggle("active", b.dataset.grp === state.group);
+  });
+}
+
+function renderDistrib(){
+  const score = getScore();
+  const bar = $("distrib-bar");
+  const axis = $("distrib-axis");
+  bar.innerHTML = '';
+  axis.innerHTML = '';
+  const userGroup = score >= 4 ? 4 : score;
+  POP_DISTRIB.forEach(d => {
+    const seg = document.createElement('div');
+    seg.className = 'distrib-seg';
+    if(d.g !== userGroup) seg.classList.add('dim');
+    seg.style.width = d.pct + '%';
+    const c = d.g === 0 ? 'rgb(241,239,232)' : heatColor(d.g/4 * 0.55);
+    seg.style.background = c;
+    if(d.pct >= 9) {
+      const lbl = document.createElement('div');
+      lbl.className = 'distrib-seg-label';
+      lbl.style.color = d.g === 0 ? '#6b6a64' : 'white';
+      lbl.textContent = d.pct + '%';
+      seg.appendChild(lbl);
+    }
+    bar.appendChild(seg);
+
+    const axL = document.createElement('div');
+    axL.style.width = d.pct + '%';
+    axL.style.textAlign = 'center';
+    axL.style.fontWeight = d.g === userGroup ? '500' : '400';
+    axL.style.color = d.g === userGroup ? 'var(--text)' : 'var(--text-3)';
+    axL.textContent = 'ACE=' + (d.g === 4 ? '4+' : d.g);
+    axis.appendChild(axL);
+  });
+}
+
+function renderChart(){
+  const t = I18N[lang];
+  const wrap = $("risk-chart");
+  wrap.innerHTML = '';
+  const grp = state.group;
+  const showAll = grp === 'all';
+  const maxOR = Math.max(...RISK_OR.flatMap(r => Object.values(r)));
+
+  t.risks.forEach((r, idx) => {
+    const orData = RISK_OR[idx];
+    const row = document.createElement('div');
+    row.className = 'risk-row';
+
+    const label = document.createElement('div');
+    label.className = 'risk-label';
+    label.textContent = r.name;
+    row.appendChild(label);
+
+    const barWrap = document.createElement('div');
+    barWrap.className = 'risk-bar-wrap';
+    if(showAll) barWrap.style.height = '38px';
+
+    if(showAll){
+      [1,2,3,4].forEach((g,i) => {
+        const v = orData[g];
+        const bar = document.createElement('div');
+        bar.className = 'risk-bar-multi';
+        bar.style.top = (i*8) + 'px';
+        bar.style.width = ((v/maxOR)*100) + '%';
+        bar.style.background = heatColor(g/4 * 0.55);
+        bar.dataset.g = g;
+        bar.dataset.v = v;
+        bar.dataset.name = r.name;
+        attachTooltip(bar, r.name, r.desc, g, v);
+        barWrap.appendChild(bar);
+      });
+    } else {
+      const v = orData[parseInt(grp)];
+      const bar = document.createElement('div');
+      bar.className = 'risk-bar';
+      bar.style.width = ((v/maxOR)*100) + '%';
+      bar.style.background = heatColor(parseInt(grp)/4 * 0.55);
+      attachTooltip(bar, r.name, r.desc, parseInt(grp), v);
+      barWrap.appendChild(bar);
+    }
+    row.appendChild(barWrap);
+
+    const val = document.createElement('div');
+    val.className = 'risk-value';
+    if(showAll){
+      val.textContent = '';
+    } else {
+      val.textContent = '×' + orData[parseInt(grp)].toFixed(1);
+    }
+    row.appendChild(val);
+    wrap.appendChild(row);
+  });
+
+  if(showAll){
+    const legend = document.createElement('div');
+    legend.className = 'bar-legend';
+    [1,2,3,4].forEach(g => {
+      const item = document.createElement('span');
+      item.innerHTML = `<i style="background: ${heatColor(g/4 * 0.55)};"></i>ACE=${g === 4 ? '4+' : g}`;
+      legend.appendChild(item);
+    });
+    wrap.appendChild(legend);
+  }
+}
+
+function attachTooltip(el, name, desc, group, value){
+  el.style.cursor = 'pointer';
+  const tt = $("tooltip");
+  el.addEventListener('mouseenter', e => {
+    tt.querySelector('.tt-title').textContent = name;
+    const labelTxt = lang === 'ru' ? 'ACE=' : 'ACE=';
+    const grpLabel = group === 4 ? '4+' : group;
+    const vsTxt = lang === 'ru' ? ' раза выше, чем у группы ACE=0' : '× higher odds vs. ACE=0 group';
+    tt.querySelector('.tt-body').innerHTML = `<div style="font-weight:500;color:var(--text);margin-bottom:2px;">${labelTxt}${grpLabel}: ×${value.toFixed(1)}</div>${desc}`;
+    tt.classList.add('visible');
+    moveTooltip(e);
+  });
+  el.addEventListener('mousemove', moveTooltip);
+  el.addEventListener('mouseleave', () => {
+    tt.classList.remove('visible');
+  });
+}
+
+function moveTooltip(e){
+  const tt = $("tooltip");
+  const x = e.clientX + 14;
+  const y = e.clientY + 14;
+  const ttRect = tt.getBoundingClientRect();
+  const maxX = window.innerWidth - ttRect.width - 10;
+  const maxY = window.innerHeight - ttRect.height - 10;
+  tt.style.left = Math.min(x, maxX) + 'px';
+  tt.style.top = Math.min(y, maxY) + 'px';
+}
+
+function goToResult(){
+  renderResult();
+  renderChart();
+  renderDistrib();
+  updateChartCurrent();
+  goToScreen('result');
+}
+
+function setLang(newLang){
+  lang = newLang;
+  try { localStorage.setItem("lang", lang); } catch(e){}
+  applyLang();
+}
+
+document.querySelectorAll(".lang-btn").forEach(b => {
+  b.addEventListener("click", () => setLang(b.dataset.lang));
+});
+
+$("start-test").addEventListener("click", () => {
+  state.current = 0;
+  state.answers = Array(10).fill(undefined);
+  clearAnswers();
+  goToScreen("test");
+  renderQuestion();
+});
+
+$("skip-test").addEventListener("click", () => {
+  state.group = "all";
+  document.querySelectorAll(".group-tab").forEach(b => {
+    b.classList.toggle("active", b.dataset.grp === "all");
+  });
+  $("result-score").textContent = "—";
+  $("result-score").style.color = "var(--text-3)";
+  $("result-group-label").textContent = lang === "ru" ? "Все группы риска" : "All risk groups";
+  $("result-group-hint").textContent = lang === "ru"
+    ? "Вы пропустили тест. Ниже — данные о том, как растёт риск различных исходов во взрослой жизни в зависимости от детского балла ACE. Сравнение групп ACE=1, 2, 3, 4+ относительно базы (ACE=0). Можно переключаться между группами через табы или вернуться к описанию вверху."
+    : "You skipped the test. Below is data on how the risk of various adult outcomes grows with the childhood ACE score. Comparison of ACE=1, 2, 3, 4+ groups against the baseline (ACE=0). You can switch between groups using the tabs or return to the description above.";
+  $("result-distrib-wrap").style.display = 'block';
+  POP_DISTRIB.forEach(d => {});
+  const bar = $("distrib-bar");
+  bar.innerHTML = '';
+  const axis = $("distrib-axis");
+  axis.innerHTML = '';
+  POP_DISTRIB.forEach(d => {
+    const seg = document.createElement('div');
+    seg.className = 'distrib-seg';
+    seg.style.width = d.pct + '%';
+    seg.style.background = d.g === 0 ? 'rgb(241,239,232)' : heatColor(d.g/4 * 0.55);
+    if(d.pct >= 9){
+      const lbl = document.createElement('div');
+      lbl.className = 'distrib-seg-label';
+      lbl.style.color = d.g === 0 ? '#6b6a64' : 'white';
+      lbl.textContent = d.pct + '%';
+      seg.appendChild(lbl);
+    }
+    bar.appendChild(seg);
+    const axL = document.createElement('div');
+    axL.style.width = d.pct + '%';
+    axL.style.textAlign = 'center';
+    axL.style.color = 'var(--text-3)';
+    axL.textContent = 'ACE=' + (d.g === 4 ? '4+' : d.g);
+    axis.appendChild(axL);
+  });
+  renderChart();
+  updateChartCurrent();
+  goToScreen("result");
+});
+
+$("ans-yes").addEventListener("click", () => answer(true));
+$("ans-no").addEventListener("click", () => answer(false));
+$("ans-skip").addEventListener("click", () => answer(null));
+$("back-btn").addEventListener("click", () => {
+  if(state.current > 0){
+    state.current--;
+    renderQuestion();
+  }
+});
+$("finish-early").addEventListener("click", goToResult);
+
+document.querySelectorAll(".group-tab").forEach(b => {
+  b.addEventListener("click", () => {
+    document.querySelectorAll(".group-tab").forEach(x => x.classList.remove("active"));
+    b.classList.add("active");
+    state.group = b.dataset.grp;
+    renderChart();
+    updateChartCurrent();
+  });
+});
+
+$("retake-btn").addEventListener("click", () => {
+  state.current = 0;
+  state.answers = Array(10).fill(undefined);
+  clearAnswers();
+  goToScreen("test");
+  renderQuestion();
+});
+
+$("back-intro-btn").addEventListener("click", () => {
+  goToScreen("intro");
+});
+
+applyLang();
+renderProgress();
+
+})();
+</script>
+</body>
+</html>
